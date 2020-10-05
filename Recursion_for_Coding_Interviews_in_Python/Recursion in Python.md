@@ -169,3 +169,34 @@ def function2():
     function1()
 ```
 
+### When to Use Recursion
+
+Even though recursion may seem like a good idea to use all the time, there are times when recursion is not a good idea. 
+
+Recursion should be used where it just feels natural. This will become obvious as you continue to work on various recursion problems. The most obvious indications of recursion are:
+
+*   when the problem can be broken down into **smaller subproblems**. It is likely that a problem can be solved using recursion when you observe a pattern of that problem breaking down into similar subproblems. 
+*   When a problem requires an absurd number of nested loops. When the number of nested loops are known, use iteration but when we do not know the number of loops, stick to recursion. 
+
+### Understanding a Recursive Problem
+
+In this section, we will go over methods to help you visualize a recursive function. Let's consider another problem. We are interested in printing the following sequence: 
+
+```python
+10
+5
+0
+5
+10
+```
+
+Let's write down a function that creates such a pattern:
+
+```python
+def printPattern(targetNumber):
+    if targetNumber <= 0:
+        return 0
+    else:
+        
+```
+
