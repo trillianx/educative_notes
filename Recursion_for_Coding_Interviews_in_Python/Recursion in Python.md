@@ -195,8 +195,11 @@ Let's write down a function that creates such a pattern:
 ```python
 def printPattern(targetNumber):
     if targetNumber <= 0:
-        return 0
+        print(0)
     else:
-        
+        print(targetNumber)
+        printPattern(targetNumber-5)
+        print(targetNumber)
 ```
 
+So, we see that the first print statement prints the values before the recursion call goes into the stack while the second one is printed after we de-stack. 
