@@ -288,5 +288,112 @@ We see here that the concatenation is done in the second return statement for th
 
 ### Counting Vowels in a String
 
+Let's look at another case of iterative and recursive case. This involves counting vowels in a string. 
 
+```python
+def counting_vowels_l(string):
+    vowels = 'aeiou'
+    if len(string) > 0:
+        count = 0
+        for i in string:
+            if i.lower() in vowels:
+                count += 1
+        return count
+    else:
+        return 'Length should be non-zero'
+```
+
+Let's convert this into a recursive code: 
+
+```python
+def counting_vowels_r(string, n):
+    # base case:
+    if len(string) == 1:
+        if string[0].lower() in 'aeiou':
+            return n + 1
+        else:
+            return n
+    else:
+        if string[0].lower() in 'aeiou':
+            return counting_vowels_r(string[1:], n + 1)
+        else:
+            return counting_vowels_r(string[1:], n)
+```
+
+Let's do some challenges to hone our skills
+
+### Challenge 1: Compute Square of a Number
+
+Using the following mathematical identity to compute the square of a number: 
+$$
+(n-1)^2 = n^2 - 2n + 1
+$$
+We can rewrite this as: 
+$$
+n^2 = (n-1)^2 +2n - 1
+$$
+So, we have $n$ in terms of $n-1$, which allows us to decrease $n$ until it reaches $0$. Thus our base case would be: 
+
+```python
+if n == 0:
+    return 0
+```
+
+Putting together we can write this as: 
+
+```python
+def compute_square(n):
+    # base case:
+    if n == 0:
+        return 0
+    else:
+        return compute_square(n-1) + (2 * n) - 1
+```
+
+Graphically, this looks like the following: 
+
+<img src="Recursion%20in%20Python.assets/image-20201006155048315.png" alt="image-20201006155048315" style="zoom:33%;" />
+
+### Challenge 2: Search First Occurrence of a Number
+
+Implement a function that takes an array `arr`, a `testVariable` (containing the number to search) and `currentIndex` (containing the starting index) as parameters. The function then returns the index of the first occurrence of `testVariable` in the `arr`. If the `testVariable` is not found in `arr`, it should return `-1`. 
+
+For example, 
+
+```python
+arr = [9, 8, 1, 8, 1, 7]
+testVariable = 1
+currentIndex = 0
+```
+
+The output would be: `2`
+
+```python
+def firstIndex(arr, testVariable, currentIndex):
+    # Base Case 1: 
+	if arr[0] == testVariable:
+        return currentIndex
+    # Base Case 2
+    elif len(arr) == 1:
+        return -1
+    # Recursive Case
+    else:
+        return firstIndex(arr[1:], testVariable, currentIndex + 1)
+```
+
+Another way to solve this would be: 
+
+```python
+def firstIndex(arr, testVariable, currentIndex) : # returns the first occurrence of testVariable
+  # Base Case1
+  if len(arr) == currentIndex :
+    return -1;
+
+  # Base Case2  
+  if arr[currentIndex] == testVariable :
+    return currentIndex
+
+  # Recursive Case
+  return firstIndex(arr, testVariable, currentIndex + 1)
+```
 
