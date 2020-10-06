@@ -203,3 +203,55 @@ def printPattern(targetNumber):
 ```
 
 So, we see that the first print statement prints the values before the recursion call goes into the stack while the second one is printed after we de-stack. 
+
+## Chapter 2: Iteration Vs. Recursion
+
+Iteration means repeating steps in order to achieve the desired outcome. This is generally done with the use of loops. There are two types of iteration loops: 
+
+1.  Loops that continue to iterate until a condition is satisfied. This is typically done using a `while` loop. 
+2.  Loops that iterate through a series of elements. This is typically done using a `for` loop. 
+
+As an example, let's implement the factorial function using a `while` loop: 
+
+```python
+def factorial(n):
+    if n < 0:
+        return 'Invalid Number'
+    product = 1
+    while n != 0:
+        product = product * n
+        n = n-1
+    return product
+```
+
+And here is an example of a for loop: 
+
+```python
+import numpy as np
+def factorial_loop(n):
+    if n < 0:
+        return 'Invalid Number'
+    product = 1
+    for i in np.arange(1,n+1):
+        product = product * i
+    return product
+```
+
+Here are the differences between recursive and iterative methods: 
+
+|               | Recursive                                                    | Iterative                                                    |
+| ------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| Definition    | A function that calls itself until a base condition is satisfied | Statements are executed over and over again until a condition is satisfied |
+| Application   | Recursion is always called on a function                     | Iterative code is applied to variables. A set of instructions that are called upon repeatedly |
+| Termination   | Terminates when the base case condition is satisfied         | Terminates when a specific condition is satisfied or runs through a particular number of loops |
+| Code Size     | Smaller and neat                                             | Extensive and cluttered                                      |
+| Overhead Time | Each recursive call has an overhead time                     | No overhead time                                             |
+| Speed         | Slower as it involves running the program and also invoke stack memory | Faster as the time is only running the program               |
+| Stack         | Makes use of stack in each recursive call                    | Does not make use of stack                                   |
+
+### Converting Iterative Code to Recursive Code
+
+There are times when recursive code is more efficient than iterative code. In order to convert the code, use the following steps: 
+
+1.  
+
