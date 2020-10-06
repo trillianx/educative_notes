@@ -253,5 +253,40 @@ Here are the differences between recursive and iterative methods:
 
 There are times when recursive code is more efficient than iterative code. In order to convert the code, use the following steps: 
 
-1.  
+1.  Identify the main loop. 
+    1.  This loop should modify one or more variables
+    2.  It should return a result based on its final values
+2.  Use the loop condition as a base case and the body of the loop as the recursive case
+3.  The local variables in the iterative version turn into the parameters of the recursive version
+4.  Compile and rerun tests
+
+Let's take an example to illustrate these points: Reverse a string
+
+```python
+# Iterative way: 
+def reverse_string(string):
+    n = len(string) - 1
+    result = ''
+    while n >= 0:
+        result += result + string[n]
+        n -= 1
+    return result
+```
+
+The loop here modifies the result by adding a value from the string. The loop condition is that `n>= 0`. This becomes our base condition. So, let's write the recursive method: 
+
+```python
+def recursive_reverse(string):
+    # Base case:
+    if len(string) == 1:
+        return string[0]
+    else:
+        return recursive_reverse(string[1:]) + string[0]
+```
+
+We see here that the concatenation is done in the second return statement for the recursive case. 
+
+### Counting Vowels in a String
+
+
 
