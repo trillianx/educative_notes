@@ -5,6 +5,7 @@ __pycache__/
 
 # Mac Crap
 *.DS_Store
+*.pdf
 
 # C extensions
 *.so

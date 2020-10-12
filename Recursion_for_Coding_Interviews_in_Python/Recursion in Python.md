@@ -397,3 +397,38 @@ def firstIndex(arr, testVariable, currentIndex) : # returns the first occurrence
   return firstIndex(arr, testVariable, currentIndex + 1)
 ```
 
+### Challenge 3: Implement the Fibonacci Sequence
+
+The Fibonacci sequence is one of the most famous formulas in mathematics. Each number in the sequence is the sum of the two numbers that precede it.
+
+The sequence looks as follows:
+
+$ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 … $
+
+Use the following relationship to write a recursive code: 
+$$
+F_n = F_{n-2} + F_{n-1}
+$$
+
+```python
+def fibonacci(testVariable):
+    if testVariable == 0:
+        return 0
+    elif testVariable == 1:
+        return 1
+    else:
+        return fibonacci(testVariable - 2) + fibonacci(testVariable - 1)
+```
+
+Another way to solve this is using the following: 
+
+```python
+def fibonacci(testVariable):
+    # Base Case
+    if testVariable <= 1 :
+        return testVariable
+    
+    # Recursive Case
+    return(fibonacci(testVariable - 1) + fibonacci(testVariable - 2))
+```
+
