@@ -461,7 +461,58 @@ Static methods are methods that are usually limited to class only and not their 
 
 To declare a method as a static method, we use the decorator `@staticmethod`. It does not use a reference to the object or class, so we do not have to use `self` or `cls`. This allows the method to perform like any function in procedural function without interfering with the instance or class variables. 
 
+### When to Use What method? 
 
+Here's what each type of method does: 
+
+*   **Instance Method**
+    *   Can modify object instance state
+    *   Can modify class state
+*   **Class Method**
+    *   *Can't modify object instance state*
+    *   Can modify class state
+*   **Static Method**
+    *   *Can't modify object instance state*
+    *   *Can't modify class state*
+
+Here's an example of all the methods used: 
+
+```python
+# Creating a pizza
+import math
+class Pizza():
+    def __init__(self, ingredients):
+        self.ingredients = ingredients
+        
+    def compute_area(self, radius):
+        return self._circle_area(radius)
+        
+    @classmethod
+    def margherita(cls):
+        return cls(['cheese', 'tomatoes'])
+    
+    @classmethod
+    def hawaiian(cls):
+        return cls(['cheese', 'tomatoes', 'ham', 'pineapple'])
+    
+    @staticmethod
+    def _circle_area(r):
+        return math.pi * (r**2)
+    
+```
+
+We use `classmethod` to create objects directly. This is particularly helpful if we wish to create objects quickly or don't know what parameters they take. As we saw creating a margherita pizza could also have been created in the following way: 
+
+```python
+# Creating Margherita pizza manually: 
+m2 = Pizza()
+m2 = Pizza(['cheese', 'tomatoes'])
+
+# Creating Margherita pizza automatically
+m1 = Pizza.margherita()
+```
+
+Finally, we use `staticmethod` sort of a utility function within a class. If we have multiple methods using the same function, we can separate it out into a `staticmethod` and then use it as we have done here. The `staticmethod` can be accessed using `self.`
 
 ### Class Inheritance
 
