@@ -514,6 +514,143 @@ m1 = Pizza.margherita()
 
 Finally, we use `staticmethod` sort of a utility function within a class. If we have multiple methods using the same function, we can separate it out into a `staticmethod` and then use it as we have done here. The `staticmethod` can be accessed using `self.`
 
+### Access Modifiers
+
+In a given class, we can impose access restrictions on different data members and member functions. These are specified by the access modifiers. Access modifiers are simply the tags that are used in Python
+
+#### Public Attributes
+
+>   Public attributes are those that can be accessed inside the class and outside. 
+
+Consider the following example: 
+
+```python
+class Employee:
+    def __init__(self, ID, salary):
+        # all properties are public
+        self.ID = ID
+        self.salary = salary
+
+    def displayID(self):
+        print("ID:", self.ID)
+```
+
+In this example, the attributes `ID` and `salary` are public. This is because they can be accessed in the class, as seeen by the method `displayID` and outside using the method attributes: 
+
+```python
+Steve = Employee(3789, 2500)
+Steve.displayID()
+print(Steve.salary)
+```
+
+Output
+
+```python
+ID: 3789
+2500
+```
+
+#### Private Attributes
+
+>   Private attributes cannot be accessed from the outside the class but can be accessed from inside the class
+
+Let's take the same above example, and modify it: 
+
+```python
+class Employee:
+    def __init__(self, ID, salary):
+        # Making ID as private using double underscores
+        self.__ID = ID
+        self.salary = salary
+
+    def displayID(self):
+        print("ID:", self.__ID)
+```
+
+Now when we call: 
+
+```python
+Steve = Employee(3789, 2500)
+print(Steve.displayID())
+print(Steve.__ID)
+```
+
+Output: 
+
+```python
+ID: 3789
+---------------------------------------------------------------------
+AttributeError                    Traceback (most recent call last)
+<ipython-input-315-b338b2b6f989> in <module>
+----> 1 Steve.__ID
+
+AttributeError: 'Employee' object has no attribute '__ID'
+```
+
+So, we see that the `ID` has been made private so it cannot be accessed from the outside but the method within the class can still access it. 
+
+#### Accessing Private Attributes
+
+However, there is always a workaround. We **can** access the private attribute in the following way: 
+
+```python
+print(Steve._Employee__ID)
+```
+
+This will return the ID value. 
+
+So, even though these are private attributes, they are not quite private! 
+
+#### Private Methods
+
+Just like we made the attribute `ID` private using double underscores, we can also make the methods private as well. 
+
+```python
+class Employee:
+    def __init__(self, ID, salary):
+        self.ID = ID
+        self.__salary = salary  # salary is a private property
+
+    def displaySalary(self):  # displaySalary is a public method
+        print("Salary:", self.__salary)
+
+    def __displayID(self):  # displayID is a private method
+        print("ID:", self.ID)
+```
+
+In the above example, the attribute `salary` and the method `__displayID()` are private. But the method `displaySalary()` is public. 
+
+Just like the way we can access a private attribute, we can also access the private method: 
+
+```python
+print(Steve._Employee__displayID())
+```
+
+
+
+### Challenge 1: Square Numbers and Return Their Sum
+
+Implement a class `Point` that takes three attributes (x, y, z) and a method, `sqSum()`, which squares the values and sums them. The attributes and method should be public. For example, 
+
+![image-20201012145716459](OOP_in_Python.assets/image-20201012145716459.png)
+
+### Challege 2: Calculate the Student's Performance
+
+Implement a class `Student` that has four attributes (`name`, `phy`, `chem`, `bio`). Implement a method `totalObtained` that calculates total marks of a student. For example, 
+
+![image-20201012145658213](OOP_in_Python.assets/image-20201012145658213.png)
+
+### Challenge 3: Implement a Calculator Class
+
+Write a python class called `Calculator` by completing the tasks below: 
+
+1.  Initialize the values `num1` and `num2`
+2.  Methods: `add()`, `subtract()`, `multiply()`, `divide()`
+
+Here's an example: 
+
+![image-20201012152341209](OOP_in_Python.assets/image-20201012152341209.png)
+
 ### Class Inheritance
 
 OOP is all about code reuse. It also allows you to customize functionality. Class inheritance is that when we define a new class, we can have this new class get all the functionaity of the old class including the extra stuff without implementing the code from scratch. 
@@ -842,4 +979,73 @@ How do you design classes for inheritance? Does Python have private attributes? 
 **Polymorphism** is something that is used in OOP. 
 
 >   Polymorphism is a unified interface to operate on objects of different classes
+
+
+
+## Answers to Challenge Questions
+
+### Chapter 2
+
+#### Challenge 1
+
+```python
+class Point():
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+        
+    def sqSum(self):
+        return self.x**2 + self.y**2 + self.z **2
+```
+
+#### Challenge 2
+
+```python
+class Student():
+    def __init__(self, name, phy, chem, bio):
+        self.name = name
+        self.phy = phy
+        self.chem = chem
+        self.bio = bio
+        
+    def totalObtained(self):
+        return sum([self.phy, self.chem, self.bio])
+    
+    def Percentage(self):
+        return 100 * (self.totalObtained() / 300)
+```
+
+We can check the answer: 
+
+```python
+s1 = Student('Alexis', 80, 90, 40)
+s1.totalObtained()
+s1.Percentage()
+```
+
+#### Challenge 3
+
+```python
+import numpy as np
+class Calculator():
+    def __init__(self, num1, num2):
+        self.num1 = num1
+        self.num2 = num2
+        
+    def add(self):
+        return self.num1 + self.num2
+    
+    def subtract(self):
+        return self.num1 - self.num2
+    
+    def multiply(self):
+        return self.num1 * self.num2
+    
+    def divide(self):
+        if self.num2 != 0:
+        	return self.num1 / self.num2
+        else:
+            return np.nan
+```
 
