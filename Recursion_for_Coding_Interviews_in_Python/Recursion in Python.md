@@ -432,3 +432,79 @@ def fibonacci(testVariable):
     return(fibonacci(testVariable - 1) + fibonacci(testVariable - 2))
 ```
 
+
+
+## Chapter 2: Recursion with Numbers
+
+In this chapter we will learn how use recursion that involve the use of numbers. 
+
+As a first example, let's see how we can compute the the power of a number. That is to say, given a number n and a computer x, we wish to compute: 
+$$
+\text{power} = n^x
+$$
+Let's implement this as a recursion: 
+
+```python
+def compute_power(n, x):
+    # Base case: 
+    if x <= 0:
+        return 1
+    else:
+        return n * compute_power(n, x-1)
+```
+
+Next, let's see another example: given a number, n, we would like to compute the sum of integers from 1 to n. 
+
+```python
+def compute_sum(n):
+    # Base case: 
+    if n <= 1:
+        return 1
+    else:
+        return n + compute_sum(n-1)
+```
+
+As a third example, we will compute the modulo of a number. The number that is being divided is called the **dividend**. The number that divides the dividend is called the **divisor**. The modulo operation returns the remainder when a number is divded by another number. 
+
+<img src="Recursion%20in%20Python.assets/image-20201014195727524.png" alt="image-20201014195727524" style="zoom:50%;" />
+
+So, the relationship between these components are: 
+$$
+\text{divisor} \times \text{quotient} + \text{remainder} = \text{dividend}
+$$
+So, we have the recursion formula as: 
+$$
+\text{remainder} = \text{dividend} - (\text{divisor} \times \text{quotient})
+$$
+Let's work this out: 
+
+```python
+def get_modulo(dividend, divisor):
+    if divisor == 0:
+        return 0
+    if dividend < divisor:
+        return dividend
+    else:
+        return get_modulo(dividend - divisor, divisor)
+```
+
+### Challenge 1: Find the Greatest Common Divisor
+
+Implement a function that takes two numbers, `testVariable1` and `testVariable2` and returns their **greatest common divisor**. The greatest common divisor of two or more integers is the largest positive integer that divides each of the integers. For example, for 42 and 56, we have: 
+
+*   42 is divided by 1, 2, 3, 6, 7, 14, 21, 42
+*   56 is divided by 1, 2, 4, 7, 8, 14, 28, 56
+
+So, the greatest common divisor for 42 and 56 is 14. 
+
+```python
+def GCD(num1, num2):
+    # Base Case:
+    if num1 == num2:
+        return num1
+    if num1 > num2:
+        return GCD(num1-num2, num2)
+    else:
+        return GCD(num1, num2-num1)
+```
+
