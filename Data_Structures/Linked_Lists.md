@@ -1,3 +1,5 @@
+[TOC]
+
 
 
 # Linked Lists
@@ -143,10 +145,91 @@ def insert_at_tail(self, data):
     while cur_node.next != None:
         cur_node = cur_node.next
 
-        cur_node.next = new_node
+    cur_node.next = new_node
         return 
 ```
 
 ### Insertion at *k*th index
 
-To insert at the *k*th index
+To insert at the *k*th index, we need to follow these steps: 
+
+1.  Define a counter so it can count to the *k*th index
+2.  Create a new node
+3.  Point the *k-1*th pointer to the new node
+4.  Point the new node to *k+1* node
+
+Let's create this method: 
+
+```python
+def len(self):
+    if self.head_node is None:
+        return 0
+    count = 0
+    curr = self.head_node
+    while curr is not None:
+        curr = curr.next
+        count += 1
+    return count
+
+def insert_at_index(self, index, data):
+    new_node = Node(data)
+    
+    # Check if the linked list is empty
+    if self.isEmpty():
+        self.insert_at_head(data)
+        
+    n = self.len()
+    if index > n:
+        return 'Index out of range'
+    elif index == n:
+        return self.insert_at_tail(data)
+    else:
+        count = 0
+        curr = self.head_node
+        while count < index:
+            print(count)
+            prev = curr
+            curr = curr.next
+            count += 1
+    # Point the previous to new node:
+    new_node.next = curr
+    prev.next = new_node
+    return 
+    
+```
+
+
+
+## Challenge 2: Search in a Singly Linked List
+
+Given a list and a value. Find whether the value exist in the list. Call the method `search(lst, value)`. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Challenge Solutions
+
+Here are the solutions to challenges.
+
+## Challenge 2: Search in a Single Linked List
+
+```python
+from linked_list_class import LinkedList
+from node_class import Node
+
+def search()
+```
+

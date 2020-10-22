@@ -36,7 +36,43 @@ class LinkedList():
             cur_node = cur_node.next
         
         cur_node.next = new_node
+        return
+
+    def len(self):
+        if self.head_node is None:
+            return 0
+        count = 0
+        curr = self.head_node
+        while curr is not None:
+            curr = curr.next
+            count += 1
+        return count
+
+    def insert_at_index(self, index, data):
+        new_node = Node(data)
+        
+        # Check if the linked list is empty
+        if self.isEmpty():
+            self.insert_at_head(data)
+            
+        n = self.len()
+        if index > n:
+            return 'Index out of range'
+        elif index == n:
+            return self.insert_at_tail(data)
+        else:
+            count = 0
+            curr = self.head_node
+            while count < index:
+                print(count)
+                prev = curr
+                curr = curr.next
+                count += 1
+        # Point the previous to new node:
+        new_node.next = curr
+        prev.next = new_node
         return 
+
 
     def show(self):
         cur_node = self.head_node
@@ -53,7 +89,7 @@ if __name__ == "__main__":
     ll.insert_at_head(35)
     ll.insert_at_head(45)
     ll.insert_at_head(55)
-    ll.show()
-    print("--"*10)
     ll.insert_at_tail(15)
     ll.show()
+    print(ll.len())
+    ll.insert_at_index(3, 100)
