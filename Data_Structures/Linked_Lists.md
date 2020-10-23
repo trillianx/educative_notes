@@ -204,7 +204,14 @@ def insert_at_index(self, index, data):
 
 Given a list and a value. Find whether the value exist in the list. Call the method `search(lst, value)`. 
 
+## Challenge 3: Singly Linked List Deletion
 
+There are three types of deletion: 
+
+*   Deletion at the head
+*   Deletion by value
+
+Implement all the three types of deletions. 
 
 
 
@@ -230,6 +237,47 @@ Here are the solutions to challenges.
 from linked_list_class import LinkedList
 from node_class import Node
 
-def search()
+def search(lst, value):
+    if lst.head_node is None:
+        return 'Empty List'
+    
+    cur = lst.head_node
+    while cur is not None:
+        data = cur.data
+        if value == data:
+            return True
+        cur = cur.next
+    return False
+```
+
+### Challenge 3: Deletion at Head & Index
+
+```python
+from linked_list_class import LinkedList
+from node_class import Node
+
+def deletion_at_head(lst):
+    if lst.head_node is None:
+        return 'Empty linked list'
+    lst.head_node = lst.head_node.next
+    return
+    
+def deletion_at_value(lst, value):
+    if lst.isEmpty():
+        return 'Empyt Linked list'
+    
+    if lst.get_head().data == value:
+        return deletion_at_head(lst)
+    
+    cur = lst.head_node
+    pre = cur
+    while cur is not None:
+        if cur.data == value:
+            pre.next = cur.next
+            cur.next = None
+            return True
+        pre = cur
+        cur = cur.next
+    return Falses
 ```
 
