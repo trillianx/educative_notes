@@ -136,7 +136,7 @@ def insert_at_tail(self, data):
     new_node = Node(data)
 
     # Check if the linked list is empty: 
-    if self.head_nodke is None:
+    if self.head_node is None:
         self.head_node = new_node
         return
 
