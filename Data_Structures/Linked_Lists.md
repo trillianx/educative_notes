@@ -213,11 +213,17 @@ There are three types of deletion:
 
 Implement all the three types of deletions. 
 
+## Challenge 4: Find the Length of a Linked List
 
+Implement the `length()` method to find the length of a given linked list. Here's an example: 
 
+<img src="Linked_Lists.assets/image-20201026200658557.png" alt="image-20201026200658557" style="zoom:50%;" />
 
+## Challenge 5: Reverse a Linked List
 
+Write a method `reverse()` that takes a singly linked list and produces the exactly opposite list. 
 
+![image-20201026201707392](Linked_Lists.assets/image-20201026201707392.png)
 
 
 
@@ -279,5 +285,44 @@ def deletion_at_value(lst, value):
         pre = cur
         cur = cur.next
     return Falses
+```
+
+## Challenge 4: Find the Length of a Linked List
+
+```python
+from linked_list_class import LinkedList
+from node_class import Node
+
+def length(lst):
+    if lst.isEmpty():
+        return 0
+    cur_node = lst.get_head()
+    count = 0
+    while cur_node != None:
+        count += 1
+        cur_node = cur_node.next
+    return count
+```
+
+## Challenge 5: Reverse a Singly Linked List
+
+```python
+from linked_list_class import LinkedList
+from node_class import Node
+
+def reverse(lst):
+    if lst.isEmpty():
+        return lst
+    temp_node = None
+    prev_node = None
+    cur_node = lst.get_head()
+    while cur_node != None:
+        temp_node = cur_node
+        cur_node = cur_node.next
+        cur_node.next = prev_node
+        prev_node = temp_node
+    lst.head = prev_node
+    return lst
+
 ```
 

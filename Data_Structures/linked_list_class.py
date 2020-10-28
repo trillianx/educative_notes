@@ -5,8 +5,6 @@ class LinkedList():
         self.head_node = None
     
     def get_head(self):
-        if self.head_node is not None:
-            return self.head_node
         return self.head_node
 
     def isEmpty(self):
