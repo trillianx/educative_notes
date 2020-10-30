@@ -18,6 +18,7 @@ def reverse(lst):
 
 
 
+
 if __name__ == "__main__":
     lst = LinkedList()
     lst.insert_at_head(6)
