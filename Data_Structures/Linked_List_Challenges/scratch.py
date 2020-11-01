@@ -14,7 +14,7 @@ def factorial_bu(n):
     for i in range(1,n+1):
         prod = bb[i-1] * i
         bb.append(prod)
-    return bb
+    return bb[n]
 
 
 

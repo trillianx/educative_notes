@@ -161,3 +161,43 @@ Tabulation is the opposite of the top-down approach and it avoids recursion. In 
 *   Dynamic programming speeds up the recursion technique and uses much less code.
 *   Dynamic programming takes a lot of memory to store the calculated result of every subproblem. 
 *   There is no general form for problems solved by dynamic programming. Every problem has to be solved in its own way. 
+
+## Asymptotic Analysis
+
+There are many ways to solve a problem and therefore it is natural to compare alternatives. In this section, we will look at different techniques to determine which algorithm is better. 
+
+When it comes to comparison, there are two things to keep in mind: **time** and **space**. The time corresponds to the amount of time an algorithm takes to solve the problem and space corresponds to the amount of memory the algorithm takes when solving the problem. 
+
+Let's look at the time comparison first
+
+### Comparing Execution Time
+
+The execution time can easily be compared by running the algorithms on the computer and noting the duration each algorithm takes. However, the speed at which the algorithms run may differ based on the hardware the computer has. Thus the result may vary from computer to computer. Instead, an analytical evaluation is better suited for such comparison. 
+
+#### Analytical Evaluation
+
+In order to evaluate an algorithm analytically, we do the following: 
+
+*   Consider a specific input size. Generally, this is set at $n$. 
+*   Compute the number of **primitive operations** executed by an algorithm for the given input
+
+When we follow these steps, we judge the algorithm that takes the least amount of 
+
+#### Primitive Operations
+
+Before we count the primitive operations, we need to understand what these operations really are. Primitive operations are operations that are implemented as processor instructions. These include assignment of a variable, array indexing, comparing variables, arthmetic operations, a function call, etc...
+
+Operations such as printing the array is not considered a primitive operations. The other thing to keep in mind is that when a function is called, all the statements in the function are executed. So, we cannot considered a function call as a single primitive operation but multiple. 
+
+Conditional statements is also a primitive operation. However, the number of times they are executed is important to keep in mind. The conditional statements are a little tricky because depending on whether the condition is satisfied or not, the statement may or may not execute. So, how do we decide the number of primitive operations in such a case? 
+
+In order to determine the primitive operations, we consider the: 
+
+*   Best case analysis
+*   Average case analysis
+*   Worst case analysis
+
+Let's look at each one of them in more detail
+
+##### Best Case Analysis
+
