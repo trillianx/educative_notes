@@ -256,3 +256,110 @@ Note that the first n corresponds to `range(n)` while the second $n$ corresponds
 
 ### Asymptotic Analysis & Big O
 
+As we saw in the previous section, the analysis of algorithms can be expressed in terms of a polynomial. However, such an analysis will become cumbersome as we get into complex algorithms. Instead, we resort to something quite simple. 
+
+### Asymptotic Analysis 
+
+When our input variable, $n$, is small, the comparison between two algorithms may not make sense. However, when $n$ becomes large it can make a difference. The analysis that is done when $n$ is large is called **asymptotic**. In this case, given two function $f(n)$ and $g(n)$, the asymptotic analysis compares two functions as $n$ increases. In the next few sections we will see come into play. 
+
+#### Big O Notation
+
+The Big O notation (pronounced Big Oh Notation) is as follows
+
+>   A function $f(n)$ is considered $O(g(n))$ if there exists some positive real constant $c$ and an integer $n_o \geq 0$ such that the following inequality holds for all $n \geq n_0$: 
+>   $$
+>   f(n) \leq cg(n)
+>   $$
+
+The following graph shows the inequality: 
+
+![image-20201102093348787](Algorithms.assets/image-20201102093348787.png)
+
+The above inequality does not have to hold for all $n$. In other words, for $ n < n_0$, $f(n)$ is allowed to exceed $cg(n)$, but for all values of $n$ beyond some value $n_0$, $f(n)$ is not allowed to exceed $cg(n)$. 
+
+Consider an example of an algorithm's time complexity to be $3n^3 + 4n + 2$. We can write this as an inequality: 
+
+$3n^3 +4n + 2 \leq 9n^3 = O(n^3)$
+
+This holds true beyond $n=2$. However, we know for sure that $O(n^2)$ or even $O(n)$ will not be true for any given $n$. But $O(n^4)$ or $O(n^5)$ will always be true. We can always find higher orders for which the inequality holds, but it would not make sense. Instead, it helps to see if the inequality holds for some constant times the largest power of the input. 
+
+>   Suppose algorithm A and B have running time of $O(n)$ and $O(n^2)$, respectively for sufficiently large input sizes, algorithm A will run faster than algorithm B. That does not mean that algorithm A will always run faster than algorithm B. 
+
+#### Simplified Asymptotic Analysis
+
+Once we have obtained the complexity of an algorithm by counting the number of primitive operations, we can arrive at the Big O notation for the algorithm by: 
+
+1.  dropping the multiplicative constants with all terms
+2.  dropping all but the highest order term
+
+For example, we can write: 
+
+*   $n^2 + 2n + 1$ as $O(n^2)$
+*   $n^5 + 2n + 43$ as $O(n^5)$
+
+#### A comparison of some common functions
+
+The table below shows the typical 12 functions that are used for comparison of asymptotic analysis: 
+
+![image-20201102094901516](Algorithms.assets/image-20201102094901516.png)
+
+The plot below illustrates some of these functions: 
+
+![image-20201102094929622](Algorithms.assets/image-20201102094929622.png)
+
+### Useful Formulas to help with Calculations
+
+Below are some handy tables used for calculating time complexity of an algorithm: 
+
+![image-20201102095244243](Algorithms.assets/image-20201102095244243.png)
+
+Some of the formulas dealing with logarithmic expressions: 
+
+![image-20201102095314288](Algorithms.assets/image-20201102095314288.png)
+
+Few things to keep in mind: 
+
+*   Every time a list or an array gets iterated over $c \times length$ times, it is most likely in $O(n)$ time.
+*   When you see a problem where the number of elements in the problem space get halved each time, that will most probably be in $O(log n)$. 
+*   Whenever you have a singly nested loop, the problem is most likely in $O(n^2)$
+
+#### Common Complexity Scenarios
+
+In this lesson we will see the most common examples and handly formulas for solving time complexity problems. 
+
+##### Simple Loop
+
+```python
+for x in range(n):
+    # Statements
+```
+
+The running complexity is $O(n)$ because the `range()` function which has $O(1)$ is called $n$ times. 
+
+##### Loop with Increment
+
+```python
+for x in range(1, n, k):
+    # Statements
+```
+
+The running complexity is $O(n)$
+
+##### Simple Nested Loop
+
+```python
+for i in range(n):
+    for j in range(m):
+        # Statements
+```
+
+The running complexity is $O(nm)$. 
+
+##### Nested for loop with dependent variables
+
+```python
+for i in range(n):
+    for x in range(i):
+        # Statements
+```
+
