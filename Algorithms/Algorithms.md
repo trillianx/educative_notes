@@ -187,17 +187,72 @@ When we follow these steps, we judge the algorithm that takes the least amount o
 
 Before we count the primitive operations, we need to understand what these operations really are. Primitive operations are operations that are implemented as processor instructions. These include assignment of a variable, array indexing, comparing variables, arthmetic operations, a function call, etc...
 
-Operations such as printing the array is not considered a primitive operations. The other thing to keep in mind is that when a function is called, all the statements in the function are executed. So, we cannot considered a function call as a single primitive operation but multiple. 
+Operations such as printing the entire array is not considered a primitive operations. However, printing a single value is considered a primitive operation. The other thing to keep in mind is that when a function is called, all the statements in the function are executed. So, we cannot considered a function call as a single primitive operation but multiple. 
 
 Conditional statements is also a primitive operation. However, the number of times they are executed is important to keep in mind. The conditional statements are a little tricky because depending on whether the condition is satisfied or not, the statement may or may not execute. So, how do we decide the number of primitive operations in such a case? 
 
 In order to determine the primitive operations, we consider the: 
 
-*   Best case analysis
-*   Average case analysis
-*   Worst case analysis
+*   **Best case analysis** - In this case, given a specific input we look at the fewest number of primitive operations. This gives us the **lower bound** to the algorithm
+*   **Worst case analysis** - In this case, given a specific input we look at the maximum number of primitive operations. This gives us the **upper bound** to the algorithm. 
+*   **Average case analysis** - In this case, we compute the weighted average of the number of primitive operations executed for each input. 
 
-Let's look at each one of them in more detail
+In practice, we make use of the worst-case analysis. This allows us to keep an upper bound and not be surprised by the result. 
 
-##### Best Case Analysis
+#### Analyzing a Simple Python Program
+
+Let's consider an example to illustrate the time complexity of an algorithm. 
+
+```python
+x = 0
+x += 1
+print(x)
+```
+
+In this case, we see the following: 
+
+![image-20201101104555116](Algorithms.assets/image-20201101104555116.png)
+
+Thus these three lines constitute 6 primitive operations. Thus the time complexity for the above program is 6. Note that there is notion of input size here as there is no input. 
+
+### Measuring Time Complexity
+
+Let's consider another example to illustrate the measurement of time complexity. 
+
+```python
+n = 10
+sum = 0
+for var in range(10):
+    sum += 1
+    
+print(sum)
+```
+
+So, what is the time complexity in this case: 
+
+<img src="Algorithms.assets/image-20201101105354266.png" alt="image-20201101105354266" style="zoom:50%;" />
+
+So, that would be: 
+
+$1 + 1 + [n + (1 + 1+ ... +  1) + 3n] + 1 = 3+ [n + n + 3n] = 5n + 3$
+
+>   Though `range(n)` executes only once, its execution cost is $n$ because each call to `range(n)` results in $n$ individual operations.
+
+Let's consider another more complex example: 
+
+```python
+n = 5
+sum = 0
+for i in range(n):
+    for j in range(n):
+        sum += 1
+        
+print(sum)
+```
+
+ $1 + 1 + n + n + n[n + n + 3n] + 1$ = $3 + 2n + 5n^2$
+
+Note that the first n corresponds to `range(n)` while the second $n$ corresponds to assignment in the first loop. The third $n[...]$ corresponds to inner loop being run 
+
+### Asymptotic Analysis & Big O
 
