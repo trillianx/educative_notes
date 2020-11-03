@@ -1,25 +1,16 @@
-import time
-def factorial(n):
-    # Base case: 
-    if n <= 0:
-        return 1
-    else:
-        return n * factorial(n-1)
-
-def factorial_bu(n):
-    if n <= 1:
-        return 1
-    bb = []
-    bb.append(1)
-    for i in range(1,n+1):
-        prod = bb[i-1] * i
-        bb.append(prod)
-    return bb[n]
-
-
-
-
+def selection_sort(arr):
+    # Traverse through all the array elements:
+    for index, value in enumerate(arr):
+        min_index = index
+        for ind, val in enumerate(min_index+1, arr):
+            if val < value:
+                min_index = ind
+        
+        # Swap the found minimum element with the first element
+        arr[index], arr[min_index] = arr[min_index], arr[ind]
+        print(arr)
+        
 
 if __name__ == "__main__":
-    print(factorial(10))
-    result = factorial_bu(10)
+    arr = [8, 5, 2, 6, 9, 3, 1, 4, 8, 7]
+    selection_sort(arr)

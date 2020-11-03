@@ -363,3 +363,94 @@ for i in range(n):
         # Statements
 ```
 
+The running time complexity in this case is $O(n^2)$. 
+
+The outer loop runs $n$ times while the inner loop runs $n-1$. This is because for $i=0$, the inner loop does not run. Hence, we have $(n-1)((n-1) + 1)/2$. 
+
+##### Nested for loop with index modification
+
+```python
+for i in range(n):
+    i = i * 2
+    for x in range(i):
+        # Statements
+```
+
+This is $n(n-1) = O(n^2)$. 
+
+Here's why: 
+
+![image-20201102101732521](Algorithms.assets/image-20201102101732521.png)
+
+So, this means that the running total is 0 + 2 + 4 + ... + (2n-2). We can plug this into a summation formula to get: 
+
+![image-20201102101955222](Algorithms.assets/image-20201102101955222.png)
+
+#### Loops with log(n) time complexity
+
+```python
+i = constnt
+n = constant
+k = constant
+while i < n:
+    i = i * k
+    # Statements
+```
+
+The running time complexity is $log_k(n) = O(log_k(n))$. 
+
+## Selection Sort, Bubble Sort, and Insertion Sort
+
+In this section, we will look at various sorting algorithms. Sorting, in general, is a process of arranging items systematically. In computer science, sorting algorithms put elements of a list in a certain order. 
+
+### Selection Sort
+
+The selection sort algorithm repeatedly finds the minimum element in the list and places it at the beginning. This way, the algorithm maintains two lists: 
+
+1.  the sublist of already-sorted elements, which is filled from left to right
+2.  the sublist of the remaining unsorted elements that need to be sorted
+
+Let's illustrate with a code: 
+
+```python
+arr = [8, 5, 2, 6, 9, 3, 1, 4, 8, 7]
+
+def selection_sort(arr):
+    # Traverse through all the array elements:
+    for i in range(len(arr)):
+        min_index = i
+        for j in range(i+1, len(arr)):
+            if arr[min_index] > arr[j]:
+                min_index = j
+        
+        # Swap the found minimum element with the first element
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    
+```
+
+Here's how the algorithm works: 
+
+*   Traverse the array, one element by one element. 
+*   For each element, pick the index of that element: 
+    *   Now shorten the array to from the next index to the last element
+    *   Within this small array find the minimum element
+    *   Once found, grab the index of that element
+*   Swap the elements
+
+### Bubble Sort
+
+The bubble sort is another sorting algorithm that compares adjacent pairs of elements and swaps them if they are in the wrong order. This is repeated until the list is sorted. 
+
+```python
+def bubble_sort(arr):
+    # Traverse through all the elements in the array
+    n = len(arr)
+    for i in range(n):
+        for j in range(0, n-i-1):
+            # Traverse the list from 0 to n-i-1
+            # Swap if the element found is greater than the next
+            # element
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+```
+
