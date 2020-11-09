@@ -1,16 +1,17 @@
-def selection_sort(arr):
-    # Traverse through all the array elements:
-    for index, value in enumerate(arr):
-        min_index = index
-        for ind, val in enumerate(min_index+1, arr):
-            if val < value:
-                min_index = ind
-        
-        # Swap the found minimum element with the first element
-        arr[index], arr[min_index] = arr[min_index], arr[ind]
-        print(arr)
-        
+class Node():
+    def __init__(self, data=None):
+        self.data = data
+        self.next = None
+    
+class LinkedList():
+    def __init__(self):
+        self.head = None
 
-if __name__ == "__main__":
-    arr = [8, 5, 2, 6, 9, 3, 1, 4, 8, 7]
-    selection_sort(arr)
+    def insert_at_head(self, data):
+        new_node = Node(data)
+        self.head = new_node
+        return
+
+ll = LinkedList()
+ll.insert_at_head(10)
+ll.insert_at_head(20)
