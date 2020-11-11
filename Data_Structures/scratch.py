@@ -24,7 +24,7 @@ class LinkedList():
 
     def show(self):
         cur = self.head
-        while cur != None:
+        while cur:
             print(cur.data)
             cur = cur.next
         return ''

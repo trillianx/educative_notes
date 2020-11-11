@@ -256,3 +256,9 @@ This is a valid BST:
 
 ### Implementing a Binary Search Tree
 
+To implement a binary search tree, let's look at the BST insertion algorithm: 
+
+*   Start with the root node
+*   Check if the value to be inserted is greater than the root/current node's value
+*   If yes, then repeat the steps above for the right subtree, otherwise repeat the steps above for the left sub-tree of the current node
+*   Repeat until you find the node that has no right/left child to move onto. Insert the given value there and update the parent node accordingly
