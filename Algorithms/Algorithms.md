@@ -492,3 +492,7 @@ def insertion_sort(arr):
         arr[j+1] = temp
 ```
 
+
+
+### Quick Sort
+
