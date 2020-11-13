@@ -474,10 +474,6 @@ def bubble_sort(arr):
 
 
 
-
-
-
-
 ### Insertion Sort
 
 ```python
@@ -495,4 +491,9 @@ def insertion_sort(arr):
 
 
 ### Quick Sort
+
+The quick sort algorithm makes use **divide and conquer technique**. The idea is to divide or partition the array into subarrays and then combine them into a sorted array. The quick sort algorithm follows two steps: 
+
+1.  Partition the array into subarrays
+2.  Combine the partitions into sorted array
 
