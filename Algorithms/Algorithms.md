@@ -437,6 +437,10 @@ Here's how the algorithm works:
     *   Once found, grab the index of that element
 *   Swap the elements
 
+So, one thing to remember is that, we only concentrate on the indexes rather than the values themselves. 
+
+
+
 ### Bubble Sort
 
 The bubble sort is another sorting algorithm that compares adjacent pairs of elements and swaps them if they are in the wrong order. This is repeated until the list is sorted. 
