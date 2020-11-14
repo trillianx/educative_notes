@@ -495,5 +495,26 @@ def insertion_sort(arr):
 The quick sort algorithm makes use **divide and conquer technique**. The idea is to divide or partition the array into subarrays and then combine them into a sorted array. The quick sort algorithm follows two steps: 
 
 1.  Partition the array into subarrays
-2.  Combine the partitions into sorted array
+2.  Combine the partitions into a sorted array
+
+So, the python code would be: 
+
+```python
+def quick_sort(arr):
+    n = len(arr)
+    frontier = 0
+    pivot = arr[0]
+    for i in range(1, n):
+        if arr[i] < pivot:
+            frontier += 1
+            arr[i], arr[frontier] = arr[frontier], arr[i]
+    arr[0], arr[frontier] = arr[frontier], arr[0]
+    
+    left = quick_sort(arr[0:frontier])
+    right = quick_sort(arr[frontier+1]:n)
+    
+    arr = left + [arr[frontier]] + right
+    
+    return arr
+```
 
