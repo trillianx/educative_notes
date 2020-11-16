@@ -12,30 +12,50 @@ class BST():
         if self.root == None:
             self.root = Node(value)
         else:
-            self._insert(self, value, self.root)
+            self._insert(value, self.root)
     
-    def _insert(self, value, cur.node):
-        if value < cur.node.value:
+    def _insert(self, value, cur_node):
+        if value < cur_node.data:
             if cur_node.left == None:
                 cur_node.left = Node(value)
             else:
                 self._insert(value, cur_node.left)
-        elif value > cur.node.value:
+        elif value > cur_node.data:
             if cur_node.right == None:
                 cur_node.right = Node(value)
             else:
                 self._insert(value, cur_node.right)
         else:
-            print("Value in BST")
+            print("Value " + str(value) + " already in BST")
 
     def inorder(self, node):
         if node:
-            self.inorder(self, node.left)
+            self.inorder(node.left)
             print(node.data)
-            self.inorder(self, node.right)
+            self.inorder(node.right)
         return ''
 
     def show(self):
         if self.root != None:
             self.inorder(self.root)
 
+    def height(self):
+        if self.root:
+            return self._height(self.root, 0)
+        else:
+            return 0
+
+    def _height(self, cur_node, cur_height):
+        if cur_node:
+            left = self._height(cur_node.left, cur_height+1)
+            right = self._height(cur_node.right, cur_height+1)
+            return max(left, right)
+        else:
+            return cur_height
+
+if __name__ == "__main__":
+    arr = [10, 8, 11, 5, 6, 3, 4, 3, 2, 1, 9]
+    b = BST()
+    for a in arr:
+        b.insert(a)
+    b.show()
