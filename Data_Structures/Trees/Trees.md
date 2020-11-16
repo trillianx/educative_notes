@@ -262,3 +262,30 @@ To implement a binary search tree, let's look at the BST insertion algorithm:
 *   Check if the value to be inserted is greater than the root/current node's value
 *   If yes, then repeat the steps above for the right subtree, otherwise repeat the steps above for the left sub-tree of the current node
 *   Repeat until you find the node that has no right/left child to move onto. Insert the given value there and update the parent node accordingly
+
+
+
+```python
+class Node():
+    def __init__(self, data=None):
+        self.data = data
+        self.left = None
+        self.right = None
+        
+class binary_search_tree():
+    def __init__(self):
+        self.root = None
+    
+ 	def insert(self, value):
+        # If the root is empty, insert at root
+        if self.root == None:
+            self.root = Node(value)
+        else:
+            self._insert(self, value, self.root)
+            
+    def _insert(self, value, cur.node):
+        if value < cur.node.value:
+            self.insert(value)
+            
+```
+
