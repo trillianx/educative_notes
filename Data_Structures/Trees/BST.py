@@ -36,7 +36,7 @@ class BST():
         return ''
 
     def show(self):
-        if self.root != None:
+        if self.root:
             self.inorder(self.root)
 
     def height(self):
@@ -52,6 +52,22 @@ class BST():
             return max(left, right)
         else:
             return cur_height
+    
+    def search(self, value):
+        if self.root:
+            return self._search(self.root, value)
+        else:
+            return False
+
+    def _search(self, cur_node, value):
+        if cur_node:
+            if value == cur_node.data: 
+                return True
+        elif value < cur_node.data and cur_node.left != None:
+            return self._search(cur_node.left, value)
+        elif value > cur_node.data and cur_node.right != None:
+            return self._search(cur_node.right, value)
+        return False
 
 if __name__ == "__main__":
     arr = [10, 8, 11, 5, 6, 3, 4, 3, 2, 1, 9]
@@ -59,3 +75,5 @@ if __name__ == "__main__":
     for a in arr:
         b.insert(a)
     b.show()
+    print(b.search(2))
+    print(b.search(100))
