@@ -28,6 +28,17 @@ Given an array. If the array has a negative number, replace that with `0`. Do no
 
 
 
+## Challenge 5: Find the Average of Numbers
+
+Given an array find the average of numbers. The function has two inputs, the array and `currentIndex`. 
+
+```python
+def average(arr, currentIndex):
+    pass
+```
+
+
+
 # Solutions
 
 Here are the solutions for the challenges
@@ -128,4 +139,20 @@ def replace(arr):
 ```
 
 This is the same idea as reversing it. But instead of passing the actual number BEFORE the recursive call, simply pass an array with `0`. 
+
+## Challenge 5: Find the Average of Numbers
+
+```python
+def average(arr, currentIndex):
+    # Base Case: 
+    if currentIndex == len(arr) - 1:
+        return arr[currentIndex]
+    
+    # Compute the average:
+    if currentIndex == 0:
+        return (arr[currentIndex] + average(arr, currentIndex + 1)) / len(arr)
+    
+    # Compute the sum of the numbers: 
+    return arr[currentIndex] + average(arr, currentIndex + 1)
+```
 

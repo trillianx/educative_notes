@@ -18,9 +18,39 @@ def find_valr(arr, value, count):
             count = find_valr(arr[1:], value, count)
     return count
 
-def find_length(arr, count):
+
+def find_length(arr):
     if arr == []:
-        return count
+        return 0
     else:
-        count = find_length(arr[1:], count+1)
-    return count
+        return 1 + find_length(arr[1:])
+
+def reverse(arr):
+    if len(arr) == 0:
+        return []
+    else:
+        return reverse(arr[1:]) + [arr[0]]
+
+def replace(arr):
+    if len(arr) == 0:
+        return []
+    else:
+        if arr[0] < 0:
+            return [0] + replace(arr[1:])
+        else:
+            return [arr[0]] + replace(arr[1:])
+
+
+def find_sum(arr, currentIndex):
+    if currentIndex == len(arr) - 1:
+        return arr[currentIndex]
+    
+    if currentIndex == 0:
+        return ((arr[currentIndex] + find_sum(arr, currentIndex + 1)) / len(arr))
+    
+    return (arr[currentIndex] + find_sum(arr, currentIndex + 1))
+
+if __name__ == "__main__":
+    arr = [1, 2, 3, 4, 5]
+    print(find_sum(arr, 0))
+
