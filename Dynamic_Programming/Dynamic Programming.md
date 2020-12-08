@@ -100,3 +100,58 @@ Here's how the two recursion types differ:
 
 <img src="Dynamic%20Programming.assets/image-20201207143004143.png" alt="image-20201207143004143" style="zoom:100%;" />
 
+### Non-linear Recursion
+
+The above discussed recursion types make single call to themselves. This type of recursion is called **linear recursion**. You might have a case where a function calls itself multiple times instead of once; we call that **non-linear recursion**. A binary recursion is an example of non-linear recursion
+
+![image-20201207143415006](Dynamic%20Programming.assets/image-20201207143415006.png)
+
+## Thinking Recursively
+
+Let's use an example to illustrate how you can think recursively. Create a function that takes a string and a character. The function should count the number of instances of that character in the given string. For example, 
+
+```python
+countChar('abacada', 'a')
+4
+```
+
+So, we see that `'a'` is repeated 4 times. 
+
+```python
+def countChar(string, char, n):
+    if len(string) == 0:
+        return n
+    else:
+        if string[0] == char:
+            return countChar(string[1:], char, n + 1)
+        else:
+            return countChar(string[1:], char, n)
+```
+
+Notice the base case here. Before you write the base case, you need to understand what it should do, especially when the recursive calls hit the base case. 
+
+An alternative way is: 
+
+```python
+def countChar(str, char):
+    # Base Case:
+    if len(str) == 0:
+        return 0
+    if str[0] == char:
+        return 1 + countChar(str[1:], char)
+    else:
+        return countChar(str[1:], char)
+```
+
+Let's look at another example. 
+
+```python
+def fib(n):
+    if n <= 0:
+        return 1
+    if n <= 1:
+        return 1
+    else:
+        return fib(n-1) + fib(n-2)
+```
+
