@@ -30,5 +30,40 @@ class LinkedList():
         cur_node.next = new_node
         return
         
+    def get_length(self):
+        if self.isEmpty():
+            return 0
+        count = 0
+        cur_node = self.head
+        while cur_node != None:
+            count += 1
+            cur_node = cur_node.next
+        return count
 
+    def insert_at_index(self, index, data):
+        if self.isEmpty():
+            self.insert_at_head(data)
+            return
+        
+        count = 0
+        cur_node = self.head
+        
+        while count < index:
+            prev = cur_node
+            cur_node = cur_node.next
+            count += 1
+        
+        new_node = Node(data)
+        prev.next = new_node
+        new_node.next = cur_node
+        return
     
+    def print_ll(self):
+        if self.isEmpty():
+            return
+        cur_node = self.head
+        while cur_node != None:
+            print(cur_node.data)
+            cur_node = cur_node.next
+        return
+
