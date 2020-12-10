@@ -1,3 +1,4 @@
+import numpy as np
 class Node():
     def __init__(self, data=None):
         self.data = data
@@ -66,4 +67,43 @@ class LinkedList():
             print(cur_node.data)
             cur_node = cur_node.next
         return
+
+    def find_at_index(self, index):
+        length = self.get_length()
+        if index > length:
+            return
+        count = 0
+        cur_node = self.head
+        while count != index:
+            cur_node = cur_node.next
+            count += 1
+        if cur_node != None:
+            return cur_node.data
+
+    def find_middle(self):
+        length = self.get_length()
+        print(length)
+        middle = length / 2
+        if length % 2 == 0:
+            middle = int(middle)
+        else:
+            middle = int(np.round(middle))
+        
+        return self.find_at_index(middle)
+
+    def delete_at_index(self, index):
+        if self.isEmpty():
+            return
+        if index > self.get_length():
+            return
+        count = 0
+        cur_node = self.head
+        while count < index:
+            prev_node = cur_node
+            cur_node = cur_node.next
+            count += 1
+        prev_node.next = cur_node.next
+        return
+
+        
 
