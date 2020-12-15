@@ -1,14 +1,20 @@
-import math
-def smallest_sub(s, arr):
-    sum_val = 0
-    min_length = math.inf
+def longest_substrings_with_k_distinct(string, k):
     start = 0
-
-    for end in range(len(arr)):
-        
+    max_length = 0
+    substring = ''
+    for end in range(len(string)):
+        substring += string[end]
+        unique_chars = len(set(substring))
+        while unique_chars > k:
+            cur_length = end - start + 1
+            max_length = max(max_length, cur_length)
+            substring = substring[start:]
+            start += 1
+            unique_chars = unique_chars - 1
+            # print(substring)
+    return max_length - 1
 
 if __name__ == "__main__":
-    arr = [2, 1, 5, 2, 3, 2]
-    arr2 = [2, 1, 5, 2, 8]
-    arr3 = [3, 4, 1, 1, 6]
-    print(smallest_sub(8, arr3))
+    string = 'araaci'
+    k = 1
+    print(longest_substrings_with_k_distinct(string, k))
