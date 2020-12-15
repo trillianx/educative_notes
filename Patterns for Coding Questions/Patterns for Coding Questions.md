@@ -134,3 +134,56 @@ We compare the `max_val` with the `sum_val` and take the maximum of the two. Gra
 
 ![image-20201214155628794](Patterns%20for%20Coding%20Questions.assets/image-20201214155628794.png)
 
+Let's look at another problem
+
+### Smallest Subarray with a Given Sum
+
+Given an array of positive numbers and a positive number $S$, find the length of the smallest contiguous subarray whose sum is greater than or equal to $S$. Return `0` if no such subarray exists. 
+
+Here are some examples: 
+
+![image-20201214162024312](Patterns%20for%20Coding%20Questions.assets/image-20201214162024312.png)
+
+We start with a window size of `1`. We find that there is no number which is greater or equal to `7`. However, when we increase the window size to `2`, we see that we have one possibility, `[5,2]`, which equals `7`. 
+
+Here's another example: 
+
+![image-20201214162205739](Patterns%20for%20Coding%20Questions.assets/image-20201214162205739.png)
+
+In this case, a window size of 1 helps get the answer. 
+
+While for the following, we see that: 
+
+![image-20201214162248875](Patterns%20for%20Coding%20Questions.assets/image-20201214162248875.png)
+
+a window size of 3 gets us the answer. Note that, in this case there are two possibilities, so we show both of them. 
+
+Let's solve this problem: 
+
+```python
+def smallest_sub(s, arr):
+    for windowsize in range(len(arr)):
+        start = 0
+        sum_val = 0
+        for end in range(len(arr)):
+            sum_val = sum_val + arr[end]
+            if sum_val >= s:
+                return len(arr[start:end+1])
+            if end >= windowsize - 1:
+                sum_val = sum_val - arr[start]
+                start += 1
+    return 0
+
+if __name__ == "__main__":
+    arr = [2, 1, 5, 2, 3, 2]
+    arr2 = [2, 1, 5, 2, 8]
+    arr3 = [3, 4, 1, 1, 6]
+    print(smallest_sub(8, arr3))
+```
+
+This works well. However, because we used two `for` loops, the time complexity is $O(N^2)$. We can do better by replacing one `for` loop with a `while` loop as follows: 
+
+```python
+
+```
+

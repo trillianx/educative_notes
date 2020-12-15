@@ -1,16 +1,14 @@
-def max_sub(k, arr):
+import math
+def smallest_sub(s, arr):
     sum_val = 0
+    min_length = math.inf
     start = 0
-    max_val = 0
+
     for end in range(len(arr)):
-        sum_val += arr[end]
-        if end >= k - 1:
-            max_val = max(max_val, sum_val)
-            sum_val = sum_val - arr[start]
-            start += 1
-    return max_val
+        
+
 if __name__ == "__main__":
-    arr = [2, 1, 5, 1, 3, 2]
-    arr2 = [2, 3, 4, 1, 5]
-    k = 2
-    print(max_sub(k, arr2))
+    arr = [2, 1, 5, 2, 3, 2]
+    arr2 = [2, 1, 5, 2, 8]
+    arr3 = [3, 4, 1, 1, 6]
+    print(smallest_sub(8, arr3))
