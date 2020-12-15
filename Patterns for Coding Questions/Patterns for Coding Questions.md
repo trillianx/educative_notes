@@ -181,9 +181,45 @@ if __name__ == "__main__":
     print(smallest_sub(8, arr3))
 ```
 
-This works well. However, because we used two `for` loops, the time complexity is $O(N^2)$. We can do better by replacing one `for` loop with a `while` loop as follows: 
+This works well. However, because we used two `for` loops, the time complexity is $O(N^2)$. 
+
+Here's the code: 
 
 ```python
+import math
 
+def smallest_sub(s, arr):
+    sum_val = 0
+    min_length = math.inf
+    start = 0
+    for end in range(len(arr)):
+        sum_val += arr[end]
+        while sum_val >= s:
+            cur_length = end - start + 1
+            min_length = min(min_length, cur_length)
+            sum_val -= arr[start]
+            start += 1
+    if min_length == math.inf:
+        return 0
+    return min_length
 ```
+
+Here are the steps we take: 
+
+1.  We add elements to `sum_val`, thus increasing the window size, until the `sum_val` is greater than `s`. 
+2.  We note the size of the window, `cur_length = end - start + 1`. 
+3.  We pick the minimum of the window sizes and store it in `min_length`
+4.  We then move the window by 1 element. 
+5.  We now add elements until the `sum_val` is greater or equal to `s`
+6.  We repeat steps 2 - 6
+
+Graphically, this is how it looks like: 
+
+![image-20201215145305548](Patterns%20for%20Coding%20Questions.assets/image-20201215145305548.png)
+
+In this way we only traverse the array once rather than multiple times using the double for loop. The time complexity for this is $O(N + N) \approx O(N)$. And the space complexity is $O(1)$ as the algorithm runs in constant space. 
+
+Let's look at another problem
+
+### Longest 
 
