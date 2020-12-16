@@ -221,5 +221,74 @@ In this way we only traverse the array once rather than multiple times using the
 
 Let's look at another problem
 
-### Longest 
+### Longest Substring with K Distinct Characters
+
+Given a string, find the length of the longest substring in it with no more than K distinct characters. 
+
+![image-20201215145827174](Patterns%20for%20Coding%20Questions.assets/image-20201215145827174.png)
+
+![image-20201215145915337](Patterns%20for%20Coding%20Questions.assets/image-20201215145915337.png)
+
+Let's solve this problem: 
+
+```python
+def longest_substrings_with_k_distinct(string, k):
+    start = 0
+    max_length = 0
+    char_frequency = {}
+    
+    for end in range(len(string)):
+        right_char = string[end]
+        if right_char not in char_frequency:
+            char_frequency[right_char] = 0
+        char_frequency[right_char] += 1
+        
+        while len(char_frequency) > k:
+            left_char = string[start]
+            char_frequency[left_char] -= 1
+            if char_frequency[left_char] == 0:
+                del char_frequency[left_char]
+            start += 1
+        max_length = max(max_length, end - start + 1)
+    return max_length
+        
+```
+
+The time complexity is $O(2N)$ while the time complexity is $O(K)$. 
+
+### Fruits into Baskets
+
+Given an array of characters where each character represents a fruit tree, you are given two baskets, and your goal is to put maximum number of fruits in each basket. The only restriction is that each basket can have only one type of fruit. 
+
+You can start with any tree, but you can’t skip a tree once you have started. You will pick one fruit from each tree until you cannot, i.e., you will stop when you have to pick from a third fruit type.
+
+Write a function to return the maximum number of fruits in both the baskets.
+
+![image-20201215155248154](Patterns%20for%20Coding%20Questions.assets/image-20201215155248154.png)
+
+This problem is quite similar to the previous problem. In this case, we take K = 2. The answer would be the following: 
+
+```python
+def fruits_into_baskets(fruits):
+  window_start = 0
+  max_length = 0
+  fruit_frequency = {}
+
+  # try to extend the range [window_start, window_end]
+  for window_end in range(len(fruits)):
+    right_fruit = fruits[window_end]
+    if right_fruit not in fruit_frequency:
+      fruit_frequency[right_fruit] = 0
+    fruit_frequency[right_fruit] += 1
+
+    # shrink the sliding window, until we are left with '2' fruits in the fruit frequency dictionary
+    while len(fruit_frequency) > 2:
+      left_fruit = fruits[window_start]
+      fruit_frequency[left_fruit] -= 1
+      if fruit_frequency[left_fruit] == 0:
+        del fruit_frequency[left_fruit]
+      window_start += 1  # shrink the window
+    max_length = max(max_length, window_end-window_start + 1)
+  return max_length
+```
 
