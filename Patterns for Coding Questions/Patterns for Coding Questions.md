@@ -302,3 +302,20 @@ Consider the following example:
 
 >    Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target
 
+We could solve this problem we make use of two pointers, one on each side of the array. Then we use the following logic: 
+
+*   If the sum of the elements for the two pointers is greater than the target sum, we decrease the second pointer
+*   If the sum of the element is less than the target, we increase the first pointer
+
+This approach is graphically shown in the figure below: 
+
+![image-20201217133620662](Patterns%20for%20Coding%20Questions.assets/image-20201217133620662.png)
+
+Such an approach results in time complexity of $O(N)$. 
+
+### Pair with Target Sum
+
+Given an array of sorted numbers and target sum, find a pair in the array whose sum is equal to the given target. Write a function to return the indices of the two numbers (i.e. the pair) such that they add up to the given target. 
+
+![image-20201217133853506](Patterns%20for%20Coding%20Questions.assets/image-20201217133853506.png)
+
