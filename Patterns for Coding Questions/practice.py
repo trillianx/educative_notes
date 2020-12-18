@@ -1,20 +1,16 @@
-def longest_substrings_with_k_distinct(string, k):
-    start = 0
-    max_length = 0
-    substring = ''
-    for end in range(len(string)):
-        substring += string[end]
-        unique_chars = len(set(substring))
-        while unique_chars > k:
-            cur_length = end - start + 1
-            max_length = max(max_length, cur_length)
-            substring = substring[start:]
-            start += 1
-            unique_chars = unique_chars - 1
-            # print(substring)
-    return max_length - 1
+def remove_duplicates(arr):
+    non_dup_index = 1
+    index = 1
+    while index < len(arr):
+        if arr[non_dup_index - 1] != arr[index]:
+            arr[non_dup_index] = arr[index]
+            non_dup_index += 1
+        index += 1
+    return arr[:non_dup_index] 
+
 
 if __name__ == "__main__":
-    string = 'araaci'
-    k = 1
-    print(longest_substrings_with_k_distinct(string, k))
+    arr = arr = [2, 3, 3, 3, 6, 9, 9]
+    arr2 = [2, 5, 9, 11]
+    target = 6
+    print(remove_duplicates(arr))

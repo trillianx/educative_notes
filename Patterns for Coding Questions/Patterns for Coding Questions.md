@@ -319,3 +319,80 @@ Given an array of sorted numbers and target sum, find a pair in the array whose 
 
 ![image-20201217133853506](Patterns%20for%20Coding%20Questions.assets/image-20201217133853506.png)
 
+Let's write down a solution: 
+
+```python
+def pair_with_targetsum(arr, target):
+    start = 0
+    end = len(arr) - 1
+    sum = arr[end] + arr[start]
+    while sum != target:
+        if sum > target:
+            end -= 1
+            if end < 0:
+                return None
+        else:
+            start += 1
+            if start >= len(arr):
+                return None
+        sum = arr[start] + arr[end]
+    return [start, end]
+```
+
+The time complexity is $O(N)$ and the space complexity is $O(1)$. 
+
+#### An Alternative Approach
+
+Rather than using pointers, you can use a hash table. 
+
+```python
+def pair_with_targetsum(arr, target):
+    nums = {}
+    for i, num in enumerate(arr):
+        print(nums)
+        if target - num in nums:
+            return [nums[target - num], i]
+        else:
+            nums[arr[i]] = i
+    return [-1, -1]
+```
+
+In this case, we add element to the dictionary along with the index. At each time, we also subtract the target value with the element and check whether the result is in the dictionary. The way this works is that elements `1, 2, 3`  are added first to the dictionary. However, when `6-4` is computed, the result value of `2` is found in the dictionary. So, the index in the loop `i` along with the value associated with the key, `2`, in the dictionary is returned. 
+
+The time complexity is $O(N)$ and because we use a data structure, the space complexity is also $O(N)$. 
+
+### Remove Duplicates
+
+ Given an array of sorted numbers, remove all duplicates from it. You should not use any extra space. Return the length of the subarray that has no duplicate in it. 
+
+![image-20201217141656382](Patterns%20for%20Coding%20Questions.assets/image-20201217141656382.png)
+
+Here's how we would traverse:
+
+*   Step 1: We start with two pointers both are at index 1. One is called non duplicate index, while the other is the running index. 
+*   Step 2: We compare the elements of `non_duplicate_index - 1` with element at index 1. 
+*   Step 3: If the elements are not same, we copy the element of running index at the non duplicate index.
+*   Step 4: We increase value of non duplicate index by 1
+*   Step 5: Outside this if statement, we increase the running index by 1.
+
+
+
+
+
+![image-20201217144717685](Patterns%20for%20Coding%20Questions.assets/image-20201217144717685.png)
+
+We implement it in the following way: 
+
+```python
+def remove_duplicates(arr):
+    non_dup_index = 1
+    index = 1
+    while index < len(arr):
+        if arr[non_dup_index - 1] != arr[index]:
+            arr[non_dup_index] = arr[index]
+            non_dup_index += 1
+        index += 1
+    return arr[:non_dup_index] 
+```
+
+The reason we start with index of 1 for `non_dup_index` is because if there are duplicates, say two duplicates, we want to keep one while replace the other with a new number. 
