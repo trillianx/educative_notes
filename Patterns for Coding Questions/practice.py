@@ -1,16 +1,27 @@
-def remove_duplicates(arr):
-    non_dup_index = 1
-    index = 1
-    while index < len(arr):
-        if arr[non_dup_index - 1] != arr[index]:
-            arr[non_dup_index] = arr[index]
-            non_dup_index += 1
-        index += 1
-    return arr[:non_dup_index] 
+class MedianOfAStream():
+    def __init__(self):
+        self.arr = []
+    
+    def insert(self, number):
+        return self.arr.append(number)
+    
+    def findMedian(self):
+        self.arr.sort()
+        n = len(self.arr)
+        if n % 2 != 0:
+            middle = int(round(n / 2) - 1)
+            return self.arr[middle]
+        else:
+            middle = int(round(n/2))
+            return (self.arr[middle]+ self.arr[middle-1]) / 2
+
+
 
 
 if __name__ == "__main__":
-    arr = arr = [2, 3, 3, 3, 6, 9, 9]
-    arr2 = [2, 5, 9, 11]
-    target = 6
-    print(remove_duplicates(arr))
+    l = MedianOfAStream()
+    l.insert(5)
+    l.insert(3)
+    l.insert(2)
+    l.insert(1)
+    print(l.findMedian())

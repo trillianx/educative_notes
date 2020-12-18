@@ -396,3 +396,52 @@ def remove_duplicates(arr):
 ```
 
 The reason we start with index of 1 for `non_dup_index` is because if there are duplicates, say two duplicates, we want to keep one while replace the other with a new number. 
+
+### Squaring a Sorted Array
+
+Given a sorted array, create a new array containing squares of all the numbers of the input array in sorted order. 
+
+![image-20201218101837535](Patterns%20for%20Coding%20Questions.assets/image-20201218101837535.png)
+
+We start from either side of the array. 
+
+![image-20201218102607625](Patterns%20for%20Coding%20Questions.assets/image-20201218102607625.png)
+
+Here's how it is done: 
+
+*   We begin by creating the start and end indexes of our pointers
+*   We create an array equal to the length of the original array. This will be used to store the squared values in it. 
+*   Now we will move inward and the pointers will move based on which square is less. 
+
+Here's the solution: 
+
+```python
+def make_squares(arr):
+    n = len(arr)
+    start = 0
+    end = len(arr) - 1
+    new_arr_index = end
+    
+    # create a new array
+    new_array = [0] * n
+    while start <= end:
+        start_sq = arr[start] ** 2
+        end_sq = arr[end] ** 2
+        if start_sq > end_sq:
+            new_array[new_arr_index] = start_sq
+            start += 1
+        elif start_sq <= end_sq:
+            new_array[new_arr_index] = end_sq
+            end -= 1
+        new_arr_index -= 1
+    return new_array
+```
+
+This takes $O(N)$ time complexity and $O(N)$ space complexity. 
+
+### Triple Sum to Zero
+
+Given an array of unsorted numbers, find all unique triplets in it that add up to zero. 
+
+![image-20201218104118468](Patterns%20for%20Coding%20Questions.assets/image-20201218104118468.png)
+
