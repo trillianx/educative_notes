@@ -68,7 +68,6 @@ There are two common ways to represent a graph. These are:
 
     We can see that the matrix is much more sparse for a directed graph than for undirected graph.
     
-
 *   **Adjacency List** - Rather than representing with a matrix, we can represent a graph as a linked list. Each vertex has its own linked list. For a undirected graph, the adjacency list looks like this: 
 
     <img src="Graph_notes.assets/image-20201222135206525.png" alt="image-20201222135206525" style="zoom:80%;" />
@@ -122,8 +121,15 @@ This is for directed graph. If we had a undirected graph, then we would write th
 ```python
 def add_edge(self, source, destination):
     if source < self.vertices and destination < self.vertices:
+        self.array[source].insert_at_head(destination)
         self.array[destination].insert_at_head(source)
 ```
+
+The Graph constructor stores the linked list based on the indexes so it gets easier later to index a node based on the index. Now, when we implement a directed graph, then ```add_edge(0, 1)``` is not equal to `add_edge(1, 0)`. But when we have undirected graph, we create from source to destination and from destination to source. 
+
+We should also consider the edge cases, when `source < 0` or when `destination < 0`.  
+
+
 
 Finally, here's the code to represent a graph: 
 
@@ -140,11 +146,67 @@ def print_graph(self):
             print("None")
 ```
 
+### Graph Operation Complexities
+
+The graph complexities are defined in the table below where **V** stands for the total number of vertices and **E** stands for the total number of edges. 
+
+<img src="Graph_notes.assets/image-20201222142119625.png" alt="image-20201222142119625" style="zoom:80%;" />
+
+#### Adjacency List
+
+-   Adding an edge in adjacency lists takes constant time as we only need to insert at the **head** node of the corresponding vertex.
+-   Removing an edge takes O(E) time because, in the worst case, all the edges could be at a single vertex and hence, we would have to traverse all **E** edges to reach the last one.
+-   Removing a vertex takes O(V + E) time because we have to delete all its edges and then reindex the rest of the list one step back in order to fill the deleted spot.
+-   Searching an edge between a pair of vertices can take up to O(V) if all **V** nodes are present at a certain index and we have to traverse them.
+
+#### Adjacency Matrix 
+
+-   Edge operations are performed in constant time as we only need to manipulate the value in the particular cell.
+-   Vertex operations are performed in O(V2) since we need to add rows and columns. We will also need to fill all the new cells.
+-   Searching an edge is O(1) because we can access each edge by indexing.
+
+#### Comparison
+
+Both representations are suitable for different situations. If your application frequently manipulates vertices, the adjacency list is a better choice.
+
+If you are dealing primarily with edges, the adjacency matrix is the more efficient approach.
+
+Keep these complexities in mind because they will give you a better idea about the time complexities of the several algorithms we’ll see in this section.
+
+## Graph Traversal Algorithms
+
+Graph traversal means visiting every vertex in the graph. There are two basic techniques used for graph traversal. These are: 
+
+*   Breadth First Search (BFS)
+*   Depth First Search (DFS)
+
+In order to understand these algorithms, we need to first look at graphs in a slightly different way. The graph is not a linear data structure so there is no one starting point and one end point. So, how do we traverse a graph? Rather than points, graphs have levels. 
+
+Take any starting point. This becomes our lowest level in our search. The next level corresponds to all the adjacent vertices. The next higher level would be vertices adjacent to the vertices to just looked at and so forth. 
+
+### Breadth First Search 
+
+This algorithm travels all the vertices at the same level first before moving on to the next level. It goes wide and then deep. Here's how the BFS looks like: 
+
+![image-20201222150222009](Graph_notes.assets/image-20201222150222009.png)
 
 
 
+The top is the starting point. We randomly decided to start from the vertex 1. In the BFS, we go down to 2 followed by 3 and then to 4, 5, and finally to 6. 
 
+Note that if this were an undirected graph, the BFS would then be: 
 
+```python
+1 -> 2 -> 3 -> 6 -> 4 -> 5
+```
 
+This is because the vertex marked `6` is at the same level  as `2, 3` due to this edge from `1`. 
 
+### Depth First Search
+
+In this case, we go deep before we go wide. So, using our previous example, a DFS would look like: 
+
+<img src="Graph_notes.assets/image-20201222150657736.png" alt="image-20201222150657736" style="zoom:80%;" />
+
+## Implemenation of Breadth First Search 
 
