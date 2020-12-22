@@ -52,10 +52,11 @@ Here's an example of Heap as a priority queue:
 
 Heaps can be represented as arrays or lists in Python. The node values are stored such that all the parent nodes occur in the first half of the list (where index $\leq$ floor$(\frac{n-1}{2})$), where $n$ is the last index and the leaves exist in the rest. This means that the last parent will be at the floor($\frac{n-1}{2}$) index. The left child of the node at the $k$th index will be at the $2k + 1$ index and the right child will be at $2k+2$. 
 
-In other words, the following two properties hold: 
+In other words, the following properties hold: 
 
 *   $LeftChild = 2k + 1$
 *   $RightChild = 2k + 2$
+*   $Parent = k / 2$
 
 Let's see this in example. We have a following heap: 
 
@@ -72,5 +73,19 @@ Heaps are sometimes called **Binary Heaps** because heaps are complete binary tr
 
 ## Max Heap Introduction
 
+As we saw earlier, Max Heap is a complete binary tree where the parent node is larger than their children. Given the following complete binary tree,
 
+<img src="Heap_Notes.assets/image-20201221102109964.png" alt="image-20201221102109964" style="zoom:67%;" />
+
+We can build a Max Heap by comparing each of the nodes and swapping them. Here are the steps followed: 
+
+*   Compare the leaf nodes first. We compare 15 and 20. Because 20 > 15, we swap them. 
+*   Next we compare 8 and 5. Because 8 is a parent node, we leave it as is.
+*   The same goes with 8 and 1. 
+*   We compare 8 and 2. As 2 < 8, we may decide to swap, but we should compare the other child on the parent, which now would be 20. 2 < 8 and 2 < 20. So, we swap 20 and 2.
+*   With this configuration, we now have 2 in the parent node and 15 in its child node. So, we swap again to make 2 the child of 15. 
+
+This completes our Max Heap ordering resulting in the following structure: 
+
+<img src="Heap_Notes.assets/image-20201221102541024.png" alt="image-20201221102541024" style="zoom:67%;" />
 
