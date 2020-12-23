@@ -129,21 +129,18 @@ The Graph constructor stores the linked list based on the indexes so it gets eas
 
 We should also consider the edge cases, when `source < 0` or when `destination < 0`.  
 
-
-
 Finally, here's the code to represent a graph: 
 
 ```python
 def print_graph(self):
-    print(">>Adjacency List of Directed Graph<<")
-    print
-    for i in range(self.vertices):
-        print("|", i, end=" | => ")
-        temp = self.array[i].get_head()
-        while(temp is not None):
-            print("[", temp.data, end=" ] -> ")
-            temp = temp.next_element
-            print("None")
+    for v in range(self.vertices):
+        print("|", v, end=" | => ")
+        cur_node = self.array[v].head_node
+        while cur_node != None:
+            print("[", cur_node.data, end=" ] -> ")
+            cur_node = cur_node.next
+        print("None \n") 
+    return None
 ```
 
 ### Graph Operation Complexities

@@ -17,9 +17,17 @@ class LinkedList():
     
     def insert_at_head(self, data):
         new_node = Node(data)
+        if self.isEmpty():
+            self.head_node = new_node
+            return self.head_node
+        
         new_node.next = self.head_node
         self.head_node = new_node
         return self.head_node
+
+
+
+
 
     def insert_at_tail(self, data):
         
