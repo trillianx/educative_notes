@@ -143,6 +143,32 @@ def print_graph(self):
     return None
 ```
 
+When we run this code, we will get the following result: 
+
+```python
+if __name__ == "__main__":
+    gs = Graph(4)
+    gs.add_edge(0, 2)
+    gs.add_edge(0, 1)
+    gs.add_edge(1, 3)
+    gs.add_edge(2, 3)
+    gs.print_graph()
+```
+
+And the output is: 
+
+```python
+| 0 | => [ 1 ] -> [ 2 ] -> None 
+
+| 1 | => [ 3 ] -> None 
+
+| 2 | => [ 3 ] -> None 
+
+| 3 | => None 
+```
+
+This matches exactly how we have in the image above. 
+
 ### Graph Operation Complexities
 
 The graph complexities are defined in the table below where **V** stands for the total number of vertices and **E** stands for the total number of edges. 
