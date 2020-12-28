@@ -1,4 +1,4 @@
-
+[TOC]
 
 # Arrays
 
@@ -122,5 +122,52 @@ print(a)
 print(a[:-2])
 
 [1, 3, 5]
+```
+
+
+
+## Challenge 1: Remove Even Integers from List
+
+Implement a function that removes all the even elements from a given list. Name it `remove_even(list)`.
+
+For example, 
+
+![image-20201228094245480](Arrays.assets/image-20201228094245480.png)
+
+This can be solved in two ways: 
+
+*   **Using an extra space** - This involves simply creating a new array with only the odd numbers and returning that list. 
+*   **Doing it with segragation** - This involves segragating odds on one side and evens on the other side and returning the sublist of odd numbers
+
+```python
+# Using extra space: 
+def remove_evens(lst):
+    return [e for e in lst if e % 2 !=0]
+
+# Using Segragation
+# Here we segregate even on the left and odd on the right
+def remove_evens(lst):
+    left = 0
+    right = len(lst) - 1
+    
+    while left < right:
+         # Increment left until we see an odd number: 
+            while lst[left] % 2 == 0 and left < right: 
+                left += 1
+            
+         # Decrement right until we see an even number: 
+            while lst[right] % 2 != 0 and left < right: 
+                right -= 1
+                
+         # Now we even on the left and odd on the right, we swap: 
+            if left < right: 
+                arr[left], arr[right] = arr[right], arr[left]
+                left += 1
+                right -= 1
+    
+    # Now we return the odd array: 
+    return lst[left:]
+                
+  
 ```
 
