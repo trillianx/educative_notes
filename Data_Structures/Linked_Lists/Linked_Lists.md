@@ -256,7 +256,7 @@ def search(lst, value):
     return False
 ```
 
-### Challenge 3: Deletion at Head & Index
+## Challenge 3: Deletion at Head & Index
 
 ```python
 from linked_list_class import LinkedList

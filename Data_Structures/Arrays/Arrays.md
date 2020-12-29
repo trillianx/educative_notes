@@ -383,3 +383,103 @@ def find_second_max(lst):
 ## Challenge 8: Right Rotate List
 
 Implement a function `right_rotate(lst, k)` which will rotate the given list by `k`. This means that the right-most elements will appear at the left-most position in the list and so on. You only have to rotate the list by one element at a time.
+
+<img src="Arrays.assets/image-20201228144438330.png" alt="image-20201228144438330" style="zoom:80%;" />
+
+The solution is the following: 
+
+```python
+def right_rotate(lst, k):
+    if len(lst) < 2:
+        return lst
+    if k > len(lst):
+        return None
+    index = k - 1
+    return lst[index:] + lst[:index]
+```
+
+## Challenge 9: Rearrange Positive & Negative Values
+
+Implement a function `rearrange(lst)` which rearranges the elements such that all the negative elements appear on the left and positive elements appear at the right of the list. Note that it is not necessary to maintain the sorted order of the input list.
+
+<img src="Arrays.assets/image-20201228150216291.png" alt="image-20201228150216291" style="zoom:80%;" />
+
+This is the same as segragation we encountered earlier: 
+
+```python
+def rearrange(lst):
+    start = 0
+    end = len(lst) - 1
+    while start < end:
+        while lst[start] < 0 and start < end:
+            start += 1
+        while lst[end] > 0 and start < end:
+            end -= 1
+        if start < end:
+            lst[start], lst[end] = lst[end], lst[start]
+    return lst
+```
+
+## Challenge 10: Rearrange Sorted List in Max/Min Form
+
+Implement a function called `maxMin(lst)` which will re-arrange the elements of a sorted list such that the 0th index will have the largest number, the 1st index will have the smallest, and the third index will have second-largest, and so on. In other words, all the odd-numbered indices will have the largest numbers in the list in descending order and the even-numbered indices will have the smallest numbers in ascending order.
+
+<img src="Arrays.assets/image-20201228152553736.png" alt="image-20201228152553736" style="zoom:80%;" />
+
+This makes use of two pointers. 
+
+```python
+def maxMin(lst):
+    if len(lst) < 2:
+        return None
+    left = 0
+    right = len(lst) - 1
+    result = []
+    while left < right:
+        result.append(lst[right])
+        result.append(lst[left])
+        left += 1
+        right -= 1
+    print(left, right)
+    if left == right:
+        return result + [lst[left]]
+    else:
+        return result
+```
+
+## Challenge 11: Maximum Sum Sublist
+
+Given an unsorted list A, the maximum sum sub list is the sub list (contiguous elements) from A for which the sum of the elements is maximum. This problem is also known as **Largest Sum Contiguous Subarray**. 
+
+For example, given: 
+
+```python
+# Input: 
+arr = [-2, 10, 7, -5, 15, 6]
+
+# Output:
+33
+```
+
+This is because the sum is equal to 33. The highest sum possible given by the sublist `[10, 7, -5, 15, 6]`. 
+
+This is solved using the **Kadane's Algorithm**. The approach takes a dynamic programming approach. The idea behind this approach is to start from index 1, keep adding the values as we scan through the list. Save the running sum into a variable `current_max`. If at any point, `current_max` becomes negative, start over from the current value of the array and keep adding. However, before starting over the sum again, store the highest value into another variable called `global_max`
+
+```python
+def find_max_sum(lst):
+    if len(lst) < 1:
+        return 0
+    
+    curr_max = lst[0]
+    global_max = lst[0]
+    n = len(lst)
+    for i in range(1, n):
+        if curr_max < 0:
+            curr_max = lst[i]
+        else:
+            curr_max += lst[i]
+        if global_max < curr_max:
+            global_max = curr_max
+    return global_max
+```
+
