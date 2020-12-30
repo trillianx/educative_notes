@@ -11,7 +11,7 @@ class Stack():
     def pop(self):
         if self.isEmpty():
             return None
-        self.list.pop()
+        return self.list.pop()
 
     def size(self):
         return len(self.list)

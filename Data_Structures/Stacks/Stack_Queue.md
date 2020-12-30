@@ -142,6 +142,21 @@ Given the input `n`, implement a function `find_bin(n)` which will generate bina
 
 ![image-20201019144010165](Stack_Queue.assets/image-20201019144010165.png)
 
+```python
+
+def compute_binary(n):
+    result = []
+    queue = Queue()
+    queue.enqueue(1)
+    for i in range(n):
+        result.append(str(queue.dequeue()))
+        s1 = result[i] + "0"
+        s2 = result[i] + "1"
+        queue.enqueue(s1)
+        queue.enqueue(s2)
+        return result
+```
+
 ## Challenge 2: Implement Two Stacks Using One List
 
 Implement the following functions to implement two stacks using a single array such that for storing elements both stacks should use the same array. An illustration is also provided for your understanding. Also, for this problem, use Python **arrays** and not lists!
@@ -154,86 +169,6 @@ Implement the following functions to implement two stacks using a single array s
 ![image-20201019152438015](Stack_Queue.assets/image-20201019152438015.png)
 
 Create a class and call it `TwoClass()`. Use the following template: 
-
-```python
-class TwoStacks:
-    # Initialize the two stacks here
-    def __init__(self, size):
-        pass
-
-    # Insert Value in First Stack
-    def push1(self, value):
-        pass
-
-    # Insert Value in Second Stack
-    def push2(self, value):
-        pass
-
-    # Return and remove top Value from First Stack
-    def pop1(self):
-        pass
-
-    # Return and remove top Value from Second Stack
-    def pop2(self):
-        pass
-```
-
-## Challenge 3: Reversing First $k$ Elements of Queue
-
-Implement the function `reverseK(queue, k)` which takes a queue and a number $k$ as input and reverses the first $k$ elements of the queue. 
-
-![image-20201019160213690](Stack_Queue.assets/image-20201019160213690.png)
-
-## Challenge 4: Implement a Queue Using Stacks
-
-
-
-
-
-## Challenge 5: Sort Values in a Stack
-
-Implement a function called `sort_stack()` which takes a stack and sorts all of its elements in ascending order such that when they are *popped and printed*, they come out in ascending order. So the element that was pushed last to the stack has to be the smallest.
-
-![image-20201021115150480](Stack_Queue.assets/image-20201021115150480.png)
-
-![image-20201021115319788](Stack_Queue.assets/image-20201021115319788.png)
-
-
-
-## Challenge 9: `min()` Function Using a Stack
-
-Implement the `MinStack` class which will have a `min()` function. Whenever `min()` is called, the minimum value of the stack is returned in *O(1)* time. The element is not popped from the stack. Its value is simply returned.
-
-![image-20201021132033318](Stack_Queue.assets/image-20201021132033318.png)
-
-
-
-
-
-# Challenge Solutions
-
-These include the challenges that are implemented for Stacks and Queues
-
-## Challenge 1: Generate Binary Numbers from 1 to n using Queue
-
-```python
-    @staticmethod
-    def compute_binary(n):
-        result = []
-        queue = Queue()
-        queue.enqueue(1)
-        for i in range(n):
-            result.append(str(queue.dequeue()))
-            s1 = result[i] + "0"
-            s2 = result[i] + "1"
-            queue.enqueue(s1)
-            queue.enqueue(s2)
-        return result
-```
-
-
-
-## Challenge 2: Implement Two Stacks Using One List
 
 ```python
 class TwoStacks:
@@ -305,6 +240,10 @@ class TwoStacks:
 
 ## Challenge 3: Reversing First $k$ Elements of Queue
 
+Implement the function `reverseK(queue, k)` which takes a queue and a number $k$ as input and reverses the first $k$ elements of the queue. 
+
+![image-20201019160213690](Stack_Queue.assets/image-20201019160213690.png)
+
 ```python
 from queue_class import Queue
 from stack_class import Stack
@@ -339,6 +278,43 @@ def reverseK(q, k):
 
 ## Challenge 5: Sort Values in a Stack
 
+Implement a function called `sort_stack()` which takes a stack and sorts all of its elements in ascending order such that when they are *popped and printed*, they come out in ascending order. So the element that was pushed last to the stack has to be the smallest.
+
+![image-20201021115150480](Stack_Queue.assets/image-20201021115150480.png)
+
+![image-20201021115319788](Stack_Queue.assets/image-20201021115319788.png)
+
+The iterative method of sorting values in the stack are shown below: 
+
+```python
+from stack_class import Stack
+def sort_stack(stack):
+
+    temp_stack = Stack()
+
+    while stack.isEmpty() is False:
+
+        value = stack.pop()
+
+        if (temp_stack.top() is not None and 
+           value >= int(temp_stack.top())):
+            # if value is not none and larger, push it at the top of temp_stack
+            temp_stack.push(value)
+        else:
+            while temp_stack.isEmpty() is False:
+                stack.push(temp_stack.pop())
+            # place value as the smallest element in temp_stack
+            temp_stack.push(value)
+
+    # Transfer from temp_stack => stack
+    while temp_stack.isEmpty() is False:
+        stack.push(temp_stack.pop())
+
+    return stack
+```
+
+Another method is to use a sorting algorithm and add the sorted values in reverse order. 
+
 ```python
 from stack_class import Stack
 
@@ -354,7 +330,106 @@ def sort_stack(s):
 
 
 
+## Challenge 7: Next Greater Element Using a Stack
+
+You must implement the `next_greater_element()` function. For each element $i$ in a list, it finds the first element to its right which is greater than i*i*. For any element that such a value does not exist, the answer is `-1`.
+
+<img src="Stack_Queue.assets/image-20201229114433861.png" alt="image-20201229114433861" style="zoom:80%;" />
+
+```python
+from stack_class import Stack
+def next_greater_element(lst):
+    s = Stack()
+    res = [-1] * len(lst)
+    # Reverse iterate list
+    for i in range(len(lst) - 1, -1, -1):
+        # While stack has elements
+        # and current element is greater than top element
+        # pop all elements
+        while not s.isEmpty() and s.top() <= lst[i]:
+            s.pop()
+        # if stack has an element
+        # Top element will be greater than ith element
+        if not s.isEmpty():
+            res[i] = s.top()
+        # push in the current element in stack
+        s.push(lst[i])
+
+    for i in range(len(lst)):
+        print(str(lst[i]) + " -- " + str(res[i]))
+    return res
+```
+
+
+
+## Challenge 8: Check Balanced Parentheses Using Stack
+
+In this problem, you have to implement the `is_balanced()` function which will take a string containing only curly `{}`, square `[]`, and round `()` parentheses. The function will tell us whether all the parentheses in the string are balanced or not.
+
+For all the parentheses to be balanced, every opening parenthesis must have a closing one. The order in which they appear also matters. For example, `{[]}` is balanced, but `{[}]` is not.
+
+Note that the input solely of `(`, `)`, `{`, `}`, `[`, and `]`. 
+
+<img src="Stack_Queue.assets/image-20201229120944740.png" alt="image-20201229120944740" style="zoom:80%;" />
+
+```python
+from stack_class import Stack
+
+def is_balanced(exp):
+    paren_dict = {'(': 1, ')': -1, 
+                  '{': 1, '}': -1,
+                  '[': 1, ']': -1}
+    sum_val = 0
+    if exp.isEmpty():
+        return False
+    for i in range(exp.size()):
+        this_paren = exp.pop()
+        sum_val = sum_val + paren_dict[this_paren]
+    if sum_val == 0:
+        return True
+    else:
+        return False
+```
+
+This method works but uses a data structure such as the dictionary. Another way is to use a list: 
+
+```python
+from stack_class import Stack
+
+def is_balanced(exp):
+    opening_paren = ['(', '{', '[']
+    s = Stack()
+    # If the characters are in opening_paren
+    # Add them to the stack
+    for char in exp:
+        if char in opening_paren:
+            s.push(char)
+        else:
+            if s.isEmpty():
+                return False
+            this_char = s.pop()
+            if this_char == '(':
+                if char != ')':
+                    return False
+            if this_char == '{':
+                if char != '}':
+                    return False
+            if this_char == '[':
+                if char != ']':
+                    return False
+    if s.isEmpty():
+        return True
+    else:
+        return False
+```
+
+
+
 ## Challenge 9: `min()` Function Using a Stack
+
+Implement the `MinStack` class which will have a `min()` function. Whenever `min()` is called, the minimum value of the stack is returned in *O(1)* time. The element is not popped from the stack. Its value is simply returned.
+
+![image-20201021132033318](Stack_Queue.assets/image-20201021132033318.png)
 
 ```python
 from stack_class import Stack
