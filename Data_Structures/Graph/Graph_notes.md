@@ -233,5 +233,73 @@ In this case, we go deep before we go wide. So, using our previous example, a DF
 
 ## Implemenation of Breadth First Search 
 
-Let's implement a BFS. 
+Let's implement a BFS. Before we implement the BSF, let us try to understand how it works. 
+
+1.  We start with a vertex. We look for all outgoing edges that lead to a vertex
+2.  Each time we go through an edge and come to a vertex, we will store that vertex in a queue that we have not visited
+3.  Once we have exhausted all the vertices in a given vertex, we pick the first vertex in the queue
+4.  Repeat steps 1-3. 
+
+
+
+Here's the code for BFS. Let's break it down and explain the result: 
+
+```python
+def bfs_traversal_helper(gs, source, visited):
+    result = ""
+    q = Queue()
+    q.enqueue(source)
+    visited[source] = True
+    while not q.is_empty():
+        current_node = q.dequeue()
+        result += str(current_node)
+        temp = gs.array[current_node].head_node
+        while temp is not None:
+            if visited[temp.data] is False:
+                q.enqueue(temp.data)
+                visited[temp.data] = True
+            temp = temp.next
+    return result, visited
+
+def bfs_traveral(gs, source):
+    result = ""
+    num_of_vertices = gs.vertices
+    if num_of_vertices is 0:
+        return result
+    visited = [False] * num_of_vertices
+    
+    result, visited = bfs_traversal_helper(gs, source, visited)
+    for i in range(num_of_vertices):
+        if visited[i] is False:
+            result_new, visited = bfs_traversal_helper(gs, i, visited)
+            result += result_new
+    return result
+```
+
+
+
+Let's first look at what the helper function `bfs_traveral_helper` does. This is more of a actual BFS for a given vertex and not a helper function. 
+
+*   We start with a string called `result`
+*   We instantiate a `Queue` and add the source to this queue
+*   We add that source to the visited list as we are visited it now
+*   Now if the queue is not empty we look at one vertex at a time
+    *   We remove the vertex from the queue one
+    *   We add the vertex to our result as string
+    *   Now we traverse this vertex, which is actually a Linked list. We traverse the Linked List one node at a time. However for each node we visit, we ask: 
+        *   Has this node been visited before? If it is not: 
+            *   We add that to our queue
+            *   We mark it as visited 
+        *   We move into the second node until we hit a `None`
+*   Finally, we return the result and the visited. 
+
+
+
+The second `bfs_traveral()` function does some housekeeping.
+
+*   It sets up the `visited` list with `False` values for each of the nodes. 
+*   Calls the `bfs_traveral_helper()` function. 
+*   Finally, it checks whether all the vertices are visited. If they are not, it calls the helper function on them again. 
+
+## Implemenation of Breadth First Search 
 

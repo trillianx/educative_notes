@@ -1,27 +1,37 @@
-from linked_list_class import LinkedList
+from graph import Graph
+from queue_class import Queue
 
-class Graph():
-    def __init__(self, vertices):
-        self.vertices = vertices
-        self.array = []
+def bfs_traversal_helper(gs, source, visited):
+    result = ""
+    q = Queue()
+    q.enqueue(source)
+    visited[source] = True
+    while not q.is_empty():
+        current_node = q.dequeue()
+        result += str(current_node)
+        temp = gs.array[current_node].head_node
+        while temp is not None:
+            if visited[temp.data] is False:
+                q.enqueue(temp.data)
+                visited[temp.data] = True
+            temp = temp.next
+    return result, visited
 
-        for i in range(vertices):
-            temp = LinkedList()
-            self.array.append(temp)
+def bfs_traveral(gs, source):
+    result = ""
+    num_of_vertices = gs.vertices
+    if num_of_vertices is 0:
+        return result
+    visited = []
+    for i in range(num_of_vertices):
+        visited.append(False)
+    result, visited = bfs_traversal_helper(gs, source, visited)
+    for i in range(num_of_vertices):
+        if visited[i] is False:
+            result_new, visited = bfs_traversal_helper(gs, i, visited)
+            result += result_new
+    return result
     
-    def add_edge(self, source, destination):
-        if source < self.vertices and destination < self.vertices:
-            self.array[source].insert_at_head(destination)
-
-    def print_graph(self):
-        for v in range(self.vertices):
-            print("|", v, end=" | => ")
-            cur_node = self.array[v].head_node
-            while cur_node != None:
-                print("[", cur_node.data, end=" ] -> ")
-                cur_node = cur_node.next
-            print("None \n") 
-        return None
 
 if __name__ == "__main__":
     gs = Graph(6)
@@ -33,3 +43,4 @@ if __name__ == "__main__":
     gs.add_edge(2, 5)
     gs.add_edge(5, 0)
     gs.print_graph()
+    print(bfs_traveral(gs, 0))
