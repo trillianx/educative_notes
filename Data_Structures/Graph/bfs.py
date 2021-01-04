@@ -20,7 +20,7 @@ def bfs_traversal_helper(gs, source, visited):
 def bfs_traveral(gs, source):
     result = ""
     num_of_vertices = gs.vertices
-    if num_of_vertices is 0:
+    if num_of_vertices == 0:
         return result
     visited = []
     for i in range(num_of_vertices):
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     gs.add_edge(2, 5)
     gs.add_edge(5, 0)
     gs.print_graph()
-    print(bfs_traveral(gs, 0))
+    print(bfs_traveral(gs, 4))
