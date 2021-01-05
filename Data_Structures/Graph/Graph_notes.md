@@ -251,14 +251,14 @@ def bfs_traversal_helper(gs, source, visited):
     q.enqueue(source)
     visited[source] = True
     while not q.is_empty():
-        current_node = q.dequeue()
-        result += str(current_node)
-        temp = gs.array[current_node].head_node
-        while temp is not None:
-            if visited[temp.data] is False:
-                q.enqueue(temp.data)
-                visited[temp.data] = True
-            temp = temp.next
+        vertex = q.dequeue()
+        result += str(vertex)
+        node = gs.array[vertex].head_node
+        while node is not None:
+            if visited[node.data] is False:
+                q.enqueue(node.data)
+                visited[node.data] = True
+            node = node.next
     return result, visited
 
 def bfs_traveral(gs, source):
@@ -274,6 +274,18 @@ def bfs_traveral(gs, source):
             result_new, visited = bfs_traversal_helper(gs, i, visited)
             result += result_new
     return result
+
+if __name__ == "__main__":
+    gs = Graph(6)
+    gs.add_edge(0, 1)
+    gs.add_edge(0, 2)
+    gs.add_edge(1, 3)
+    gs.add_edge(2, 3)
+    gs.add_edge(2, 4)
+    gs.add_edge(2, 5)
+    gs.add_edge(5, 0)
+    gs.print_graph()
+    print(bfs_traveral(gs, 0))
 ```
 
 
@@ -341,6 +353,18 @@ def dfs_traversal(gs, source):
             result_new, visited = dfs_traversal_helper(gs, index, visited)
             result += result_new
     return result
+
+if __name__ == "__main__":
+    gs = Graph(6)
+    gs.add_edge(0, 1)
+    gs.add_edge(0, 2)
+    gs.add_edge(1, 3)
+    gs.add_edge(2, 3)
+    gs.add_edge(2, 4)
+    gs.add_edge(2, 5)
+    gs.add_edge(5, 0)
+    gs.print_graph()
+    print(dfs_traversal(gs, 0))
 ```
 
 Since the algorithm traverses the whole graph once, the time complexity is $O(V + E)$.

@@ -7,14 +7,14 @@ def bfs_traversal_helper(gs, source, visited):
     q.enqueue(source)
     visited[source] = True
     while not q.is_empty():
-        current_node = q.dequeue()
-        result += str(current_node)
-        temp = gs.array[current_node].head_node
-        while temp is not None:
-            if visited[temp.data] is False:
-                q.enqueue(temp.data)
-                visited[temp.data] = True
-            temp = temp.next
+        vertex = q.dequeue()
+        result += str(vertex)
+        node = gs.array[vertex].head_node
+        while node is not None:
+            if visited[node.data] is False:
+                q.enqueue(node.data)
+                visited[node.data] = True
+            node = node.next
     return result, visited
 
 def bfs_traveral(gs, source):
@@ -43,4 +43,4 @@ if __name__ == "__main__":
     gs.add_edge(2, 5)
     gs.add_edge(5, 0)
     gs.print_graph()
-    print(bfs_traveral(gs, 4))
+    print(bfs_traveral(gs, 0))
