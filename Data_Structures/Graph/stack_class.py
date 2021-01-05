@@ -17,4 +17,7 @@ class Stack():
         return len(self.list)
 
     def top(self):
-        return self.list[-1]
+        if not self.isEmpty():
+            return self.list[-1]
+        else:
+            return None
