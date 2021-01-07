@@ -58,20 +58,15 @@ from stack_class import Stack
 
 def sort_stack(s):
     temp_stack = Stack()
-
     while not s.isEmpty():
-        value = s.pop()
+        temp = s.pop()
 
-        if temp_stack.top() is not None and value >= temp_stack.top():
-            temp_stack.push(value)
-        else:
-            while not temp_stack.isEmpty():
-                s.push(temp_stack.pop())
-            temp_stack.push(value)
-
+        while temp_stack.top() is not None and temp < temp_stack.top():
+            s.push(temp_stack.pop())
+        temp_stack.push(temp)
+    
     while not temp_stack.isEmpty():
         s.push(temp_stack.pop())
-    
     return s
 ```
 
