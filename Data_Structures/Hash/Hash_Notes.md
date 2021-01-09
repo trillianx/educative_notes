@@ -217,5 +217,114 @@ class HashTable():
 
  ### Resizing the Hash Table
 
+To start off we will first ensure that the hash table does not get loaded beyond a certain threshold. When it crosses a threshold, we shift the elements from the current table to a new table with double capacity. this helps avoid collision. 
 
+So, let's implement the `resize()` function. 
+
+```python
+def resize(self):
+    new_slots = self.slots * 2
+    new_bucket = [None] * new_slots
+    # Now go through each bucket and add them into new buckets
+    for i in range(len(self.bucket)):
+        head = self.bucket[i]
+        while head is not None:
+            new_index = hash(head.key) % new_slots
+            if new_bucket[new_index] is None:
+                new_bucket[new_index] = HashEntry(head.key, head.value)
+            else:
+                node = new_bucket[new_index]
+                while node is not None:
+                    if node.key is head.key:
+                        node.value = head.value
+                        node = None
+                    elif node.next is None:
+                        node.next = HashEntry(head.key, head.value)
+                        node = None
+                    else:
+                        node = node.next
+            head = head.next
+    self.bucket = new_bucket
+    self.slots = new_slots
+             
+```
+
+
+
+
+
+
+
+
+
+
+
+The operations we implemented for hash tables have the following time complexity:
+
+![image-20210107143358535](Hash_Notes.assets/image-20210107143358535.png)
+
+### Comparison Between Trees and Hash Tables
+
+Hash tables perform search, insertion, and deletion in constant time whereas trees usually work in $O(log n)$. In the worst case, the performance of hash tables in $O(log\ n)$. An AVL tree would maintain $O(log\ n)$ even in the worst case. 
+
+If an application requires the data to be ordered in a specific sequence, trees would be more useful because a BST or an AVL tree maintains order. Hash tables work best when the data stored is in random order. 
+
+### Difference between Dict and Set in Python
+
+*   Dict
+    *   Stores `key-value` pairs
+    *   Cannot contain duplicate keys but can have duplicate values
+    *   Does not store elements in any order It takes the key and then maps it into the range of hash table using the hash function
+    *   On average, the time complexity is $O(1)$
+*   Set
+    *   Is not a `key-value` pair, instead the value is the key and the value
+    *   Set does not store duplicate elements
+    *   On average, the complexity of basic operation is $O(1)$
+
+Here are some common functions for both these data structures
+
+<img src="Hash_Notes.assets/image-20210107144953542.png" alt="image-20210107144953542" style="zoom:50%;" />
+
+<img src="Hash_Notes.assets/image-20210107145006664.png" alt="image-20210107145006664" style="zoom:50%;" />
+
+
+
+## Problem Sets
+
+Here are a total of 12 interview problems on hash tables
+
+### Challenge 1: A List as a Subset of Another List
+
+Given two lists, write a function `is_subset(lst1, lst2)` check whether one is a sublist of another. 
+
+For example, 
+
+```python
+list1 = [9,4,7,1,-2,6,5]
+list2 = [7,1,-2]
+```
+
+The response is: `True`
+
+![image-20210107145507908](Hash_Notes.assets/image-20210107145507908.png)
+
+
+
+```python
+def is_subset(lst1, lst2):
+    s1 = set(lst1)
+    s2 = set(lst2)
+    result = s1.intersection(s2)
+    if len(result) == len(lst2):
+        return True
+    else:
+        return False
+    
+if __name__ == "__main__":
+    list1 = [9, 4, 7, 1, -2, 6, 5]
+    list2 = [7, 1, -2]
+    list3 = [10, 12]
+    print(is_subset(list1, list2))
+    print(is_subset(list1, list3))
+```
 
