@@ -399,7 +399,7 @@ while i < n:
 
 The running time complexity is $log_k(n) = O(log_k(n))$. 
 
-## Selection Sort, Bubble Sort, and Insertion Sort
+## Sorting Algorithms
 
 In this section, we will look at various sorting algorithms. Sorting, in general, is a process of arranging items systematically. In computer science, sorting algorithms put elements of a list in a certain order. 
 
@@ -439,11 +439,14 @@ Here's how the algorithm works:
 
 So, one thing to remember is that, we only concentrate on the indexes rather than the values themselves. 
 
-
-
 ### Bubble Sort
 
 The bubble sort is another sorting algorithm that compares adjacent pairs of elements and swaps them if they are in the wrong order. This is repeated until the list is sorted. 
+
+Here's the algorithm: 
+
+*   Start with index 1
+*   Compare the value of the previous index with the current index. As long as the previous index is greater than or equal to zero and the value of the previous index is greater than current index, swap. 
 
 ```python
 def bubble_sort(arr):
@@ -472,9 +475,28 @@ def bubble_sort(arr):
 	return arr
 ```
 
+A third alternative is the following: 
 
+```python
+def bubble_sort(arr):
+    for i in range(1, len(arr)):
+        j = i - 1
+        while j >= 0 and arr[j] > arr[j+1]:
+            arr[j], arr[j+1] = arr[j+1], arr[j]
+            j = j - 1
+    return arr
+```
+
+>   Keep in mind that we need two indices. I cannot simply work with `i` because if we do, the index will be modified in the `while` loop as well in the `for` loop. 
 
 ### Insertion Sort
+
+The insertion sort is similar to bubble sort with one exception. Rather than swapping, we hold out the value and compare all other previous values with it until there is no value greater than the hold out value. It is at this point, we move the hold out value to that position. By holding out the value at index `i`, we create a hole. This hold migrates leftwards until it cannot go anymore left either because (1) it has reached the leftmost part of the array or (2) there are no values greater than this hold out value. It is at this point, we paste that hold out value into this hole. 
+
+*   Start with array at index 1. We assume the left array is sorted while the right of the index, the array is unsorted. 
+*   Now we hold out the value at index i in temp
+*   We compare the previous value with the temp. If it is greater than temp and the index is not zero, we copy that value over. 
+*   When we cannot copy any values over, we take the temp and add it 
 
 ```python
 def insertion_sort(arr):
@@ -486,35 +508,99 @@ def insertion_sort(arr):
             arr[j+1] = arr[j]
             j -= 1
         arr[j+1] = temp
+    return arr
 ```
 
-
+>   At the end we require `arr[j+1] = temp` rather than `ar[j] = temp` because the index `j` will get to `-1` if it does not encounter any value less than `temp`. That is why we need to use `j+1`. 
 
 ### Quick Sort
 
-The quick sort algorithm makes use **divide and conquer technique**. The idea is to divide or partition the array into subarrays and then combine them into a sorted array. The quick sort algorithm follows two steps: 
+The quick sort algorithm makes use **divide and conquer technique**. The idea is to divide or partition the array into subarrays and then combine them into a sorted array. The quick sort algorithm follows these steps
 
-1.  Partition the array into subarrays
-2.  Combine the partitions into a sorted array
+We start with the array, just like the one we have below: 
 
-So, the python code would be: 
+<img src="Algorithms.assets/image-20210111122332099.png" alt="image-20210111122332099" style="zoom:50%;" />
+
+We take the first element as our **pivot** element. We set our **frontier** as a barrier. All values on the left of this barrier are less than our pivot element, all values on the right of this barrier are greater that our pivot element. 
+
+<img src="Algorithms.assets/image-20210111122514891.png" alt="image-20210111122514891" style="zoom:50%;" />
+
+Now we evaluate each element of the array, starting from `index = 1`. 
+
+<img src="Algorithms.assets/image-20210111122628184.png" alt="image-20210111122628184" style="zoom:50%;" />
+
+If the element is less that our pivot element, we move our frontier forward. 
+
+<img src="Algorithms.assets/image-20210111122839974.png" alt="image-20210111122839974" style="zoom:50%;" />
+
+If the value is greater than our pivot, we move our index forward. When we reach a value that is less than our pivot, we swap the value at the frontier with that of the index. 
+
+<img src="Algorithms.assets/image-20210111123021073.png" alt="image-20210111123021073" style="zoom:50%;" />
+
+And move our frontier by 1. 
+
+<img src="Algorithms.assets/image-20210111123049529.png" alt="image-20210111123049529" style="zoom:50%;" />
+
+And repeat these steps until we have reached the end of the array. Thne we have the following parts: 
+
+<img src="Algorithms.assets/image-20210111141057717.png" alt="image-20210111141057717" style="zoom:50%;" />
+
+
+
+Recursively we pass the left and the right subarrays through the sorting algorithm until each subarray is just a single element. We then put them back together. 
+
+
 
 ```python
-def quick_sort(arr):
+def QuickSort(arr):
+
     n = len(arr)
-    frontier = 0
+    
+    #Base case
+    if n < 2:
+        return arr
+    
+    #Position of the partitioning element
     pivot = arr[0]
-    for i in range(1, n):
-        if arr[i] < pivot:
-            frontier += 1
-            arr[i], arr[frontier] = arr[frontier], arr[i]
+    frontier = 0 
+
+    #Partitioning loop
+    for i in range(1, n): 
+         if arr[i] <= pivot:
+              frontier += 1
+              # Now swap the values
+              arr[i], arr[frontier] = arr[frontier], arr[i]
+
     arr[0], arr[frontier] = arr[frontier], arr[0]
+    print(frontier)
+
+  
+    #Sorts the elements to the left of pivot
+    left = QuickSort(arr[0:frontier])
     
-    left = quick_sort(arr[0:frontier])
-    right = quick_sort(arr[frontier+1]:n)
-    
-    arr = left + [arr[frontier]] + right
+    #sorts the elements to the right of pivot
+    right = QuickSort(arr[frontier+1:n]) 
+
+    #Merging everything together
+    arr = left + [arr[frontier]] + right 
     
     return arr
 ```
 
+
+
+Here's a table for of the sorting algorithms we have seen so far: 
+
+| Algorithm Name | Explanation                                                  | Time Complexity | Space Complexity |
+| -------------- | ------------------------------------------------------------ | --------------- | ---------------- |
+| Selection Sort | Find minimum in a given subarray and insert at the beginning of the array |                 |                  |
+| Bubble Sort    | Swap adjacent values until they are sorted                   |                 |                  |
+| Insertion Sort | Remove element from list and insert it in order              |                 |                  |
+| Quick Sort     | Recursively partition array into left and right arrays through swapping of elements either left or right of a pivot and put them back together |                 |                  |
+| Merge Sort     |                                                              |                 |                  |
+
+
+
+## Count Sort
+
+The algorithms that we have seen so far are called **comparison sorting algorithms**. These algorithms compare values and then decide whether they wish to be sorted or not. 
