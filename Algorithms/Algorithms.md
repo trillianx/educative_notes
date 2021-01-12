@@ -593,10 +593,10 @@ Here's a table for of the sorting algorithms we have seen so far:
 
 | Algorithm Name | Explanation                                                  | Time Complexity | Space Complexity |
 | -------------- | ------------------------------------------------------------ | --------------- | ---------------- |
-| Selection Sort | Find minimum in a given subarray and insert at the beginning of the array |                 |                  |
-| Bubble Sort    | Swap adjacent values until they are sorted                   |                 |                  |
-| Insertion Sort | Remove element from list and insert it in order              |                 |                  |
-| Quick Sort     | Recursively partition array into left and right arrays through swapping of elements either left or right of a pivot and put them back together |                 |                  |
+| Selection Sort | Find minimum in a given subarray and insert at the beginning of the array | $O(n^2)$        | $O(1)$           |
+| Bubble Sort    | Swap adjacent values until they are sorted                   | $O(n^2)$        | $O(1)$           |
+| Insertion Sort | Remove element from list and insert it in order              | $O(n^2)$        | $O(1)$           |
+| Quick Sort     | Recursively partition array into left and right arrays through swapping of elements either left or right of a pivot and put them back together | $O(n\ log\ n)$  | $O(log\ n)$      |
 | Merge Sort     |                                                              |                 |                  |
 
 
@@ -669,4 +669,68 @@ Here are some **drawbacks**:
 We can modify the algorithm to work with negative values. We find the minimum value and add its absolute value to all the elements. This will result in positive numbers. We then use the algorithm as is and before output, we subtract the absolute value of minimum value from the array and return the array. 
 
 ### Radix Sort
+
+The drawback of counting sort is that if the numbers and spread out, the intermediate array that is created is too large. This is where radix sort comes into picture. Radix sort applies counting sort to each digit of a given number repeatedly from one, tenth, hundredths, and so on. Doing so results in a sorted array. 
+
+Here's how it works: 
+
+Suppose we are given the following array: 
+
+```python
+arr = [121, 432, 564, 23, 1, 45, 788]
+```
+
+1.  Start by finding the largest number in the array. In our example, that would be `788`
+
+2.  Note the length of this largest number. In this case it is `3`
+
+3.  Convert all numbers to three digits by adding zeros at the beginning. 
+
+    ```python
+    arr = ['121', '432', '564', '023', '001', '045', '788']
+    ```
+
+4.  We now apply `count sort` to the last character in each element. We will get something like this: 
+
+    <img src="Algorithms.assets/image-20210112095853894.png" alt="image-20210112095853894" style="zoom:50%;" />
+
+5.  Our new output looks something like this. 
+
+6.  We repeat the same process now at the tens place
+
+    <img src="Algorithms.assets/image-20210112095944079.png" alt="image-20210112095944079" style="zoom:50%;" />
+
+7.  And again at the hundreds place
+
+    <img src="Algorithms.assets/image-20210112100007365.png" alt="image-20210112100007365" style="zoom:50%;" />
+
+Here's the code in Python
+
+```python
+# Using counting sort to sort the elements in the basis of significant places
+def countingSort(array, place):
+    size = len(array)
+    output = [0] * size
+    count = [0] * 10
+
+    # Calculate count of elements
+    for i in range(0, size):
+        index = array[i] // place
+        count[index % 10] += 1
+
+    # Calculate cummulative count
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    # Place the elements in sorted order
+    i = size - 1
+    while i >= 0:
+        index = array[i] // place
+        output[count[index % 10] - 1] = array[i]
+        count[index % 10] -= 1
+        i -= 1
+
+    for i in range(0, size):
+        array[i] = output[i]
+```
 
