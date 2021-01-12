@@ -601,6 +601,72 @@ Here's a table for of the sorting algorithms we have seen so far:
 
 
 
-## Count Sort
+### Count Sort
 
 The algorithms that we have seen so far are called **comparison sorting algorithms**. These algorithms compare values and then decide whether they wish to be sorted or not. 
+
+Here's how **count sort** works: 
+
+1.  Find the maximum value in the given `array`
+
+    <img src="Algorithms.assets/image-20210111152938022.png" alt="image-20210111152938022" style="zoom:50%;" />
+
+2.  Create an `count array` with the number of slots equal to the maximum number + 1
+
+    <img src="Algorithms.assets/image-20210111153028254.png" alt="image-20210111153028254" style="zoom:50%;" />
+
+3.  Count each occurrence of an element from the `array` and store that value at the index value of the `count array`. 
+
+    <img src="Algorithms.assets/image-20210111153249609.png" alt="image-20210111153249609" style="zoom:50%;" />
+
+4.  Create a cumulative sum of the `count array` and overwrite it
+
+    <img src="Algorithms.assets/image-20210111153354236.png" alt="image-20210111153354236" style="zoom:50%;" />
+
+5.  Loop through the `array`. For each element in the `array`, find the index value in the cumulative `count array`. Take that element and subtract it by `1`. This will be the new index position in the original `array`.  Then decrease the cumulative count in the `count array` by `1`. 
+
+Following these steps will result in the sorted array. 
+
+```python
+def count_sort(arr):
+    # Find the max value
+    max_val = max(arr)
+    # Create a count array
+    count_arr = [0] * (max_val + 1)
+    # Create an output array
+    output = [0] * len(arr)
+    # Count the number of instances of each 
+    # element in the array and store that in count_arr
+    for i in arr:
+        count_arr[i] += 1
+	# Do a cumulative sum of the count_arr
+    for i in range(1, len(count_arr)):
+        count_arr[i] = count_arr[i-1] + count_arr[i]
+	# Now find the index of the array in count_arr
+    # subtract by 1. This will be position in original
+    # array. 
+    for i in arr:
+        count_loc = count_arr[i]
+        new_index = count_loc - 1
+        output[new_index] = i
+        count_arr[i] -= 1
+    
+    return output
+
+if __name__ == "__main__":
+    arr = [1, 8, 3, 0, 9, 4]
+    print(arr)
+    result = count_sort(arr)
+    print(result)
+```
+
+Here are some **drawbacks**: 
+
+*   The space complexity increases rapidly based on what the maximum value is. For example, if we have 100 elements but one element has a value of 10000, the count array will be 10001 elements long with mostly 0 values in it. 
+*   The time complexity is $O(n)$ 
+*   This algorithm does not work for negative values or floating point values
+
+We can modify the algorithm to work with negative values. We find the minimum value and add its absolute value to all the elements. This will result in positive numbers. We then use the algorithm as is and before output, we subtract the absolute value of minimum value from the array and return the array. 
+
+### Radix Sort
+
