@@ -589,15 +589,56 @@ def QuickSort(arr):
 
 
 
-Here's a table for of the sorting algorithms we have seen so far: 
+### Merge Sort
 
-| Algorithm Name | Explanation                                                  | Time Complexity | Space Complexity |
-| -------------- | ------------------------------------------------------------ | --------------- | ---------------- |
-| Selection Sort | Find minimum in a given subarray and insert at the beginning of the array | $O(n^2)$        | $O(1)$           |
-| Bubble Sort    | Swap adjacent values until they are sorted                   | $O(n^2)$        | $O(1)$           |
-| Insertion Sort | Remove element from list and insert it in order              | $O(n^2)$        | $O(1)$           |
-| Quick Sort     | Recursively partition array into left and right arrays through swapping of elements either left or right of a pivot and put them back together | $O(n\ log\ n)$  | $O(log\ n)$      |
-| Merge Sort     |                                                              |                 |                  |
+Merge sort is another algorithm that is based on **divide and conquer** principle. The problem is divided into subproblems and each subproblem is solved individually. Finally, the subproblems are combined to form the final solution. 
+
+The divide and conquer strategy is the following. If we have to sort an array A. A subproblem would be to take a subarray from index p to index r. 
+
+1.  **Divide**: If q is a halfway point between p and r, we split the array into two subarrays, A[p, q] and A[q+1, r]. 
+2.  **Conquer**: We split this further if we have not reached the base case. If we have, we sort these subarrays. 
+3.  **Combine**: Once we have sorted the subarrays in the conquer step, we put them back together to return a sorted array. 
+
+Here's the algorithm of the array: 
+
+![image-20210112135117970](Algorithms.assets/image-20210112135117970.png)
+
+So, we see that the mergesort algorithm has two parts: 
+
+1.  Split the array into two subarrays recursively until the base case, length of array < 2 is reached. 
+2.  Sort each subarray and combine them. 
+
+Here's the algorithm: 
+
+```python
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
+    
+    mid = len(arr) // 2
+    left = merge_sort(arr[0:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(lst1, lst2):
+    output = []
+    i = 0
+    j = 0
+    while i < len(lst1) and j < len(lst2):
+        if lst1[i] < lst2[j]:
+            output.append(lst1[i])
+            i += 1
+        else:
+            output.append(lst2[j])
+            j += 1
+    output = output + lst1[i:] + lst2[j:]
+    return output
+
+if __name__ == "__main__":
+    arr = [15, 5, 24, 8, 1, 3, 16, 10, 20]
+    result = merge_sort(arr)
+    print(result)
+```
 
 
 
@@ -628,28 +669,32 @@ Here's how **count sort** works:
 Following these steps will result in the sorted array. 
 
 ```python
-def count_sort(arr):
-    # Find the max value
-    max_val = max(arr)
-    # Create a count array
-    count_arr = [0] * (max_val + 1)
-    # Create an output array
-    output = [0] * len(arr)
-    # Count the number of instances of each 
-    # element in the array and store that in count_arr
-    for i in arr:
-        count_arr[i] += 1
-	# Do a cumulative sum of the count_arr
-    for i in range(1, len(count_arr)):
-        count_arr[i] = count_arr[i-1] + count_arr[i]
-	# Now find the index of the array in count_arr
-    # subtract by 1. This will be position in original
-    # array. 
-    for i in arr:
-        count_loc = count_arr[i]
-        new_index = count_loc - 1
-        output[new_index] = i
-        count_arr[i] -= 1
+def countingSort(array):
+    size = len(array)
+    output = [0] * size
+
+    # Initialize count array
+    count = [0] * 10
+
+    # Store the count of each elements in count array
+    for i in range(0, size):
+        count[array[i]] += 1
+
+    # Store the cummulative count
+    for i in range(1, 10):
+        count[i] += count[i - 1]
+
+    # Find the index of each element of the original array in count array
+    # place the elements in output array
+    i = size - 1
+    while i >= 0:
+        output[count[array[i]] - 1] = array[i]
+        count[array[i]] -= 1
+        i -= 1
+
+    # Copy the sorted elements into original array
+    for i in range(0, size):
+        array[i] = output[i]
     
     return output
 
@@ -684,11 +729,7 @@ arr = [121, 432, 564, 23, 1, 45, 788]
 
 2.  Note the length of this largest number. In this case it is `3`
 
-3.  Convert all numbers to three digits by adding zeros at the beginning. 
-
-    ```python
-    arr = ['121', '432', '564', '023', '001', '045', '788']
-    ```
+3.  Now start by taking the last digit first 
 
 4.  We now apply `count sort` to the last character in each element. We will get something like this: 
 
@@ -703,6 +744,38 @@ arr = [121, 432, 564, 23, 1, 45, 788]
 7.  And again at the hundreds place
 
     <img src="Algorithms.assets/image-20210112100007365.png" alt="image-20210112100007365" style="zoom:50%;" />
+
+The trick here in getting the digits we want as we make our pass is with the use of two operators: 
+
+*   `//` - Floor division - division that results into whole number adjusted to the left in the number line
+*   `%` - Modulus - remainder of the division of left operand by the right
+
+For example, 
+
+```python
+num = 843
+for i in range(3):
+    place = 10 ** i
+    print((num // place) % 10)
+```
+
+Here's the output: 
+
+```python
+3
+4
+8
+```
+
+If we have just one digit, such as `num = 8`. Doing the above will result in: 
+
+```python
+8
+0
+0
+```
+
+
 
 Here's the code in Python
 
@@ -732,5 +805,48 @@ def countingSort(array, place):
 
     for i in range(0, size):
         array[i] = output[i]
+        
+# Main function to implement radix sort
+def radixSort(array):
+    # Get maximum element
+    max_element = max(array)
+
+    # Apply counting sort to sort elements based on place value.
+    place = 1
+    while max_element // place > 0:
+        countingSort(array, place)
+        place *= 10
 ```
+
+### Bucket Sort
+
+The idea behind bucket sort is similar to radix sort but one exception. We begin the same way as we do in radix sort, starting with the last digit. But here's the difference. We create an array from 0-9. These become our buckets. Now, as we go through the elements in the array, we add these numbers to the buckets based on their digit. Then we remove them and put them back into the array starting from 0th index or bucket to the 9th bucket. 
+
+Here's how it works: 
+
+1.  We are given the following unsorted array
+
+    <img src="Algorithms.assets/image-20210112105314504.png" alt="image-20210112105314504" style="zoom:50%;" />
+
+2.  We create an array of 9 buckets. This would be a list of lists. There are 10 total lists.
+
+3.  We find the length of the maximum value. This will be our loop in terms of place (ones, tens, hundreds,..) 
+
+4.  We start with the last digit of each element and put them in corresponding bucket.
+
+5.  Now we remove each element from the bucket and add it to our output. This will be our new array. 
+
+6.  Repeat steps 1-5 equal to the number of digits in the maximum value. 
+
+
+
+Here's a table for of the sorting algorithms we have seen so far: 
+
+| Algorithm Name | Explanation                                                  | Time Complexity | Space Complexity |
+| -------------- | ------------------------------------------------------------ | --------------- | ---------------- |
+| Selection Sort | Find minimum in a given subarray and insert at the beginning of the array | $O(n^2)$        | $O(1)$           |
+| Bubble Sort    | Swap adjacent values until they are sorted                   | $O(n^2)$        | $O(1)$           |
+| Insertion Sort | Remove element from list and insert it in order              | $O(n^2)$        | $O(1)$           |
+| Quick Sort     | Recursively partition array into left and right arrays through swapping of elements either left or right of a pivot and put them back together | $O(n\ log\ n)$  | $O(log\ n)$      |
+| Merge Sort     | Divide the array until it is left to single element. Sort each element and combine them in a sorted array | $O(n \log \ n)$ | $O(n)$           |
 

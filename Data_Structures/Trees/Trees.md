@@ -48,7 +48,7 @@ There are different types of trees that are optimized for particular use-case. M
 
 ### The N-ary Tree
 
-Binary trees are a special case of N-ary tree. An N-arry tree is a tree that has a N most children from a parent node. For example, in this case, this is a N = 4, as the root has a maximum number of 4 children. 
+Binary trees are a special case of N-ary tree. An N-arry tree is a tree that has N most children from a parent node. For example, in this case, this is a N = 4, as the root has a maximum number of 4 children. 
 
 <img src="Trees.assets/image-20201109155305553.png" alt="image-20201109155305553" style="zoom:50%;" />
 
@@ -245,6 +245,12 @@ Given the following tree:
     `2 5 4 8 12 9 6`
 *   Inorder: Go the child first then the parent and back to the child. So, in the example, we will have:
     `2 4 5 6 8 9 12`
+
+Here's an easy way to remember these three: 
+
+*   Preorder - Remember the parent first then the children
+*   Postorder - Remember the children first then the parents 
+*   Inorder - Remember the children between parents
 
 ## Binary Search Tree
 

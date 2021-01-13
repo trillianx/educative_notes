@@ -1,23 +1,30 @@
-def count_sort(arr):
-    max_val = max(arr)
-    count_arr = [0] * (max_val + 1)
-    output = [0] * len(arr)
-    for i in arr:
-        count_arr[i] += 1
-
-    for i in range(1, len(count_arr)):
-        count_arr[i] = count_arr[i-1] + count_arr[i]
-    # print(count_arr)
-    for i in arr:
-        count_loc = count_arr[i]
-        new_index = count_loc - 1
-        output[new_index] = i
-        count_arr[i] -= 1
+def merge_sort(arr):
+    if len(arr) < 2:
+        return arr
     
+    mid = len(arr) // 2
+    left = merge_sort(arr[0:mid])
+    right = merge_sort(arr[mid:])
+    return merge(left, right)
+
+def merge(lst1, lst2):
+    output = []
+    i = 0
+    j = 0
+    while i < len(lst1) and j < len(lst2):
+        if lst1[i] < lst2[j]:
+            output.append(lst1[i])
+            i += 1
+        else:
+            output.append(lst2[j])
+            j += 1
+    output = output + lst1[i:] + lst2[j:]
     return output
 
 if __name__ == "__main__":
-    arr = [652, 0, 999, 1111, 7, 432, 10000]
-    print(arr)
-    result = count_sort(arr)
+    arr1 = [1, 5, 8, 15, 24]
+    arr2 = [3, 10, 16, 20]
+    arr = [15, 5, 24, 8, 1, 3, 16, 10, 20]
+    #result = merge(arr1, arr2)
+    result = merge_sort(arr)
     print(result)
