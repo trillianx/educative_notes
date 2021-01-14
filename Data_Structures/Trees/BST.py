@@ -55,25 +55,31 @@ class BST():
     
     def search(self, value):
         if self.root:
-            return self._search(self.root, value)
+            return self._search(self.root, value) == True
         else:
-            return False
+            return None
 
     def _search(self, cur_node, value):
-        if cur_node:
-            if value == cur_node.data: 
-                return True
-        elif value < cur_node.data and cur_node.left != None:
-            return self._search(cur_node.left, value)
-        elif value > cur_node.data and cur_node.right != None:
-            return self._search(cur_node.right, value)
-        return False
+        if value == cur_node.data:
+            return True
+        if value < cur_node.data:
+            if cur_node.left is not None:
+                return self._search(cur_node.left, value)
+            else:
+                return False
+        elif value > cur_node.data:
+            if cur_node.right is not None:
+                return self._search(cur_node.right, value)
+            else:
+                return False
+        
 
 if __name__ == "__main__":
-    arr = [10, 8, 11, 5, 6, 3, 4, 3, 2, 1, 9]
+    arr = [10, 8, 11, 5, 5]
     b = BST()
     for a in arr:
         b.insert(a)
     b.show()
-    print(b.search(2))
+    print(b.search(5))
+    print(b.search(10))
     print(b.search(100))

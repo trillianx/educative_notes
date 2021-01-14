@@ -269,7 +269,7 @@ To implement a binary search tree, let's look at the BST insertion algorithm:
 *   If yes, then repeat the steps above for the right subtree, otherwise repeat the steps above for the left sub-tree of the current node
 *   Repeat until you find the node that has no right/left child to move onto. Insert the given value there and update the parent node accordingly
 
-
+We begin by writing the `Node()` class first. This class will have the basics as we seen for `Node()` class as in Linked Lists but it will also include `self.left` and `self.right`. In addition we include `.insert()` to insert values into the BST. 
 
 ```python
 class Node():
@@ -278,20 +278,85 @@ class Node():
         self.left = None
         self.right = None
         
-class binary_search_tree():
+    def insert(self, value):
+        if value < self.data:
+            if self.left is not None:
+                self.left.insert(value)
+            else:
+                self.left = Node(value)
+                return None
+        elif value > self.data
+            if self.right is not None:
+                self.right.insert(value)
+            else:
+                self.right = Node(value)
+                return None
+        else:
+            print("Value " + str(value) + " already in BST")
+            return None
+        
+class BST():
     def __init__(self):
         self.root = None
-    
- 	def insert(self, value):
-        # If the root is empty, insert at root
-        if self.root == None:
-            self.root = Node(value)
+        
+    def insert(self, value):
+        if self.root:
+            return self.root.insert(value)
         else:
-            self._insert(self, value, self.root)
+            self.root = Node(value)
+    
             
-    def _insert(self, value, cur.node):
-        if value < cur.node.value:
-            self.insert(value)
-            
+```
+
+The `.insert()` is a recursive method. Here's how the algorithm for insertion works: 
+
+*   We first check if the value is less than the node. If it is, we follow the left branch. If the left branch of the node is not empty, we recursively move down that node until we find a branch that is `None`. We then create a node and add it to that brank. 
+*   If the value is greater, we follow the same process but going through the right branch. 
+
+
+
+
+
+Now let's look at searching for a value in a BST: 
+
+```python
+    def search(self, value):
+        if self.root:
+            is_found = self._search(self.root, value)
+            if is_found:
+                return True
+            else:
+                return False
+        else:
+            return None
+
+    def _search(self, cur_node, value):
+        if value == cur_node.data:
+            return True
+        if value < cur_node.data:
+            if cur_node.left is not None:
+                return self._search(cur_node.left, value)
+            else:
+                return False
+        elif value > cur_node.data:
+            if cur_node.right is not None:
+                return self._search(cur_node.right, value)
+            else:
+                return False
+```
+
+Here we continue to work in the BST class. We add a new method called `search()` along with its helper function `_search()`. To things to note here: 
+
+1.  The main function will call a recursive helper function `_search()`. Eventually, the helper function returns the value either `True` or `False`. This is what is captured by `is_found` variable. Then this variable is evaluated to either return True or False
+2.  In the helper function, we want to return the recursive function. If we don't do that, we will not traverse through the nodes. 
+
+Another alternative to the main `search()` method is the following: 
+
+```python
+    def search(self, value):
+        if self.root:
+            return self._search(self.root, value) == True
+        else:
+            return None
 ```
 
