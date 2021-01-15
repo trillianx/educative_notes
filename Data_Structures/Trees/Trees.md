@@ -262,7 +262,9 @@ This is a valid BST:
 
 ### Implementing a Binary Search Tree
 
-To implement a binary search tree, let's look at the BST insertion algorithm: 
+To implement a binary search tree. Along with the class, we will create an `insert()` method as well. 
+
+#### Insert Method 
 
 *   Start with the root node
 *   Check if the value to be inserted is greater than the root/current node's value
@@ -304,8 +306,6 @@ class BST():
             return self.root.insert(value)
         else:
             self.root = Node(value)
-    
-            
 ```
 
 The `.insert()` is a recursive method. Here's how the algorithm for insertion works: 
@@ -313,36 +313,70 @@ The `.insert()` is a recursive method. Here's how the algorithm for insertion wo
 *   We first check if the value is less than the node. If it is, we follow the left branch. If the left branch of the node is not empty, we recursively move down that node until we find a branch that is `None`. We then create a node and add it to that brank. 
 *   If the value is greater, we follow the same process but going through the right branch. 
 
-
-
-
-
-Now let's look at searching for a value in a BST: 
+Here's some code to see how the insertion works: 
 
 ```python
+if __name__ == "__main__":
+    b = BST()
+    arr = [10, 8, 7, 11, 5]
+    for a in arr:
+        b.insert(a)
+    display(b.root)
+    b.insert(9)
+    display(b.root)
+```
+
+We first insert all the values in the BST from the array. This is shown here: 
+
+```python
+  _10_ 
+  /   \
+  8  11
+ /     
+ 7     
+/      
+5  
+```
+
+Then we insert `9` into the BST. 
+
+```python
+   _10_ 
+  /    \
+  8   11
+ / \    
+ 7 9    
+/       
+5     
+```
+
+#### Search Method
+
+Now that we have created a BST, we will next create a `.search()` method to find a value in a BST. Just like `.insert()` method, we will have the `.search()` method within the `Node()` class and the `BST()` class. 
+
+```python
+# Search in the Node class: 
     def search(self, value):
-        if self.root:
-            is_found = self._search(self.root, value)
-            if is_found:
-                return True
+        if value < self.data:
+            if self.left:
+                return self.left.search(value)
+            else:
+                return False
+        elif value > self.data:
+            if self.right:
+                return self.right.search(value)
             else:
                 return False
         else:
-            return None
-
-    def _search(self, cur_node, value):
-        if value == cur_node.data:
             return True
-        if value < cur_node.data:
-            if cur_node.left is not None:
-                return self._search(cur_node.left, value)
-            else:
-                return False
-        elif value > cur_node.data:
-            if cur_node.right is not None:
-                return self._search(cur_node.right, value)
-            else:
-                return False
+        return False
+
+# Search in the BST class: 
+de search(self, value):
+    if self.root is None:
+        return False
+    else:
+        return self.root.search(value) == value
 ```
 
 Here we continue to work in the BST class. We add a new method called `search()` along with its helper function `_search()`. To things to note here: 
@@ -359,4 +393,183 @@ Another alternative to the main `search()` method is the following:
         else:
             return None
 ```
+
+#### Deletion Method
+
+When it comes to deleting there are many scenarios. These include: 
+
+*   Delete an empty tree
+*   Delete a node with no children
+*   Delete a node that has one child: 
+    *   Delete a left child
+    *   Delete a right child
+*   Delete a node with two children
+
+There are also complications that can occur when you delete child node. We will look at that in more detail later. 
+
+##### Delete an Empty Tree
+
+This is the easiest. If we have a null tree, we do nothing. We simply return `False`. 
+
+#####  Delete a Leaf node
+
+If we have a leaf node that we wish to delete, here are the steps we follow: 
+
+1.  We search for the node in mind. 
+2.  We ensure that the node is a leaf node
+3.  We simply set either the left or the right of the parent node to `None` that corresponds to the leaf node in question. 
+
+##### Delete a Node with One Child
+
+Here are the steps we follow: 
+
+1.  We first search for the node in the BST
+2.  We ensure that the parent has just one child
+3.  We copy the child of the child into a temporary variable
+4.  We delete the child.
+5.  We set the child of the child to be the parent's child. 
+
+Here's how it looks graphically: 
+
+![image-20210114134852656](Trees.assets/image-20210114134852656.png)
+
+##### Delete a Node with Two Children
+
+This is a little more complicated. Let's look at the steps to follow: 
+
+1.  We search for the node in the BST
+2.  Once we have found it, we look to see if they have children.
+3.  If they have children, we find the minimum value in the right subtree. This is found traversing the left branch of the tree which will have the minimum value
+4.  We swap this minimum value with the value we wish to delete.
+5.  Now we delete the value we original planned to delete
+
+Now let's implement the deletion method
+
+#### Implement the Deletion Method
+
+Let's build this up as we go. We will work in the `Node()` class
+
+1.  **Delete an Empty Tree**
+
+    ```python
+    def delete(self, val):
+        if val < self.val:  # val is in the left subtree
+            pass
+        elif val > self.val:  # val is in the right subtree
+            pass
+        else:  # val was found
+            pass
+    ```
+
+2.  **Traversing the Tree**
+
+    ```python
+    def delete(self, val):
+        if val < self.val:  # val is in the left subtree
+            if(self.leftChild):
+                self.leftChild = self.leftChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        elif val > self.val:  # val is in the right subtree
+            if(self.rightChild):
+                self.rightChild = self.rightChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        else:  # val was found
+            pass
+    ```
+
+3.  **When the value is Found**: Deleting a Leaf Node
+
+    ```python
+    def delete(self, val):
+        if val < self.val:  # val is in the left subtree
+            if(self.leftChild):
+                self.leftChild = self.leftChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        elif val > self.val:  # val is in the right subtree
+            if(self.rightChild):
+                self.rightChild = self.rightChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        else:  # val was found
+            # deleting node with no children
+            if self.leftChild is None and self.rightChild is None:
+                self = None
+                return None
+    ```
+
+4.  **When the Value is Found**: Deleting a Right Node Only
+
+    ```python
+    def delete(self, val):
+        if val < self.val:  # val is in the left subtree
+            if(self.leftChild):
+                self.leftChild = self.leftChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        elif val > self.val:  # val is in the right subtree
+            if(self.rightChild):
+                self.rightChild = self.rightChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        else:  # val was found
+            # deleting node with no children
+            if self.leftChild is None and self.rightChild is None:
+                self = None
+                return None
+            # deleting node with right child
+            elif self.leftChild is None:
+                tmp = self.rightChild
+                self = None
+                return tmp
+    ```
+
+5.  **When a Value is Found**: Deleting a Node with a Left Child Only
+
+    ```python
+    def delete(self, val):
+        if val < self.val:  # val is in the left subtree
+            if(self.leftChild):
+                self.leftChild = self.leftChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        elif val > self.val:  # val is in the right subtree
+            if(self.rightChild):
+                self.rightChild = self.rightChild.delete(val)
+            else:
+                print(str(val) + " not found in the tree")
+                return None
+        else:  # val was found
+            # deleting node with no children
+            if self.leftChild is None and self.rightChild is None:
+                self = None
+                return None
+            # deleting node with right child
+            elif self.leftChild is None:
+                tmp = self.rightChild
+                self = None
+                return tmp
+            # deleting node with left child
+            elif self.rightChild is None:
+                tmp = self.leftChild
+                self = None
+                return tmp
+    ```
+
+6.  **When a Value is Found**: Deleting a Node with Two Children
+
+    ```python
+    
+    ```
+
+    
 
