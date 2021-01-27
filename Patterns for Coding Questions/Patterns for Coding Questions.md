@@ -74,7 +74,7 @@ def compute_avg(arr, k):
     start = 0
     result = []
     for end in range(len(arr)):
-        sums = sum + arr[end]
+        sums = sums + arr[end]
         if end >= k - 1:
             result.append(sum / k)
             sums = (sums - arr[start])
@@ -89,6 +89,8 @@ Now what we want to do is keeping add numbers one by one until we read the windo
 In the following chapters we will use the sliding window approach to solve few problems. 
 
 In some problems, the size of the sliding window is not fixed. We have to expand or shrink the window based on the problem constraints. We will see a few examples of such problems in the next chapter. 
+
+>   To summarize: Start with start of the window at 0 and increase the end of the window from 0. Keep adding elements to the sums until the end of the window equals k. Then subtract the start and add the end to the sum. 
 
 ### Maximum Sum Subarray of Size K
 
@@ -158,6 +160,8 @@ While for the following, we see that:
 
 a window size of 3 gets us the answer. Note that, in this case there are two possibilities, so we show both of them. 
 
+This problem follows the Sliding Window pattern, and we can use a similar strategy as discussed in the previous question. However, the sliding window size is not fixed. 
+
 Let's solve this problem: 
 
 ```python
@@ -203,6 +207,8 @@ def smallest_sub(s, arr):
         return 0
     return min_length
 ```
+
+THe time complexity of the above algorithm will be $O(N)$. The outer for loop runs through all elements while the inner loop processes each element only once. So, the time complexity is $O(N + N) \approx O(N)$. 
 
 Here are the steps we take: 
 
