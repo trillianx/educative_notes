@@ -20,6 +20,7 @@ class Node():
             return None
 
     def search(self, value):
+        print(self.data)
         if value < self.data:
             if self.left:
                 return self.left.search(value)
@@ -32,12 +33,14 @@ class Node():
                 return False
         else:
             return True
-        return False
+        return False  
     
     def delete(self, value):
         if value < self.data:
             if self.left:
+                print('Before: ', self.left.data)
                 self.left = self.left.delete(value)
+                print('After: ', self.left.data)
             else:
                 print("Value not found: ", value)
                 return None
@@ -71,9 +74,7 @@ class Node():
                 self.data = current.data
                 self.right = self.right.delete(value)
         return self
-
-
-    
+        
 class BST():
     def __init__(self):
         self.root = None
@@ -92,5 +93,22 @@ class BST():
         
     def delete(self, value):
         if self.root is not None:
-            self.root = self.root.delete(value)
+            self.root.delete(value)
 
+    def inorder(self):
+        if self.root:
+            return self._inorder(self.root)
+
+    def _inorder(self, node):
+        if node:
+            self._inorder(node.left)
+            print(node.data)
+            self._inorder(node.right)
+        return ''
+
+if __name__ == "__main__":
+    arr = [6, 4, 9, 5, 2, 8, 12]
+    b = BST()
+    for a in arr:
+        b.insert(a)
+    print(b.inorder())

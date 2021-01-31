@@ -1,30 +1,52 @@
-def merge_sort(arr):
-    if len(arr) < 2:
-        return arr
-    
-    mid = len(arr) // 2
-    left = merge_sort(arr[0:mid])
-    right = merge_sort(arr[mid:])
-    return merge(left, right)
+from new_bst import BST
+from new_bst import Node
 
-def merge(lst1, lst2):
-    output = []
-    i = 0
-    j = 0
-    while i < len(lst1) and j < len(lst2):
-        if lst1[i] < lst2[j]:
-            output.append(lst1[i])
-            i += 1
-        else:
-            output.append(lst2[j])
-            j += 1
-    output = output + lst1[i:] + lst2[j:]
-    return output
+def find_height(b):
+    if b.root is None:
+        return 0
+    else:
+        return _find_height(b.root, 0)
+
+def _find_height(b, count):
+    if b.left and b.right:
+        return max(_find_height(b.left, count+1), _find_height(b.right, count+1))
+    elif b.left:
+        return _find_height(b.left, count+1)
+    elif b.right:
+        return _find_height(b.right, count+1)
+    else:
+        return count
+
+def find_max(b):
+    if b.root:
+        return _find_max(b.root)
+    else:
+        return 0
+
+def _find_max(b):
+    if b.right:
+        return _find_max(b.right)
+    else:
+        return b.data
+
+def find_kth_max(b, k):
+    arr = []
+    inorderTraverse(b.root, arr)
+    if k <= len(arr):
+        return arr[-k]
+
+def inorderTraverse(node, arr):
+    if node:
+        inorderTraverse(node.left, arr)
+        arr.append(node.data)
+        inorderTraverse(node.right, arr)
+
 
 if __name__ == "__main__":
-    arr1 = [1, 5, 8, 15, 24]
-    arr2 = [3, 10, 16, 20]
-    arr = [15, 5, 24, 8, 1, 3, 16, 10, 20]
-    #result = merge(arr1, arr2)
-    result = merge_sort(arr)
-    print(result)
+    b = BST()
+    arr = [4,9,5,2,8,12,10,14, -1]
+    for i in arr:
+        b.insert(i)
+    # print(find_height(b))
+    print(b.inorder())
+    print(find_kth_max(b, 2))

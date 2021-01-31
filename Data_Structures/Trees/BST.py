@@ -72,14 +72,47 @@ class BST():
                 return self._search(cur_node.right, value)
             else:
                 return False
+    
+    def delete(self, value):
+        if self.root:
+            return self.root._delete(value)
+        else:
+            return None
+    
+    def _delete(self, value):
+        if value < self.data:
+            if self.left:
+                self.left = self._delete(self.left, value)
+            else:
+                return None
+        elif value > self.data:
+            if self.right:
+                self.right = self._delete(self.right, value)
+            else:
+                return None
+        else:
+            # Value is found: 
+            # 1. Delete the value if it is leaf: 
+            if self.left is None and self.right is None:
+                print(self.data)
+                self = None
+                return self
+
         
 
 if __name__ == "__main__":
-    arr = [10, 8, 11, 5, 5]
+    arr = [10, 8, 11, 5]
     b = BST()
     for a in arr:
         b.insert(a)
-    b.show()
-    print(b.search(5))
-    print(b.search(10))
-    print(b.search(100))
+    # print('root node: ', b.root.data)
+    # print('Left Child of root: ', b.root.left.data)
+    # print('Right Child of root: ', b.root.right.data)
+    # print('Left of Left Child of root: ', b.root.left.left.data)
+    # print('Delete leaf node...5')
+    b.delete(5)
+    # print(" ")
+    # print('root node: ', b.root.data)
+    # print('Left Child of root: ', b.root.left.data)
+    # print('Right Child of root: ', b.root.right.data)
+    # print('Left of Left Child of root: ', b.root.left.left.data)    
