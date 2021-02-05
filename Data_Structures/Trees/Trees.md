@@ -4,7 +4,7 @@
 
 # Introduction to Trees
 
-In this chapter, we will look at another data structure called trees. Unlike linear data structures that we have seen so far, trees is a non-linear data structure. The structure of a tree is the following: 
+In this chapter, we will look at another data structure called trees. Unlike linear data structures that we have seen so far, tree is a non-linear data structure. The structure of a tree is the following: 
 
 *   **Root Node**: A node with no parent nodes.
 *   **Child Node**: A node which is linked to an upper node (**parent node**)
@@ -350,6 +350,43 @@ Then we insert `9` into the BST.
 5     
 ```
 
+There is another alternative way of writing the BST: 
+
+```python
+# Alternative Method
+
+class Node():
+    def __init__(self, data=None):
+        self.data = data
+        self.left = None
+        self.right = None
+        
+class BST():
+    def __init__(self):
+        self.root = None
+        
+    def insert(self, value):
+        if self.root is None:
+            self.root = Node(value)
+        else:
+            self._insert(self, self.root, value)
+            
+    def _insert(self, cur_node, value):
+        if value < cur_node.data:
+            if cur_node.left is not None:
+                self._insert(cur_node.left, value)
+            else:
+                cur_node.left = Node(value)
+        
+        if value > cur_node.data:
+            if cur_node.right is not None:
+                self._insert(cur_node.right, value)
+            else:
+                cur_node.right = Node(value)
+```
+
+
+
 #### Search Method
 
 Now that we have created a BST, we will next create a `.search()` method to find a value in a BST. Just like `.insert()` method, we will have the `.search()` method within the `Node()` class and the `BST()` class. 
@@ -372,7 +409,7 @@ Now that we have created a BST, we will next create a `.search()` method to find
         return False
 
 # Search in the BST class: 
-de search(self, value):
+def search(self, value):
     if self.root is None:
         return False
     else:
@@ -387,11 +424,25 @@ Here we continue to work in the BST class. We add a new method called `search()`
 Another alternative to the main `search()` method is the following: 
 
 ```python
-    def search(self, value):
-        if self.root:
-            return self._search(self.root, value) == True
+def search(self, value):
+    if self.root:
+        return self._search(self.root, value) == True
+    else:
+        return None
+        
+def _search(self, cur_node, value):
+    if value == cur_node.data:
+        return True
+    elif value < cur_node.data:
+        if cur_node.left:
+            return self._search(cur_node.left, value)
         else:
-            return None
+            return False
+    elif value > cur_node.data:
+        if cur_node.right:
+            return self._search(cur_node.right, value)
+        else:
+            return False
 ```
 
 #### Deletion Method
