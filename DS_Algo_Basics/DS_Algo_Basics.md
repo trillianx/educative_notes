@@ -6,7 +6,7 @@
 
 These are my notes from the free online book, [A Common-Sense Guide to Data Structures and Algorithms](https://medium.com/pragmatic-programmers/table-of-contents-323f1846e259). 
 
-## Data Structures
+## Chapter 1: Data Structures
 
 **Data** as a broad term refers to all types of information while **data structures** refer to how data is organized. Organization of data is important because it can significant impact how fast your code runs. So, depending on your choice of data structure, your code can run fast or slow.
 
@@ -41,11 +41,13 @@ def find_even():
     return result
 ```
 
-We see that Function 2 takes half the steps of Function 1. Therefore, Funtion 2 is faster. 
+We see that Function 2 takes half the steps of Function 1. Therefore, Funtion 2 is faster.
+
+>   Measuring efficiency of a code boils down to measuring the steps taken
 
 So, why do we measure code speed in terms of steps? This is because measuring steps is agnositic to the computer hardware or software. Measuring the steps is known as the **time complexity**. Other tems used for time complexity are **efficiency, performance, runtime**. 
 
-## Data Structure: Array
+### Data Structure: Array
 
 An array is a basic data structure in any given language. In python an array is represented by a `list`. A list is simply a data structure that is enclosed by square brackets. 
 
@@ -58,7 +60,7 @@ Here are some properties of an array:
 
 Let's look at the speed of the four operations of this data structure. 
 
-### Reading
+#### Reading
 
 In this data structure, a program is able to read a value directly when it knowns the index of the value. The computer is able to do this because each index maps to the location of the element in the computer's memory address. So, when you index an array, the computer finds the address of the element for that index and returns the value of element stored at that index. 
 
@@ -76,7 +78,7 @@ As we can see the memery address is associated with each index. Notice how the m
 
 As we can see reading an element in an array takes one step, which is adding the index to the address at index `0`. When an operation takes one step, it is considered fast. 
 
-### Searching
+#### Searching
 
 Searching is an inverse of reading. Rather than asking the computer to find the value at a given index, we ask it ito find the index of a value in a given array. 
 
@@ -86,7 +88,7 @@ So, what is the maximum number of steps a computer needs to perform in order to 
 
 Therefore, if an array has N elements. The worst case scenario would be N steps. Clearly, we see that searching is not as fast as reading. 
 
-### Insertion
+#### Insertion
 
 The insertion operation depends on where we insert an element in the array. If the insertion happens at the end of the array, it is fairly quick. This is because the computer, simply needs to create a new address, which it can based on the index, and insert the value there. 
 
@@ -98,11 +100,118 @@ However, insertion at any other index is slower as it requires more than one ste
 
 If we wish to insert at the beginning, the worst case scenario, we need to move all elements in the array to the right and then make an insertion. In short, given an array of size $N$, there would be $N+1$ steps to insert in the worst case scenario. 
 
-### Deletion
+#### Deletion
 
 The deletion operation involves finding the element, removing it and then moving all other elements, right of the element to the left. So, the deletion process is similar to insertion process. Therefore, if an array has $N$ elements, the deletion process will require, $N$ steps. 
 
-## Data Structure: Sets
+### Data Structure: Sets
 
-A set is a data structure that does not allow duplicate values to be contained within it. There are different types of sets but in this case we will talk about array-based sets. 
+A set is a data structure that does not allow duplicate values to be contained within it. There are different types of sets but in this case we will talk about array-based sets. Sets are useful when you want to ensure that you do not have duplicates. 
+
+The array-based set, therefore is an array with a condition that it cannot contain duplicates. Though such a condition is useful, it can also change the efficiency of the four operations. 
+
+#### Reading
+
+Sets in python are unordered collection of immutable objects. So, reading a set involves $N$ steps in the worst case scenario. 
+
+#### Searching
+
+Searching a set is no different from searching an array, so it takes $N$ steps. 
+
+#### Insertion
+
+The insertion in set is done using the `.add()` method. Due to the constraint that a set cannot contain duplicate elements, the insertion operation first finds whether the value to be inserted already exists or not and based on that decision decides either to insert or not. This involves searching for the element in the set, which takes $N$ steps and then inserting, which takes another $N+1$ steps. Thus the insertion takes $2N + 1$ steps. 
+
+#### Deletion
+
+The deletion is similar to deletion in an array. This takes $N$ steps. 
+
+## Chapter 2: Algorithms
+
+Choosing the right data structure is important to make our code more efficient. Another major factor that affects the efficiency of our code is proper selection of which algorithm to use. 
+
+An algorithm is simply a set of instructions for completing a specific task. 
+
+We saw two algorithms in the previous chapter in finding all even values between 1 and 100. Now we will explore an algorithm which is much faster than these two. However, before that we will explore another data structure. 
+
+### Data Structure: Ordered Array
+
+An ordered array is an array where the elements are always sorted. When an element is inserted, it is inserting such that the ordered is maintained.
+
+#### Insertion
+
+If we were to insert an element, which happens to be smallest, it will be inserting in the beginning. So, if the array has $N$ elements, we will: 
+
+1.  Make 1 comparison
+2.  Move all $N$ elements to the right
+3.  Insert the new element
+
+Thus, this takes $N+2$ steps. Now if we were to insert an element that is the largest, we would:
+
+1.  Make $N$ comparisons
+2.  Move `0` elements to the right
+3.  Insert the new element
+
+Thus, this would take $N+1$ steps. 
+
+So, the insertion in an ordered array takes $N+2$ steps. We see that this is worse than insertion in an array. However, there is something quick that we can do with an ordered array. 
+
+#### Searching
+
+Let's look at linear search first. To search for an element in the array, we would use the following method: 
+
+```python
+def search(self, element):
+    if len(self.list) != 0:
+        for e in self.list:
+            if element == e:
+                return True
+            elif element < e:
+                return False
+        return False
+    else:
+        print('emtpy array')
+        return None
+```
+
+If we look at this method, we see that it takes at most $N$ steps (if the element we are looking for is the last element ). The method also quits as soon as the element in the sorted array becomes greater than the element, clearly indicating that we've passed the number.
+
+It may seem that there is no difference between ordered array and arrays but the next algorithm will take advantage of this data structure. 
+
+### Algorithm: Binary Search
+
+The binary search algorithm works on the fact that at each step the algorithm divides the search space in half. This allows the algorithm to quickly reduce the searchable space  in each iteration. Here's how the algorithm works: 
+
+1.  Pick a middle number in the ordered array.
+2.  Ask if the number is greater than or less than this middle number
+3.  if the number is higher, pick the middle of the higher array of numbers
+4.  If the number is lower, pick the middle of the lower array of numbers
+5.  Repeat steps 2-4 until convergence
+
+Here's how I would write a recursive algorithm: 
+
+```python
+def binary_search(arr, element):
+    if len(arr) == 0:
+        return False
+    else:
+        middle_index = len(arr) // 2
+        left = arr[:middle_index]
+        right = arr[middle_index+1:]
+        if element == arr[middle_index]:
+            return True
+        elif element < arr[middle_index]:
+            return binary_search(left, element)
+        else:
+            return binary_search(right, element)
+```
+
+We see that if an array has 100 values, the maximum number of steps each type of algorithm takes are: 
+
+*   Linear Search: 100 steps
+*   Binary Search: 7 steps 
+
+So, if there are 200 elements in the array, the binary search algorithm will take 8 steps while the linear search algorithm will take 200 steps. 
+
+## Chapter 3: Big O Notation
 
