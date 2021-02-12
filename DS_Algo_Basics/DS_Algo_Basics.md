@@ -287,3 +287,127 @@ So, to conclude, with Big O Notation, we have a consistent system that allows us
 
 ## Chapter 4: Speeding Up Your Code with Big O
 
+The Big O notation allows us to compare algorithms in general. However, once we have identfied an algorithm that is slow, we can try to figure out whether there is a way to optimize the algorithm at hand. 
+
+Let's take an example of an algorithm and see if we can make it faster. The process illustrates how we can optimize an algorithm. 
+
+### Algorithm: Bubble Sort
+
+Sorting is an important subject of research in computer science. The basic idea behind sorting is the following, 
+
+Given an array of unsorted elements, how can we sort them so that they end up in ascending order?
+
+Bubble sort is a basic sorting algorithm but not the most efficient. The idea behind bubble sort is the following: compare the left neighbor of a given element. If the neighbour is larger, swap the places. Cotinue to do so until you either reach the end of the array and there is no more elements to swap or the neighbor is smaller than the current element. 
+
+#### Bubble Sort in Action
+
+Let's implement bubble sort in Python
+
+```python
+def bubblesort(arr):
+    n = len(arr)
+    if n <= 1:
+        return arr
+    for i in range(1, n):
+        print("Pass: {s}".format(s=i))
+        j = i - 1
+        while j >= 0:
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j+1] = arr[j+1], arr[j]
+            j-=1
+        print(arr)
+        print("*"* 20)
+    return arr
+```
+
+#### The Efficiency of Bubble Sort
+
+The Bubble Sort Algorithm contains two significant kinds of steps: 
+
+1.  **Comparisons**: two numbers are compared with one another to determine which is greater
+2.  **Swaps**: two numbers are swapped with one another in order to sort them
+
+Let's see an example and count the total comparisons: 
+
+```python
+a = [65, 55, 45, 35, 25, 15, 10]
+```
+
+Here are our observations: 
+
+*   There are 7 passes in total as $N=7$
+
+*   Now we count the comparisons and swaps for each pass which are given as:
+     (comparison, swaps)
+
+    *   Pass 1: (1, 1)
+    *   Pass 2: (2, 2)
+    *   Pass 3: (3, 3)
+    *   Pass 4: (4, 4)
+    *   Pass 5: ...
+
+    In this case, we see that the number of swaps and the comparisons are the same. Now, this is the worst case as we passed an array in descending order. Thus, in the worst case scenario we have a total 2 * (6 + 5 + 4 + 3 + 2 + 1) = 42 steps which correspond to 21 comparisons and 21 steps. 
+
+    We can generalize by stating that for given an array of length $N$, we have: 
+    $$
+    \text{Total Steps} = 2\times \sum_{i=1}^{N-1}i = n(n-1)
+    $$
+    Here's how the the total steps vary with increasing $N$:
+
+    ![image-20210212135158048](DS_Algo_Basics.assets/image-20210212135158048.png)
+
+This growth is approximately equal to $N^2$: 
+
+![image-20210212135239713](DS_Algo_Basics.assets/image-20210212135239713.png)
+
+Thus the bubble sort algorithm is said to take $\mathcal{O}(N^2)$ or **quadratic** time. 
+
+#### A Quadratic Problem
+
+The reason the Bubble Sort algorithm takes quadratic time is because of **nested loops**. We notice that the outer loop scans through the array once. But for each element in the array, the while loop does comparisons. When we have nested loops, the time complexity is generally quadratic. 
+
+Whenever you encounter a slow algorithm, it's worth spending some time to consider whether there are any faster alteratives. Sometimes there aren't any but let's make sure. 
+
+#### A Linear Solution
+
+Unfortunately, the Bubble Sort algorithm does not have a linear solution but let's take another example which does. 
+
+Let's write a function that checks whether an array has duplicates. If the algorithm finds a duplicate it returns `True` else it returns `False`:
+
+```python
+def find_dups(arr):
+    n = len(arr)
+    if n <= 1:
+        return False
+    for i in range(n):
+        for j in range(n):
+            if arr[i] == arr[j] and i != j:
+                return True
+    return False
+```
+
+We see that this algorithm has a nested loop and so, the time complexity of this algorithm is quadratic. So, can we make this linear in time? 
+
+One way to implement a linear time, we do the following: 
+
+```python
+def find_dups_linear(arr):
+    unique_vals = []
+    for e in arr:
+        if e not in unique_vals:
+            unique_vals.append(e)
+        else:
+            return True
+    return False
+```
+
+We see that this has a time complexity of $N$ because we have removed one loop. This algorithm will be a lot faster than the previous one. 
+
+One thing to note that this algorithm, though takes linear time is not very efficient because it takes more memory. But we will see this later in Chapter 19. 
+
+It’s clear that having a solid understanding of Big O Notation can enable you to identify slow code and select the faster of two competing algorithms.
+
+However, there are situations in which Big O Notation will have us believe that two algorithms have the same speed, while one is actually faster. In the next chapter, you’re going to learn how to evaluate the efficiencies of various algorithms even when Big O isn’t nuanced enough to do so.
+
+## Chapter 5: Optimizing Code With and Without Big O
+
