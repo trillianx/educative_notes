@@ -215,3 +215,75 @@ So, if there are 200 elements in the array, the binary search algorithm will tak
 
 ## Chapter 3: Big O Notation
 
+We have seen that we can compute the efficiency of an algorithm by computing the total number of steps the algorithm takes. We can then generalize by saying this in terms of $N$ steps. For example, we can say that a linear search algorithm takes $N$ steps if the array it is searching has $N$ elements. Now this is very wordy, instead we use a notation from mathematics called the **Big O Notation**. 
+
+### Big O: How Many Steps Relative to N Elements? 
+
+The Big O achieves consistency by focusing on the number of steps an algorithm takes, but in a specific way. Let's use Big O on linear search. 
+
+In the worst case, the linear search algorithm takes as many steps as there are elements in the array. So, if there are N elements, the linear search will take N. The appropriate way to express this in Big O notation is: 
+$$
+\mathcal{O}(N)
+$$
+
+>   The Big O notation expresses the answer to the *key question*, "if there are N data elements, how many steps will the algorithm take? ". 
+
+Let's look at reading from the array, as we say in Chapter 1. How many steps are taken to read an element from an array? The anwer is 1 step. So, we say that reading an element from an array takes $\mathcal{O}(1)$. So, this suggests that irrespective of how many elements are in the array, it takes exactly the same number of steps. We say that reading takes **a constant time**. 
+
+>   An algorithm that takes $\mathcal{O}(1)$ is said to take constant time
+
+The Big O notation describes the upper bound of the growth rate of the function. In mathematical terms, we say that if a function $g(x)$ grows no faster than $f(x)$, then $g$ is said to be a member of $\mathcal{O}(f)$. 
+
+### The Soul of Big O
+
+Knowing what we have learned so far, we may naively say that if an algorithm takes 3 steps irrespective of the number of elements in a given array, the Big O is $\mathcal{O}(3)$. However, the correct answer is $\mathcal{O}(1)$. Why is this? 
+
+The main question that the Big O notation asks is, "**How will an algorithm's performance change as the data increases?**" So, if the algorithm's performance does not change with increasing $N$, then it does not matter if we have $\mathcal{O}(3)$ or $\mathcal{O}(1)$. 
+
+Another thing to consider is that when an algorithm is said to be $\mathcal{O}(N)$, very often this is a pessimistic value. For example, the linear search could take $\mathcal{O}(1)$ if the first element it encounters is the element it is searching for.  However, it is hard to quantify if we have to depend on when and where the element happens to be. Instead, we talk about the Big O notation in terms of the worst-case scenario.
+
+We have seen the Big O notation of linear search. Now let's define the Big O notation of binary search algorithm. 
+
+We cannot define binary search as $\mathcal{O}(1)$ as the number of steps increase with increasing $N$. We cannot also call it a $\mathcal{O}(N)$, as the number of steps are much less with increasing $N$. So, it seems to fall in between $\mathcal{O}(1)$ and $\mathcal{O}(N)$. 
+
+We describe the binary search to have a time complexity of $\mathcal{O}(log \ N)$. Let's see why this is the case. In computer science, the $log()$ function is defined in terms of base 2. So, technically, it should be written as $log_2()$. 
+
+Now the $\mathcal{O}(log\ N)$ means that for $N$ data elements, the algorithm will take $log_2(N)$ steps. So, if there are 8 elements, the algorithm takes $log_2(8) = 3$ steps.  This is exactly what happens in the binary search. The algorithm keeps dividing the search space. The table below shows the difference between $\mathcal{O}(N)$ and $\mathcal{O}(log \ N)$. 
+
+<img src="DS_Algo_Basics.assets/image-20210212105246270.png" alt="image-20210212105246270" style="zoom:150%;" />
+
+### Practical Examples
+
+Let's look at the `for` loop and see what the efficiency of this algorithm is: 
+
+```python
+things = ['apples', 'baboons', 'cribs', 'dulcimers']
+
+for thing in things: 
+    print('Here is the thing: {s}'.format(s=thing))
+```
+
+Note that an algorithm does not have to be complex. Technically, any code that does anything is an algorithm. In this case, the algorithm prints things. 
+
+To measure the time complexity we do the following: 
+
+*   Break down the number of steps the algorithm takes: We see that it takes 4 steps here. But if there are $N$ elements in the array it will take $N$ steps. 
+
+So, we say that this algorithm has a time complexity of $\mathcal{O}(N)$. 
+
+Next, let's look at the algorithm that determines if a number is a prime or not: 
+
+```python
+def is_prime(n):
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+```
+
+When the number is N, the loop goes from 2 to N, so this corresponds to $N - 2$ steps. We can approximately state that the loop takes $N$ steps. The `if` statement takes $1$ step each time so it is constant in time. So, we conclude that this algorithm takes $\mathcal{O}(N)$. 
+
+So, to conclude, with Big O Notation, we have a consistent system that allows us to compare any two algorithms. With it, we will be able to examine real-life scenarios and choose between competing data structures and algorithms to make our code faster and able to handle heavier loads.
+
+## Chapter 4: Speeding Up Your Code with Big O
+
