@@ -411,3 +411,51 @@ However, there are situations in which Big O Notation will have us believe that 
 
 ## Chapter 5: Optimizing Code With and Without Big O
 
+The Big O is a good tool for comparing algorithms. However, there are times when two algorithms may have similar time complexity and yet one could be faster than the other. In this chapter, we will see how to discern between two algorithms that seem to have the same efficiency but one is faster than the other.
+
+### Algorithm: Selection Sort
+
+The selection sort algorithm is another of the sorting algorithm. The basic idea behind selection sort is to find a minimum value in a given array and push that to the beginning of the array. The resulting subarray is the again used to find the minimum value and pushed that minimum to the beginning of the array. 
+
+The selection sort algorithm consists of two parts: 
+
+1.  Find a minimum in a given sub-array
+2.  Swap the minimum value to the beginning of the array
+
+Let's write this out in Python:
+
+```python
+def selection_sort(arr):
+    n = len(arr)
+    if n < 2:
+        return arr
+    for i in range(n):
+        min_val = arr[i]
+        min_index = i
+        for j in range(i+1, n):
+            if arr[j] < min_val:
+                min_val = arr[j]
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+```
+
+Now if we were to compare Bubble Sort and Selection Sort, we see that Selection sort seems to do much better even when both have nested for loops: 
+
+![image-20210212151215742](DS_Algo_Basics.assets/image-20210212151215742.png)
+
+In fact, selection sort takes about half the steps as bubble sort indicating that selection sort is twice as fast. 
+
+But in terms of Big O, both algorithms have the same time complexity. Here's why. 
+
+*   Bubble Sort: $\mathcal{O}(N^2)$
+*   Selection Sort: $\mathcal{O}(N^2/2)$
+
+Now for Big O, the constants don't add much. So, in terms of Big O, both algorithm take $\mathcal{O}(N^2)$ time. So, even if we have an algorithm which has a time complexity of $\mathcal{O}(100N)$, it would be consider the same as one with time complexity of $\mathcal{O}(N)$. 
+
+>   In general, the Big O notation ignores any constants there could be in the analysis
+
+Here's a summary of some of the time complexities: 
+
+<img src="DS_Algo_Basics.assets/image-20210212153536173.png" alt="image-20210212153536173" style="zoom:150%;" />
+
+Until now we have looked at the worst case scenarios. But in general, we will look at the time complexity on average, which is what we expect to happen. 
