@@ -55,7 +55,7 @@ def compute_average(arr, k):
         start = i
         end = i + k
         if end <= len(arr):
-            avg = sum(arr[start:end])/5
+            avg = sum(arr[start:end])/k
             result.append(avg)
     return result
 ```
@@ -84,13 +84,21 @@ def compute_avg(arr, k):
 
 Let's understand this code. We start by setting the sum to zero. We set the start of the window to be `0` as well. Then we define a list. 
 
-Now what we want to do is keeping add numbers one by one until we read the window size. This is done using the `for end in range(len(arr))`. This also has a dual purpose. Once the window size is reached, we keep adding the numbers but we begin removing the numbers from the front. This is where the `start` comes into the picture. The `if end >= k - 1` is to check whether the window size is reached. Once the window size is reached, we simply remove the first element from the window and add the next element. 
+Now what we want to do is keep adding numbers one by one until we get to the window size. This is done using the `for end in range(len(arr))`. 
+
+This also has a dual purpose. Once the window size is reached, we keep adding the numbers but we begin removing the numbers from the front. This is where the `start` comes into the picture. The `if end >= k - 1` is to check whether the window size is reached. We use `k-1` because the numbers go start from `1` but indices start from `0`. 
+
+Once the window size is reached, we compute the average and then we simply remove the first element from the window. The loop goes back and then adds the next element to the window. 
 
 In the following chapters we will use the sliding window approach to solve few problems. 
 
 In some problems, the size of the sliding window is not fixed. We have to expand or shrink the window based on the problem constraints. We will see a few examples of such problems in the next chapter. 
 
->   To summarize: Start with start of the window at 0 and increase the end of the window from 0. Keep adding elements to the sums until the end of the window equals k. Then subtract the start and add the end to the sum. 
+Here's the whole thing shown pictorally. 
+
+<img src="Patterns%20for%20Coding%20Questions.assets/image-20210215102936004.png" alt="image-20210215102936004" style="zoom:80%;" />
+
+>   To summarize: Start with start of the window at 0 and increase the end of the window from 0. This is done in the loop by setting the index as end. Keep adding elements to the sums until the end of the window equals k. Then subtract the start and add the end to the sum. 
 
 ### Maximum Sum Subarray of Size K
 
@@ -136,7 +144,7 @@ We compare the `max_val` with the `sum_val` and take the maximum of the two. Gra
 
 ![image-20201214155628794](Patterns%20for%20Coding%20Questions.assets/image-20201214155628794.png)
 
-Let's look at another problem
+>   To summarise: We start with the beginning and end of the window to be zero. We increase the window size and keep adding the elements until the end of the window is `k-1`, or the window size is `k-1`. Then we take the maximum valule between the sums and the max_val and subtract the element at the start of the window from the sum. The loop then continues.  
 
 ### Smallest Subarray with a Given Sum
 

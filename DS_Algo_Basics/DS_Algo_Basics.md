@@ -459,3 +459,43 @@ Here's a summary of some of the time complexities:
 <img src="DS_Algo_Basics.assets/image-20210212153536173.png" alt="image-20210212153536173" style="zoom:150%;" />
 
 Until now we have looked at the worst case scenarios. But in general, we will look at the time complexity on average, which is what we expect to happen. 
+
+## Chapter 6: Optimizing for Optimistic Scenarios
+
+So far we have considered the worst-case scenario for a given algorithm. However, it is important to consider all cases which will help to better choose the appropriate algorithm for every situation. 
+
+### Algorithm: Insertion Sort
+
+Here's the python code for insertion sort: 
+
+```python
+def insertion_sort(arr):
+    n = len(arr)
+    if n < 2:
+        return arr
+    for i in range(1, n):
+        tmp = arr[i]
+        j = i - 1
+        while j >= 0 and arr[j] > tmp:
+            arr[j+1] = arr[j]
+            j -= 1
+        arr[j+1] = tmp
+    return arr
+```
+
+#### Efficiency of Insertion Sort
+
+The insertion sort involves four types of steps: removals, comparisons, shifts, and insertions. Therefore, to get the efficiency of insertion sort, we will need to tally up each of these steps. 
+
+##### Comparisons
+
+In each loop we make comparisons. In the worst case scenarios, we would make $n-1$ comparisons corresponding to $n$ elements in the array. This would happen if the array is sorted in descending order. 
+
+So, if there are 5 elements, we would have 10 comparisons, 10 element will have 45 comparisons and 20 elements have 190 comparison. So, we see a pattern here. If there are $N$ elements, there will be approximately, $N^2/2$ comparisons. 
+
+##### Shifts
+
+Shifts occur each time we move a value to the right. In the worst case scenario, we will have as many shifts as there are comparisons. Thus the number of shifts are the same as comparisons. 
+
+##### Removals
+
