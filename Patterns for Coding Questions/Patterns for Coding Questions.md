@@ -166,7 +166,7 @@ While for the following, we see that:
 
 ![image-20201214162248875](Patterns%20for%20Coding%20Questions.assets/image-20201214162248875.png)
 
-a window size of 3 gets us the answer. Note that, in this case there are two possibilities, so we show both of them. 
+A window size of 3 gets us the answer. Note that, in this case there are two possibilities, so we show both of them. 
 
 This problem follows the Sliding Window pattern, and we can use a similar strategy as discussed in the previous question. However, the sliding window size is not fixed. 
 
@@ -216,15 +216,15 @@ def smallest_sub(s, arr):
     return min_length
 ```
 
-THe time complexity of the above algorithm will be $O(N)$. The outer for loop runs through all elements while the inner loop processes each element only once. So, the time complexity is $O(N + N) \approx O(N)$. 
+The time complexity of the above algorithm will be $O(N)$. The outer for loop runs through all elements while the inner loop processes each element only once. So, the time complexity is $O(N + N) \approx O(N)$. 
 
 Here are the steps we take: 
 
 1.  We add elements to `sum_val`, thus increasing the window size, until the `sum_val` is greater than `s`. 
-2.  We note the size of the window, `cur_length = end - start + 1`. 
-3.  We pick the minimum of the window sizes and store it in `min_length`
-4.  We then move the window by 1 element. 
-5.  We now add elements until the `sum_val` is greater or equal to `s`
+2.  When the above condition is satisfied, we note the size of the current window. This is done using:  `cur_length = end - start + 1`. 
+3.  We then pick the minimum window size. For this we set the `min_length = math.inf`. So, the minimum would be the window size we get. 
+4.  Next we remove an element from start in the sum_val. This shrinks our window. If the total sum still exceeds, `s`, then we continue to shrink the window. If this is not the case, we get out of the while loop and enter the for loop. 
+5.  In the for loop we increase the `end`, this increasing the window size again. 
 6.  We repeat steps 2 - 6
 
 Graphically, this is how it looks like: 
