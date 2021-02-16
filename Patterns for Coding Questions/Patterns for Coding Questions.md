@@ -100,7 +100,7 @@ Here's the whole thing shown pictorally.
 
 >   To summarize: Start with start of the window at 0 and increase the end of the window from 0. This is done in the loop by setting the index as end. Keep adding elements to the sums until the end of the window equals k. Then subtract the start and add the end to the sum. 
 
-### Maximum Sum Subarray of Size K
+### Maximum Sum Subarray of Size K (easy)
 
 Here's the problem statement: 
 
@@ -146,7 +146,7 @@ We compare the `max_val` with the `sum_val` and take the maximum of the two. Gra
 
 >   To summarise: We start with the beginning and end of the window to be zero. We increase the window size and keep adding the elements until the end of the window is `k-1`, or the window size is `k-1`. Then we take the maximum valule between the sums and the max_val and subtract the element at the start of the window from the sum. The loop then continues.  
 
-### Smallest Subarray with a Given Sum
+### Smallest Subarray with a Given Sum (easy)
 
 Given an array of positive numbers and a positive number $S$, find the length of the smallest contiguous subarray whose sum is greater than or equal to $S$. Return `0` if no such subarray exists. 
 
@@ -233,9 +233,7 @@ Graphically, this is how it looks like:
 
 In this way we only traverse the array once rather than multiple times using the double for loop. The time complexity for this is $O(N + N) \approx O(N)$. And the space complexity is $O(1)$ as the algorithm runs in constant space. 
 
-Let's look at another problem
-
-### Longest Substring with K Distinct Characters
+### Longest Substring with K Distinct Characters (medium)
 
 Given a string, find the length of the longest substring in it with no more than K distinct characters. 
 
@@ -265,14 +263,45 @@ def longest_substrings_with_k_distinct(string, k):
             start += 1
         max_length = max(max_length, end - start + 1)
     return max_length
-        
 ```
 
 The time complexity is $O(2N)$ while the time complexity is $O(K)$. 
 
-### Fruits into Baskets
+This is similar to the smallest sub. The interesting complexity is the fact that we use a hash table to keep track of characters.
 
-Given an array of characters where each character represents a fruit tree, you are given two baskets, and your goal is to put maximum number of fruits in each basket. The only restriction is that each basket can have only one type of fruit. 
+This is my version of the code: 
+
+```python
+def longest(arr, k):
+    n = len(arr)
+    max_length = 0
+    start = 0
+    unique = {}
+    for end in range(n):
+        end_string = arr[end]
+        if end_string not in unique:
+            unique[end_string] = 0
+        else:
+            unique[end_string] += 1
+        while len(unique) > k:
+            start_string = arr[start]
+            if unique[start_string] == 0:
+                del unique[start_string]
+            else:
+                unique[start_string] -= 1
+            start += 1
+        length = end - start + 1
+        max_length = max(max_length, length)
+    return max_length
+```
+
+
+
+>   In general, when we are dealing with problems that involve flexible window size, move the end first and then move the start based on the condition. 
+
+### Fruits into Baskets (medium)
+
+Given an array of characters where each character represents a fruit tree, you are given **two baskets**, and your goal is to put **maximum number of fruits** in each basket. The only restriction is that **each basket can have only one type of fruit**. 
 
 You can start with any tree, but you can’t skip a tree once you have started. You will pick one fruit from each tree until you cannot, i.e., you will stop when you have to pick from a third fruit type.
 
@@ -306,7 +335,30 @@ def fruits_into_baskets(fruits):
   return max_length
 ```
 
+### No-repeat Substring (hard)
 
+Given a string, find the l**ength of the longest substring**, which has **no repeating characters**. 
+
+The solution is similar to the sliding window strategy discussed in Longest Substring with K Distinct Characters. We will use the hash map to remember the last index of each character that we have processed. Whenever we get a repeating character, we will shrink our sliding window to ensure that we always have distinct characters in the sliding window. 
+
+```python
+def non_repeat_substring(str1):
+  window_start = 0
+  max_length = 0
+  char_index_map = {}
+
+  for window_end in range(len(str1)):
+    right_char = str1[window_end]
+    
+    if right_char in char_index_map:
+      window_start = max(window_start, char_index_map[right_char] + 1)
+    char_index_map[right_char] = window_end
+    
+    max_length = max(max_length, window_end - window_start + 1)
+  return max_length
+```
+
+>   In summary, we increase the end index. If the end index is in the character, we measure the length of the window 
 
 ## Pattern: Two Pointers
 
@@ -316,7 +368,7 @@ Consider the following example:
 
 >    Given an array of sorted numbers and a target sum, find a pair in the array whose sum is equal to the given target
 
-We could solve this problem we make use of two pointers, one on each side of the array. Then we use the following logic: 
+To solve this problem we make use of two pointers, one on each side of the array. Then we use the following logic: 
 
 *   If the sum of the elements for the two pointers is greater than the target sum, we decrease the second pointer
 *   If the sum of the element is less than the target, we increase the first pointer
@@ -353,6 +405,24 @@ def pair_with_targetsum(arr, target):
     return [start, end]
 ```
 
+An other way of writing this would be: 
+
+```python
+def target_sum(arr, target):
+    start = 0
+    end = len(arr) - 1
+    while start <= end:
+        sum_val = arr[start] + arr[end]
+        if sum_val == target:
+            return (arr[start], arr[end])
+        elif sum_val > target:
+            end -= 1
+        else:
+            start += 1
+        
+    return False 
+```
+
 The time complexity is $O(N)$ and the space complexity is $O(1)$. 
 
 #### An Alternative Approach
@@ -363,7 +433,6 @@ Rather than using pointers, you can use a hash table.
 def pair_with_targetsum(arr, target):
     nums = {}
     for i, num in enumerate(arr):
-        print(nums)
         if target - num in nums:
             return [nums[target - num], i]
         else:
@@ -410,6 +479,43 @@ def remove_duplicates(arr):
 ```
 
 The reason we start with index of 1 for `non_dup_index` is because if there are duplicates, say two duplicates, we want to keep one while replace the other with a new number. 
+
+This is the way I did:
+
+```python
+def remove_duplicates(arr):
+    start = 0
+    end = 1
+    n = len(arr)
+    while end < n:
+        if arr[end] == arr[start]:
+            arr.pop(end)
+            n -= 1
+        else:
+            end += 1
+            start += 1
+    return arr
+```
+
+This method is not as efficient as the one above because `.pop(N)` takes $\mathcal{O}(N)$. Furthermore, because the array needs to be resized, that would take another $\mathcal{O}(N/2)$. 
+
+Here's another method I created: 
+
+```python
+def remove_duplicates(arr):
+    start = 0
+    end = 0
+    n = len(arr)
+    while end < n:
+        if arr[end] != arr[start]:
+            start += 1
+            arr[start] = arr[end]
+        else:
+            end += 1
+    return arr[:start+1]
+```
+
+
 
 ### Squaring a Sorted Array
 

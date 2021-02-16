@@ -1,18 +1,25 @@
-import numpy as np
-def small_window(arr, S):
-    n = len(arr)
-    max_val = []
-    for start in range(n):
-        sums = arr[start]
-        end = 0
-        while start + end < n and sums <= S:
-            sums += arr[end]
-            end += 1
-        max_val.append(end)
-    return max_val
+def findPivot(arr, low, high): 
+      
+    # base cases 
+    if high < low: 
+        return -1
+    if high == low: 
+        return low 
+      
+    # low + (high - low)/2; 
+    mid = int((low + high)/2) 
+      
+    if mid < high and arr[mid] > arr[mid + 1]: 
+        return mid 
+    if mid > low and arr[mid] < arr[mid - 1]: 
+        return (mid-1) 
+    if arr[low] >= arr[mid]: 
+        return findPivot(arr, low, mid-1) 
+    return findPivot(arr, mid + 1, high)
+
 
 
 if __name__=='__main__':
-    arr = [2, 1, 5, 2, 3, 2]
-    S = 7 
-    print(small_window(arr, S))
+    arr = [5, 6, 7, 8, 9, 10, 1, 2, 3]
+    print(findPivot(arr, 0, len(arr)-1))
+    
