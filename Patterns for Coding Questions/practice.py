@@ -1,25 +1,26 @@
-def findPivot(arr, low, high): 
-      
-    # base cases 
-    if high < low: 
-        return -1
-    if high == low: 
-        return low 
-      
-    # low + (high - low)/2; 
-    mid = int((low + high)/2) 
-      
-    if mid < high and arr[mid] > arr[mid + 1]: 
-        return mid 
-    if mid > low and arr[mid] < arr[mid - 1]: 
-        return (mid-1) 
-    if arr[low] >= arr[mid]: 
-        return findPivot(arr, low, mid-1) 
-    return findPivot(arr, mid + 1, high)
+def square(arr):
+    n = len(arr)
+    start = 0
+    end = n - 1
+    index = end
+    sq = [0] * n
+    while start <= end:
+        sn = arr[start] ** 2
+        en = arr[end] ** 2
+        if sn > en:
+            sq[index] = sn
+            start += 1
+        else:
+            sq[index] = en
+            end -= 1
+        index -= 1
+    return sq
 
 
 
-if __name__=='__main__':
-    arr = [5, 6, 7, 8, 9, 10, 1, 2, 3]
-    print(findPivot(arr, 0, len(arr)-1))
-    
+if __name__ == '__main__':
+    arr = [-2, -1, 0, 2, 3]
+    arr2 = [-3, -1, 0, 1, 2]
+    print(arr)
+    print("")
+    print(square(arr))

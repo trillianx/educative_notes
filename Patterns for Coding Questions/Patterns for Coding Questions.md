@@ -425,6 +425,8 @@ def target_sum(arr, target):
 
 The time complexity is $O(N)$ and the space complexity is $O(1)$. 
 
+Note that the use of $=$  sign in`start <= end` works when the start and end are on the same index. If start and end need to be unique or the value needs to be unique, we need to remove the equal sign.
+
 #### An Alternative Approach
 
 Rather than using pointers, you can use a hash table. 
@@ -510,8 +512,7 @@ def remove_duplicates(arr):
         if arr[end] != arr[start]:
             start += 1
             arr[start] = arr[end]
-        else:
-            end += 1
+        end += 1
     return arr[:start+1]
 ```
 
@@ -536,25 +537,23 @@ Here's how it is done:
 Here's the solution: 
 
 ```python
-def make_squares(arr):
+def square(arr):
     n = len(arr)
     start = 0
-    end = len(arr) - 1
-    new_arr_index = end
-    
-    # create a new array
-    new_array = [0] * n
+    end = n - 1
+    index = end
+    sq = [0] * n
     while start <= end:
-        start_sq = arr[start] ** 2
-        end_sq = arr[end] ** 2
-        if start_sq > end_sq:
-            new_array[new_arr_index] = start_sq
+        sn = arr[start] ** 2
+        en = arr[end] ** 2
+        if sn > en:
+            sq[index] = sn
             start += 1
-        elif start_sq <= end_sq:
-            new_array[new_arr_index] = end_sq
+        else:
+            sq[index] = en
             end -= 1
-        new_arr_index -= 1
-    return new_array
+        index -= 1
+    return sq
 ```
 
 This takes $O(N)$ time complexity and $O(N)$ space complexity. 
