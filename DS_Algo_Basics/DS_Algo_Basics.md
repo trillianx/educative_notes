@@ -8,7 +8,7 @@ These are my notes from the free online book, [A Common-Sense Guide to Data Stru
 
 ## Chapter 1: Data Structures
 
-**Data** as a broad term refers to all types of information while **data structures** refer to how data is organized. Organization of data is important because it can significant impact how fast your code runs. So, depending on your choice of data structure, your code can run fast or slow.
+**Data** as a broad term refers to all types of information while **data structures** refer to how data is organized. Organization of data is important because it can significantly impact how fast your code runs. So, depending on your choice of data structure, your code will run fast or slow.
 
 ### Performance of Data Structures
 
@@ -16,8 +16,8 @@ To understand the performance of any data structure, we need to analyze the comm
 
 1.  **Read**: refers to looking up something at a particular spot within a data structure
 2.  **Search**: searching for a particular value within a data structure
-3.  **Insert**: adding a new value to our data structure
-4.  **Delete**: removing a value from our data structure
+3.  **Insert**: adding a new value to a data structure
+4.  **Delete**: removing a value from a data structure
 
 In a given data structure, we evaluate how fast each of these operations are. 
 
@@ -45,24 +45,24 @@ We see that Function 2 takes half the steps of Function 1. Therefore, Funtion 2 
 
 >   Measuring efficiency of a code boils down to measuring the steps taken
 
-So, why do we measure code speed in terms of steps? This is because measuring steps is agnositic to the computer hardware or software. Measuring the steps is known as the **time complexity**. Other tems used for time complexity are **efficiency, performance, runtime**. 
+So, why do we measure code speed in terms of steps? This is because measuring steps is agnositic to the computer hardware or software. Measuring the steps is known as the **time complexity**. Other terms used for time complexity are **efficiency, performance, runtime**. 
 
 ### Data Structure: Array
 
-An array is a basic data structure in any given language. In python an array is represented by a `list`. A list is simply a data structure that is enclosed by square brackets. 
+An array is a basic data structure in any given language. In python, an array is represented by a `list`. A list is simply a data structure that is enclosed by square brackets. 
 
 Here are some properties of an array: 
 
 *   can contain mixed data structures
 *   The index number locates the position of the element in the array
 *   Index starts with `0`
-*   The size of an array is given by the number of elements the array contains
+*   The size of an array is given by the number of elements in the array
 
 Let's look at the speed of the four operations of this data structure. 
 
 #### Reading
 
-In this data structure, a program is able to read a value directly when it knowns the index of the value. The computer is able to do this because each index maps to the location of the element in the computer's memory address. So, when you index an array, the computer finds the address of the element for that index and returns the value of element stored at that index. 
+In this data structure, a program is able to read a value directly when it knowns the index of the value. The computer is able to do this because each index maps to the location of the element in the computer's memory address. So, when you index an array, the computer finds the address of the element for that index and returns the value of the element stored at that index. 
 
 Given an array, such as: 
 
@@ -74,13 +74,13 @@ The computer stores these values as follows:
 
 ![image-20210209105304422](DS_Algo_Basics.assets/image-20210209105304422.png)
 
-As we can see the memery address is associated with each index. Notice how the memory addresses are consecutive or sequential. This helps the computer to easily find the address at a given index by simply adding memory address at `0` with that of a given index.
+As we can see the memory address is associated with each index. Notice how the memory addresses are consecutive or sequential. This helps the computer to easily find the address at a given index by simply adding memory address at `0` with that of a given index.
 
 As we can see reading an element in an array takes one step, which is adding the index to the address at index `0`. When an operation takes one step, it is considered fast. 
 
 #### Searching
 
-Searching is an inverse of reading. Rather than asking the computer to find the value at a given index, we ask it ito find the index of a value in a given array. 
+Searching is an inverse of reading. Rather than asking the computer to find the value at a given index, we ask it to find the index of a value in a given array. 
 
 Searching is tedious for the computer as there is no way for the computer to jump to that value. Instead, the computer has to go through each value, evaluate it, and then return an index if it finds the value. This way of finding a value in a given array is known as **linear search**. 
 
@@ -104,17 +104,28 @@ If we wish to insert at the beginning, the worst case scenario, we need to move 
 
 The deletion operation involves finding the element, removing it and then moving all other elements, right of the element to the left. So, the deletion process is similar to insertion process. Therefore, if an array has $N$ elements, the deletion process will require, $N$ steps. 
 
+Here is the summary: 
+
+| Operation | General            | Exception                               |
+| --------- | ------------------ | --------------------------------------- |
+| Read      | $\mathcal{O}(1)$   | -                                       |
+| Search    | $\mathcal{O}(N)$   | -                                       |
+| Insertion | $\mathcal{O}(N+1)$ | $\mathcal{O}(1)$ if inserted at the end |
+| Deletion  | $\mathcal{O}(N)$   | $\mathcal{O}(1)$ if deleted at the end  |
+
+
+
 ### Data Structure: Sets
 
 A set is a data structure that does not allow duplicate values to be contained within it. There are different types of sets but in this case we will talk about array-based sets. Sets are useful when you want to ensure that you do not have duplicates. 
 
 The array-based set, therefore is an array with a condition that it cannot contain duplicates. Though such a condition is useful, it can also change the efficiency of the four operations. 
 
-#### Reading
+#### Read
 
 Sets in python are unordered collection of immutable objects. So, reading a set involves $N$ steps in the worst case scenario. 
 
-#### Searching
+#### Search
 
 Searching a set is no different from searching an array, so it takes $N$ steps. 
 
@@ -136,7 +147,7 @@ We saw two algorithms in the previous chapter in finding all even values between
 
 ### Data Structure: Ordered Array
 
-An ordered array is an array where the elements are always sorted. When an element is inserted, it is inserting such that the ordered is maintained.
+An ordered array is an array where the elements are always sorted. When an element is inserted, it is inserting such that the order is maintained.
 
 #### Insertion
 
@@ -150,7 +161,7 @@ Thus, this takes $N+2$ steps. Now if we were to insert an element that is the la
 
 1.  Make $N$ comparisons
 2.  Move `0` elements to the right
-3.  Insert the new element
+3.  Insert the new element at the end
 
 Thus, this would take $N+1$ steps. 
 
@@ -226,9 +237,9 @@ $$
 \mathcal{O}(N)
 $$
 
->   The Big O notation expresses the answer to the *key question*, "if there are N data elements, how many steps will the algorithm take? ". 
+>   The Big O notation expresses the answer to the *key question*, "if there are N data elements, how many steps will the algorithm take? "
 
-Let's look at reading from the array, as we say in Chapter 1. How many steps are taken to read an element from an array? The anwer is 1 step. So, we say that reading an element from an array takes $\mathcal{O}(1)$. So, this suggests that irrespective of how many elements are in the array, it takes exactly the same number of steps. We say that reading takes **a constant time**. 
+Let's look at reading from the array, as we say in Chapter 1. How many steps are taken to read an element from an array? The answer is 1 step. So, we say that reading an element from an array takes $\mathcal{O}(1)$. So, this suggests that irrespective of how many elements are in the array, it takes exactly the same number of steps. We say that reading takes **a constant time**. 
 
 >   An algorithm that takes $\mathcal{O}(1)$ is said to take constant time
 
