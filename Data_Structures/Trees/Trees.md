@@ -644,3 +644,84 @@ def preorder(node):
             preorder(node.right)
 ```
 
+How this works is best explained by looking at this [link](https://stackoverflow.com/questions/63962871/understanding-printed-output-for-a-bst-traversal). However, we can do a simple tree to explain the traversal. Consider the following simple tree: 
+
+```python
+        9
+       / \
+      4   17
+     / \
+    3   6
+```
+
+When we run the preorder, the function works like this: 
+
+```python
+tree = Tree(
+        Node(
+            9,
+            Node(4,
+                Node(3, None, None),  
+                Node(6, None, None), 
+            ),
+            Node(17, None, None)
+        )
+    )
+```
+
+So, at each node, the recursive algorithm keep each of the nodes. Here's another way to look at it: 
+
+```python
+entering 9
+    entering 4
+        entering 3
+        visiting 3
+        exiting 3
+    visiting 4
+        entering 6
+        visiting 6
+        exiting 6
+    exiting 4
+visiting 9
+    entering 17
+    visiting 17
+    exiting 17
+exiting 9
+```
+
+## Post-Order Traversal
+
+In the post-order traversal, the elements are traversed in "left-right-root" order. Thus, we have the following:
+
+<img src="Trees.assets/image-20210301111332663.png" alt="image-20210301111332663" style="zoom:30%;" />
+
+The code is very similar: 
+
+```python
+import BST
+
+def postorder(node):
+     if node is not None:
+            postorder(node.left)
+            postorder(node.right)
+            print(node.data)
+```
+
+## In-Order Traversal
+
+Finally, the in-order traversal can be thought of as "left-root-right" order. Thus, we have the following: 
+
+<img src="Trees.assets/image-20210301131927122.png" alt="image-20210301131927122" style="zoom:30%;" />
+
+The code is very similar to pre- and post-order: 
+
+```python
+import BST
+
+def inorder(node):
+    if node is not None:
+        inorder(node.left)
+        print(node.data)
+        inorder(node.right)
+```
+
