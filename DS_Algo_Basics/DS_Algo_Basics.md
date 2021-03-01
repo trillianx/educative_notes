@@ -416,6 +416,21 @@ We see that this has a time complexity of $N$ because we have removed one loop. 
 
 One thing to note that this algorithm, though takes linear time is not very efficient because it takes more memory. But we will see this later in Chapter 19. 
 
+We can take the space out by doing the following: 
+
+```python
+def find_dups(arr):
+    n = len(arr)
+    start = 0
+    for end in range(1, n):
+        if arr[start] != arr[end]:
+            start += 1
+            arr[start] = arr[end]
+    return arr[:start+1]
+```
+
+This algorithm scans the array once and therefore it has a time complexity of $\mathcal{O}(N)$. 
+
 It’s clear that having a solid understanding of Big O Notation can enable you to identify slow code and select the faster of two competing algorithms.
 
 However, there are situations in which Big O Notation will have us believe that two algorithms have the same speed, while one is actually faster. In the next chapter, you’re going to learn how to evaluate the efficiencies of various algorithms even when Big O isn’t nuanced enough to do so.

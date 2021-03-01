@@ -38,7 +38,7 @@ And here are some examples of subtrees:
 
 ## Types of Trees
 
-There are different types of trees that are optimized for particular use-case. Most common trees are: 
+There are different types of trees that are optimized for particular use-case. Therefore each type of tree has its own space and time complexities. Most common trees are: 
 
 *   Binary Trees
 *   Binary Search Trees
@@ -76,6 +76,8 @@ As an example, consider the following tree. We ask ourselves if the following tr
 We start with the leaf. Both for `4` and `null`, the height is `0`. We move up. At `2`, we see that `2` has one child so the height is `1`. For `3`, it has no child so the height is `0`. We get to the root. The height on the left hand side is `2` but on the right hand side it is `1`. Thus, the tree is not balanced. 
 
 <img src="Trees.assets/image-20201109160834330.png" alt="image-20201109160834330" style="zoom:50%;" />
+
+>   We compare the left and right of the current subtree and NOT the right and left of the subtree from the root.
 
 ## Binary Trees
 
@@ -623,4 +625,22 @@ Let's build this up as we go. We will work in the `Node()` class
     ```
 
     
+
+## Pre-order Traversal
+
+In this method, the elements are traversed in "root-left-right" order. So, we start with the root, and move left and then right until we hit a leaf then we move to the right of the root. So, for example in the following tree we would traverse in the following way: 
+
+<img src="Trees.assets/image-20210301095545638.png" alt="image-20210301095545638" style="zoom:67%;" />
+
+Implementation of this traversal in python:
+
+```python
+import BST
+
+def preorder(node):
+     if node is not None:
+            print(node.data)
+            preorder(node.left)
+            preorder(node.right)
+```
 
