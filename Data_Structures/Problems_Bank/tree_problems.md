@@ -14,13 +14,21 @@ Here you will define a simple binary tree class.
 
 Here we are not looking at whether a given node is empty, rather if the entire tree is empty. 
 
-### 3. Write the basic tree traversal: preorder, postorder, inorder
+### 3. Write the basic tree traversal: pre-, post-, in-order
 
 Write these are three separate functions. Should they be methods? 
 
 ### 4. Write a method to insert a value in a BST
 
-Where would this method be? In BST class or Node class? 
+Where would this method be? In BST class or Node class?
+
+### 5. Write a method to search for a value in BST
+
+So, given a value, the method should return either true or false based on whether the value exists or not. 
+
+### 6. Delete A Leaf Node
+
+Write a method to delete a leaf node in a given tree
 
 ## Medium
 
@@ -60,7 +68,7 @@ def isEmpty(self):
 
 Here we use `self.root.left` instead of `self.left` because the `BST()` class does not have `self.left`. But `root` which is a node has it.
 
-### 3. Write the basic tree traversal: preorder, postorder, inorder
+### 3. Write the basic tree traversal: pre-, post-, in-order
 
 These tree traversal are written in the `BST` class:
 
@@ -99,7 +107,58 @@ def tree_traversal(self, flag):
         return self.postorder(self.root)
 ```
 
-
-
 ### 4. Write a method to insert a value in a BST
+
+```python
+# This would be in node class
+
+def insert(self, value):
+    if value < self.data:
+        if self.left is not None:
+            self.insert(value)
+        else:
+            node.left = Node(value)
+    elif value > node.data:
+        if self.right is not None:
+            self.insert(value)
+        else:
+            self.right = Node(value)
+    else:
+        print('Value already in BST')
+        
+# This would be in the BST Class: 
+
+def insert(self, value):
+    if self.root:
+        self.root.insert(value)
+   	else:
+        self.root = Node(value)Write a method to search for a value in BST
+```
+
+### 5. Write a method to search for a value in BST
+
+```python
+# In BST Class:
+def search(self, value):
+    if not self.isEmpty():
+        return self.root.search(value)
+    else:
+        return False
+    
+
+# In Node Class:
+def search(self, value):
+    if value == self.data:
+        return True
+    elif value < self.data:
+        if self.left:
+            return self.left.search(value)
+        else:
+            return False
+    elif value > self.data:
+        if self.right:
+            return self.right.search(value)
+        else:
+            return False
+```
 

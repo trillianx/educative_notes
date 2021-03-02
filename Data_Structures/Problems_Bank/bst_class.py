@@ -45,5 +45,15 @@ class BST():
             return self.inorder(self.root)
         else:
             return None
-        
 
+    def search(self, value):
+        if not self.isEmpty():
+            return self.root.search(value)
+        else:
+            return self
+
+    def delete(self, value):
+        if self.root is not None:
+            self.root = self.root.delete(value)
+        else:
+            return False
