@@ -488,12 +488,12 @@ Here's how it looks graphically:
 
 ##### Delete a Node with Two Children
 
-This is a little more complicated. Let's look at the steps to follow: 
+This is a little more complicated. The idea is to swap the value in the current node with a value that is larger than the current value. So, here's how to: 
 
-1.  We search for the node in the BST
-2.  Once we have found it, we look to see if they have children.
-3.  If they have children, we find the minimum value in the right subtree. This is found traversing the left branch of the tree which will have the minimum value
-4.  We swap this minimum value with the value we wish to delete.
+1.  We search for the node that has the value we are looking for in the BST
+2.  Once found, we look to see if they have right child. 
+3.  If they have a right child or a right subtree, we traverse, the left branch of the right subtree. This will ensure that we get the value which is higher than the value we wish to delete.
+4.  We swap this value with the value we wish to delete.
 5.  Now we delete the value we original planned to delete
 
 Now let's implement the deletion method
@@ -686,10 +686,59 @@ Let's build this up as we go. We will work in the `Node()` class
 6.  **When a Value is Found**: Deleting a Node with Two Children
 
     ```python
-    
+    def delete(self, value):
+        # if current node's val is less than that of root node,
+        # then only search in left subtree otherwise right subtree
+        if value < self.data:
+            if(self.left):
+                self.left = self.left.delete(value)
+            else:
+                print(str(value) + " not found in the tree")
+                return self
+        elif value > self.data:
+            if(self.right):
+                self.right = self.right.delete(value)
+            else:
+                print(str(value) + " not found in the tree")
+                return self
+        else:
+            # deleting node with no children
+            print('Value located..')
+            if self.left is None and self.right is None:
+                self = None
+            # Delete a node with no left child
+            elif self.left is None:
+                tmp = self.right
+                self = None
+                return tmp
+            # Delete a node with no right child
+           	elif self.right is None:
+                tmp = self.left
+                self = None
+                return tmp
+            # Delete a node with two children
+            else:
+                current = self.right
+                while current.left is not None:
+                    current = current.left
+                self.data = current.data
+                self.right = self.right.delete(current.data)
+        return self
     ```
 
-    
+    Here's how this works. Suppose we have the following tree: 
+
+    ```python
+      _9___       
+     /     \      
+     4    16___   
+    / \  /     \  
+    3 6 15    19_ 
+             /   \
+            18  20
+    ```
+
+    Now we wish to delete `16`. As 16 has two children, the code will go through and first locate 16. Next, the code will traverse the right subtree and find the minimim in that. This would be found in the left of the right subtree, which would be 18. Now, 16 and 18 are swapped and finally the 16, which is now a leaf is deleted. 
 
 ## Pre-order Traversal
 

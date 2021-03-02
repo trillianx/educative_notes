@@ -57,4 +57,10 @@ class Node():
             # Delete node with no right child
             elif self.right is None:
                 return self.left
+            else:
+                current = self.right
+                while current.left is not None:
+                    current = current.left
+                self.data = current.data
+                self.right = self.right.delete(current.data)
         return self
