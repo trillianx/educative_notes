@@ -514,6 +514,8 @@ Let's build this up as we go. We will work in the `Node()` class
             pass
     ```
 
+    This is the basic template. It checks the value to see whether we need to traverse the left branch or the right branch or whether the value we are looking for has been found. All of the deletion will take place when the value has been found. 
+
 2.  **Traversing the Tree**
 
     ```python
@@ -534,89 +536,152 @@ Let's build this up as we go. We will work in the `Node()` class
             pass
     ```
 
+    When the value is not been found, we will continue to traverse the tree. This is very similar to search method. 
+
 3.  **When the value is Found**: Deleting a Leaf Node
 
     ```python
-    def delete(self, val):
-        if val < self.val:  # val is in the left subtree
-            if(self.leftChild):
-                self.leftChild = self.leftChild.delete(val)
+    def delete(self, value):
+        # if current node's val is less than that of root node,
+        # then only search in left subtree otherwise right subtree
+        if value < self.data:
+            if(self.left):
+                self.left = self.left.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        elif val > self.val:  # val is in the right subtree
-            if(self.rightChild):
-                self.rightChild = self.rightChild.delete(val)
+                print(str(value) + " not found in the tree")
+                return self
+        elif value > self.data:
+            if(self.right):
+                self.right = self.right.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        else:  # val was found
+                print(str(value) + " not found in the tree")
+                return self
+        else:
             # deleting node with no children
-            if self.leftChild is None and self.rightChild is None:
+            print('Value located..')
+            if self.left is None and self.right is None:
                 self = None
-                return None
+    
+        return self
     ```
+
+    This is the first case. Here we delete a leaf. A leaf is defined as a node that has no left or right children. Once the value has been found, which happens in line 16 as we enter the `else` statement, we check to see if this is a leaf. If it is a leaf, we set the current node, which is our `self` at the moment to `None`. Then we return `self`. If you don't have the return statement, you will end up with an empty tree!
+
+    So, if we have a tree that looks like this: 
+
+    ```python
+      _9_   
+     /   \  
+     4  17_ 
+    / \    \
+    3 6   18
+    ```
+
+    We want to delete a leaf, say, `3`, we get the following:
+
+    ```python
+     _9_   
+    /   \  
+    4  17_ 
+     \    \
+     6   18
+    ```
+
+    
 
 4.  **When the Value is Found**: Deleting a Right Node Only
 
     ```python
-    def delete(self, val):
-        if val < self.val:  # val is in the left subtree
-            if(self.leftChild):
-                self.leftChild = self.leftChild.delete(val)
+    def delete(self, value):
+        # if current node's val is less than that of root node,
+        # then only search in left subtree otherwise right subtree
+        if value < self.data:
+            if(self.left):
+                self.left = self.left.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        elif val > self.val:  # val is in the right subtree
-            if(self.rightChild):
-                self.rightChild = self.rightChild.delete(val)
+                print(str(value) + " not found in the tree")
+                return self
+        elif value > self.data:
+            if(self.right):
+                self.right = self.right.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        else:  # val was found
+                print(str(value) + " not found in the tree")
+                return self
+        else:
             # deleting node with no children
-            if self.leftChild is None and self.rightChild is None:
+            print('Value located..')
+            if self.left is None and self.right is None:
                 self = None
-                return None
-            # deleting node with right child
-            elif self.leftChild is None:
-                tmp = self.rightChild
+            elif self.left is None:
+                tmp = self.right
                 self = None
                 return tmp
+        return self
     ```
+
+    In this case we delete a node with ONLY a right child. So, note that such a node may not be a leaf. Now, if it is not a leaf, we need to preserve the subtree before deleting the node. 
+
+    In line 21, we enter the `elif` statement. Here, we check to see if the current node has no left child but has a right child. Now, we want to preserve the child before we delete the node. So, we copy that child into a temporary variable, `tmp`. We then delete the node using `self=None` and we return `tmp`. Technically, you can simply return `self.right`, which works as well. 
+
+    Suppose we wish to delete, 17 in the example, which is has just a right child. We will get the following: 
+
+    ```python
+    # Before: 
+      _9_   
+     /   \  
+     4  17_ 
+    / \    \
+    3 6   18
+    
+    # After:
+      _9_ 
+     /   \
+     4  18
+    / \   
+    3 6 
+    ```
+
+    
 
 5.  **When a Value is Found**: Deleting a Node with a Left Child Only
 
     ```python
-    def delete(self, val):
-        if val < self.val:  # val is in the left subtree
-            if(self.leftChild):
-                self.leftChild = self.leftChild.delete(val)
+    def delete(self, value):
+        # if current node's val is less than that of root node,
+        # then only search in left subtree otherwise right subtree
+        if value < self.data:
+            if(self.left):
+                self.left = self.left.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        elif val > self.val:  # val is in the right subtree
-            if(self.rightChild):
-                self.rightChild = self.rightChild.delete(val)
+                print(str(value) + " not found in the tree")
+                return self
+        elif value > self.data:
+            if(self.right):
+                self.right = self.right.delete(value)
             else:
-                print(str(val) + " not found in the tree")
-                return None
-        else:  # val was found
+                print(str(value) + " not found in the tree")
+                return self
+        else:
             # deleting node with no children
-            if self.leftChild is None and self.rightChild is None:
+            print('Value located..')
+            if self.left is None and self.right is None:
                 self = None
-                return None
-            # deleting node with right child
-            elif self.leftChild is None:
-                tmp = self.rightChild
-                self = None
-                return tmp
-            # deleting node with left child
-            elif self.rightChild is None:
-                tmp = self.leftChild
+            # Delete a node with no left child
+            elif self.left is None:
+                tmp = self.right
                 self = None
                 return tmp
+            # Delete a node with no right child
+           	elif self.right is None:
+                tmp = self.left
+                self = None
+                return tmp
+        return self
     ```
+
+    This is exactly like the previous one. Again, we can simplify the code by simply returning `return self.left`. 
+
+    
 
 6.  **When a Value is Found**: Deleting a Node with Two Children
 
